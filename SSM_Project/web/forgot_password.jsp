@@ -12,7 +12,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SSM - Forgot Password</title>
     <link rel="stylesheet" type="text/css" href="login_page/vendor/bootstrap/css/bootstrap.css">
-    <link rel="stylesheet" href="text/css" href="login_page/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="login_page/css/M_login_main.css">
     <link rel="stylesheet" type="text/css" href="login_page/css/M_login_util.css">
   </head>
@@ -20,7 +19,7 @@
     <div class="limiter">
       <div class="container-login100">
         <div class="wrap-login100">
-          <form class="login100-form validate-form">
+          <form class="login100-form validate-form" id="form--forgot--pass">
             <span class="login100-form-title p-b-26">
               SSM Market
             </span>
@@ -29,9 +28,10 @@
             </span>
 
             <div class="wrap-input100 validate-input">
-              <input class="input100" type="text">
+              <input class="input100" type="text" id="loginEmail">
               <span class="focus-input100" data-placeholder="Email"></span>
             </div>
+            <span id="error--email"></span>
             <div class="container-login100-form-btn">
               <div class="wrap-login100-form-btn">
                 <div class="login100-form-bgbtn"></div>
@@ -50,4 +50,5 @@
   <script src="login_page/vendor/jquery/jquery-3.2.1.min.js"></script>
   <script src="login_page/vendor/bootstrap/js/popper.js"></script>
   <script src="login_page/vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="js/validate.js"></script>
 </html>
