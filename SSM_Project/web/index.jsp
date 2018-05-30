@@ -30,7 +30,7 @@
               </button>
               <a class="navbar-brand" href="#">Dashboard</a>
             </div>
-            <%@include file="layout/user--header.jsp" %>
+            <%@include file="layout/dashboard--header.jsp" %>
           </div>
         </nav>
         <!-- end sub menu top -->

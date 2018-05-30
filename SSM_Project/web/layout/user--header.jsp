@@ -2,10 +2,13 @@
   <ul class="nav navbar-nav navbar-right">
     <li>
       <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="ti-panel"></i>
-        <p>View All Users</p></a>
+        <p>View All Users</p>
+      </a>
     </li>
-    <li><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="ti-panel"></i>
-        <p>Add Admin</p></a>
+    <li>
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="ti-panel"></i>
+        <p>Add Admin</p>
+      </a>
     </li>
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="ti-settings"></i>
