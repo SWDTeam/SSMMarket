@@ -14,8 +14,10 @@ import java.util.Date;
  */
 public class AccountDTO implements Serializable {
     
+    public static final int ROLE_USER = 2;
+    
     private int userId;  
-    private String username, password, phone, email, gender, address, status;
+    private String username, password, phone, email, gender, address, status, role;
     private Date birthday;
 
     public AccountDTO() {
@@ -97,6 +99,14 @@ public class AccountDTO implements Serializable {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
     
     

@@ -8,7 +8,9 @@ package ssm.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -144,4 +146,32 @@ public class AccountDAO {
         return false;
     }
     
+    public List<AccountDTO> getAllUser() {
+        List<AccountDTO> result = null;
+        try {
+            conn = DBConnection.getConnection();
+            String sql = "select a.userId, a.userName, a.email, a.dateOfBirth, a.gender, a.status " +
+                         "from Account a, AccountRole ar " +
+                         "where a.userId = ar.userId and ar.roleId = ?";
+            preStm = conn.prepareStatement(sql);
+            preStm.setInt(1, AccountDTO.ROLE_USER);
+            rs = preStm.executeQuery();
+            result = new ArrayList<>();
+            while (rs.next()) {
+                AccountDTO dto = new AccountDTO();
+                dto.setUserId(rs.getInt("userId"));
+                dto.setUsername(rs.getString("userName"));
+                dto.setEmail(rs.getString("email"));
+                dto.setBirthday(rs.getDate("dateOfBirth"));               
+                dto.setGender(rs.getString("gender"));
+                dto.setStatus(rs.getString("status"));
+                result.add(dto);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return result;
+    }
 }
