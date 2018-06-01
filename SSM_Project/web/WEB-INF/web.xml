@@ -4,15 +4,44 @@
         <servlet-name>ProductDAO</servlet-name>
         <servlet-class>ssm.dao.ProductDAO</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>LoginController</servlet-name>
+        <servlet-class>ssm.controllers.LoginController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ForgotPasswordController</servlet-name>
+        <servlet-class>ssm.controllers.ForgotPasswordController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProductDAO</servlet-name>
         <url-pattern>/ProductDAO</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoginController</servlet-name>
+        <url-pattern>/LoginController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ForgotPasswordController</servlet-name>
+        <url-pattern>/ForgotPasswordController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
+    <context-param>
+        <param-name>host</param-name>
+        <param-value>smtp.gmail.com</param-value>
+    </context-param>
+ 
+    <context-param>
+        <param-name>port</param-name>
+        <param-value>587</param-value>
+    </context-param>
+    <context-param>
+        <param-name>pass</param-name>
+        <param-value>Thupnm@222</param-value>
+    </context-param>
     <welcome-file-list>
         <welcome-file>profile.jsp</welcome-file>
     </welcome-file-list>

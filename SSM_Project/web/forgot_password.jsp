@@ -19,7 +19,7 @@
     <div class="limiter">
       <div class="container-login100">
         <div class="wrap-login100">
-          <form class="login100-form validate-form" id="form--forgot--pass">
+          <form class="login100-form validate-form" id="form--forgot--pass" action="ForgotPasswordController" method="POST">
             <span class="login100-form-title p-b-26">
               SSM Market
             </span>
@@ -28,7 +28,7 @@
             </span>
 
             <div class="wrap-input100 validate-input">
-              <input class="input100" type="text" id="loginEmail">
+                <input class="input100" type="text" id="loginEmail" name="txtEmail">
               <span class="focus-input100" data-placeholder="Email"></span>
             </div>
             <span id="error--email"></span>

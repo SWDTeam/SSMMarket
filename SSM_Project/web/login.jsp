@@ -13,12 +13,12 @@
     <div class="limiter">
       <div class="container-login100">
         <div class="wrap-login100">
-          <form class="login100-form validate-form" id="form--login">
+          <form class="login100-form validate-form" id="form--login" action="LoginController" method="POST">
             <span class="login100-form-title p-b-26">SSM Market</span>
             <span class="login100-form-title p-b-48">Login</span>
 
             <div class="wrap-input100 validate-input">
-              <input class="input100" type="text" id="loginEmail">
+              <input class="input100" type="text" id="loginEmail" name="txtEmail">
               <span class="focus-input100" data-placeholder="Email"></span>
             </div>
             <span id="error--email"></span>
@@ -27,7 +27,7 @@
               <span class="btn-show-pass">
                 <i class="zmdi zmdi-eye"></i>
               </span>
-              <input class="input100" type="password" id="loginPassword">
+              <input class="input100" type="password" id="loginPassword" name="txtPassword">
               <span class="focus-input100" data-placeholder="Password"></span>
             </div>
             <span id="error--pass"></span>
@@ -35,7 +35,7 @@
             <div class="container-login100-form-btn">
               <div class="wrap-login100-form-btn">
                 <div class="login100-form-bgbtn"></div>
-                <button class="login100-form-btn">Login</button>
+                <button class="login100-form-btn" type="submit">Login</button>
               </div>
             </div>
             <div class="text-center p-t-115">
