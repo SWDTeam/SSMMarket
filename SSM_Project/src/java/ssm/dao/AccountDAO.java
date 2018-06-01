@@ -152,9 +152,8 @@ public class AccountDAO {
             conn = DBConnection.getConnection();
             String sql = "select a.userId, a.userName, a.email, a.dateOfBirth, a.gender, a.status " +
                          "from Account a, AccountRole ar " +
-                         "where a.userId = ar.userId and ar.roleId = ?";
+                         "where a.userId = ar.userId";
             preStm = conn.prepareStatement(sql);
-            preStm.setInt(1, AccountDTO.ROLE_USER);
             rs = preStm.executeQuery();
             result = new ArrayList<>();
             while (rs.next()) {
