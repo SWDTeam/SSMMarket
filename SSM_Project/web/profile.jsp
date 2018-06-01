@@ -23,7 +23,6 @@
           <div class="container-fluid">
             <div class="navbar-header">
               <button type="button" class="navbar-toggle">
-                <!-- <span class="sr-only">Toggle navigation</span> -->
                 <span class="icon-bar bar1"></span>
                 <span class="icon-bar bar2"></span>
                 <span class="icon-bar bar3"></span>
@@ -41,37 +40,33 @@
                 <h4 class="title">Profile of ACB</h4>
               </div>
               <div class="content">
-                <form>
+                <form id="form--profile">
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Email</label>
-                        <input type="text" class="form-control border-input" disabled placeholder="Company" value="Creative Code Inc.">
+                        <input type="email" class="form-control border-input" id="u--mail">
                       </div>
+                      <span id="error--email"></span>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label for="exampleInputEmail1">Name</label>
-                        <input type="email" class="form-control border-input" placeholder="Email">
+                        <label>Name</label>
+                        <input type="text" class="form-control border-input" id="u--name">
                       </div>
+                      <span id="error--name"></span>
                     </div>
                   </div>
 
                   <div class="row">
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label>DOB</label>
-                        <input type="date" class="form-control border-input">
-                      </div>
-                    </div>
-
-                    <div class="col-md-4">
-                      <div class="form-group">
                         <label>Phone</label>
-                        <input type="text" class="form-control border-input" placeholder="Last Name" value="Faker">
+                        <input type="text" class="form-control border-input" id="u--phone">
                       </div>
+                      <span id="error--phone"></span>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 pull-right">
                       <div class="form-group">
                         <label>Gender</label><br>
                         <div class="col-md-4">
@@ -80,37 +75,31 @@
                         <div class="col-md-5">
                           <input type="radio" name="gender">Female
                         </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label>Address</label>
-                        <input type="text" class="form-control border-input" placeholder="Home Address" value="Melbourne, Australia">
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label>DOB</label>
-                        <input type="text" class="form-control border-input" placeholder="City" value="Melbourne">
-                      </div>
+                      </div><br/>
+                      <span id="error--gender"></span>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
                         <label>Role</label>
-                        <input type="text" class="form-control border-input" placeholder="Country" value="Australia">
+                        <input type="text" class="form-control border-input" disabled="true" id="u--role">
+                      </div>
+                      <span id="error--role"></span>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-8">
+                      <div class="form-group">
+                        <label>Address</label>
+                        <input type="text" class="form-control border-input">
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
                         <label>Status</label>
-                        <input type="text" class="form-control border-input" disabled placeholder="Company" value="Creative Code Inc.">
+                        <input type="text" class="form-control border-input" disabled="true" id="u--status">
                       </div>
+                      <span id="error--status"></span>
                     </div>
                   </div>
                   <div class="text-center" style="padding-bottom: 2%;">
