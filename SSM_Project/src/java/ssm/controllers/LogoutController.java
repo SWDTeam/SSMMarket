@@ -5,7 +5,6 @@
  */
 package ssm.controllers;
 
-import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,14 +12,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import ssm.dao.AccountDAO;
-import ssm.dto.AccountDTO;
 
 /**
  *
  * @author ThuPMNSE62369
  */
-public class LoginController extends HttpServlet {
+public class LogoutController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,39 +31,15 @@ public class LoginController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
+        String url = "error.jsp";
         try {
-            String email = request.getParameter("txtEmail");
-            String password = request.getParameter("txtPassword");
-            String json = "";
-            System.out.println("do vao loginCustomerController " + email + " - " + password);
-            AccountDAO dao = new AccountDAO();
-            int role = dao.checkLogin(email, password);
-            AccountDTO dto = new AccountDTO();
-            dto = dao.find(email, password);
-            session.setAttribute("INFO", dto);
-            if (dto == null || dto.equals("")) {
-                System.out.println("da vao mobile error");
-                json = new Gson().toJson(dto);
-                System.out.println("KIETT " + json);
-                response.getWriter().write("{}");
-            }
-            if (role == 1) {
-                System.out.println("chuyen sang trang admin");
-                request.getRequestDispatcher("index.jsp").forward(request, response);
-            } else if (role == 2) {
-                response.setContentType("application/json");
-                json = new Gson().toJson(dto);
-                if (json != "") {
-                    System.out.println("KIETTT " + json);
-                    response.getWriter().write(json);
-                }
-            } else {
-                System.out.println("vào web error ");
-                request.setAttribute("INVALID", "Invalid username or password. Please try again!");
-            }
+            HttpSession session = request.getSession();
+            session.invalidate();
+            url = "login.jsp";
         } catch (Exception e) {
-            log("ERROR at LoginController" + e.getMessage());
+            log("ERROR at LogoutController " + e.getMessage());
+        } finally {
+            response.sendRedirect(url);
         }
     }
 

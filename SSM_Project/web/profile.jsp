@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="thupnm" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -23,7 +24,6 @@
           <div class="container-fluid">
             <div class="navbar-header">
               <button type="button" class="navbar-toggle">
-                <!-- <span class="sr-only">Toggle navigation</span> -->
                 <span class="icon-bar bar1"></span>
                 <span class="icon-bar bar2"></span>
                 <span class="icon-bar bar3"></span>
@@ -38,85 +38,83 @@
           <div class="container-fluid">
             <div class="card">
               <div class="header">
-                <h4 class="title">Profile of ACB</h4>
+                <h4 class="title">Profile of ${UPDATEBASIC.username}</h4>
               </div>
               <div class="content">
-                <form>
+                  <form id="form--profile" action="UpdateInfoController" method="POST">
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Email</label>
-                        <input type="text" class="form-control border-input" disabled placeholder="Company" value="Creative Code Inc.">
+                        <input type="hidden" name="userId" value="${USERID}"/>
+                        <input type="hidden" name="roleId" value="${ROLEID}"/>
+                        <input type="email" class="form-control border-input" name="email"
+                               disabled="true" value="${UPDATEBASIC.email}" id="u--mail">
                       </div>
+                      <span id="error--email"></span>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label for="exampleInputEmail1">Name</label>
-                        <input type="email" class="form-control border-input" placeholder="Email">
+                        <label>Name</label>
+                        <input type="text" class="form-control border-input" 
+                               name="username" value="${UPDATEBASIC.username}" id="u--name">
                       </div>
+                      <span id="error--name"></span>
                     </div>
                   </div>
 
                   <div class="row">
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label>DOB</label>
-                        <input type="date" class="form-control border-input">
-                      </div>
-                    </div>
-
                     <div class="col-md-4">
                       <div class="form-group">
                         <label>Phone</label>
-                        <input type="text" class="form-control border-input" placeholder="Last Name" value="Faker">
+                        <input type="text" class="form-control border-input" 
+                               name="phoneNumber" value="${UPDATEBASIC.phone}" id="u--phone">
                       </div>
+                      <span id="error--phone"></span>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-4 pull-right">
                       <div class="form-group">
                         <label>Gender</label><br>
                         <div class="col-md-4">
-                          <input type="radio" name="gender">Male
+                          <input type="radio" name="gender" value="male" <thupnm:if test="${UPDATEBASIC.gender eq 'male'}">checked="checked"</thupnm:if>>Male
                         </div>
                         <div class="col-md-5">
-                          <input type="radio" name="gender">Female
+                          <input type="radio" name="gender" value="female" <thupnm:if test="${UPDATEBASIC.gender eq 'female'}">checked="checked"</thupnm:if>>Female
                         </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-md-12">
-                      <div class="form-group">
-                        <label>Address</label>
-                        <input type="text" class="form-control border-input" placeholder="Home Address" value="Melbourne, Australia">
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label>DOB</label>
-                        <input type="text" class="form-control border-input" placeholder="City" value="Melbourne">
-                      </div>
+                      </div><br/>
+                      <span id="error--gender"></span>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
                         <label>Role</label>
-                        <input type="text" class="form-control border-input" placeholder="Country" value="Australia">
+                        <input type="text" class="form-control border-input" disabled="true" value="${ROLE.roleName}" id="u--role">
+                      </div>
+                      <span id="error--role"></span>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-8">
+                      <div class="form-group">
+                        <label>Address</label>
+                        <input type="text" class="form-control border-input" 
+                               name="address" required value="${UPDATEBASIC.address}">
                       </div>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">
                         <label>Status</label>
-                        <input type="text" class="form-control border-input" disabled placeholder="Company" value="Creative Code Inc.">
+                        <input type="text" class="form-control border-input" disabled="true" 
+                               name="status" required value="${UPDATEBASIC.status}" id="u--status">
                       </div>
+                      <span id="error--status"></span>
                     </div>
                   </div>
                   <div class="text-center" style="padding-bottom: 2%;">
-                    <button type="submit" class="btn btn-info btn-fill btn-wd">Update Profile</button>
+                    <button type="submit" class="btn btn-info btn-fill btn-wd">Update Profile</button>         
                   </div>
                   <div class="clearfix"></div>
+                  <strong><font color="red">${requestScope.RESULT}</font></strong>
                 </form>
               </div>
             </div>

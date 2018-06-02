@@ -5,14 +5,12 @@
  */
 package ssm.controllers;
 
-import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import ssm.dao.AccountDAO;
 import ssm.dto.AccountDTO;
 
@@ -20,7 +18,7 @@ import ssm.dto.AccountDTO;
  *
  * @author ThuPMNSE62369
  */
-public class LoginController extends HttpServlet {
+public class UpdateInfoController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,39 +32,37 @@ public class LoginController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
         try {
-            String email = request.getParameter("txtEmail");
-            String password = request.getParameter("txtPassword");
-            String json = "";
-            System.out.println("do vao loginCustomerController " + email + " - " + password);
-            AccountDAO dao = new AccountDAO();
-            int role = dao.checkLogin(email, password);
+            String userId = request.getParameter("userId");
+            String email = request.getParameter("email");
+            String name = request.getParameter("username");
+            String gender = request.getParameter("gender");
+            String address = request.getParameter("address");
+            String phoneNo = request.getParameter("phoneNumber");
+            String status = request.getParameter("status");
+           
             AccountDTO dto = new AccountDTO();
-            dto = dao.find(email, password);
-            session.setAttribute("INFO", dto);
-            if (dto == null || dto.equals("")) {
-                System.out.println("da vao mobile error");
-                json = new Gson().toJson(dto);
-                System.out.println("KIETT " + json);
-                response.getWriter().write("{}");
-            }
-            if (role == 1) {
-                System.out.println("chuyen sang trang admin");
-                request.getRequestDispatcher("index.jsp").forward(request, response);
-            } else if (role == 2) {
-                response.setContentType("application/json");
-                json = new Gson().toJson(dto);
-                if (json != "") {
-                    System.out.println("KIETTT " + json);
-                    response.getWriter().write(json);
-                }
+            AccountDAO dao = new AccountDAO();
+            dto.setUserId(Integer.parseInt(userId.trim()));
+            dto.setEmail(email);
+            dto.setUsername(name);
+            dto.setGender(gender);
+            dto.setAddress(address);
+            dto.setPhone(phoneNo);
+            dto.setStatus(status);
+
+            if (dao.updateBasicInfo(dto)) {
+                request.setAttribute("UPDATEBASIC", dto);
+                request.setAttribute("RESULT", "Update Successfully!!!");
+                request.getRequestDispatcher("UpdateBasicInfo").forward(request, response);
             } else {
-                System.out.println("vào web error ");
-                request.setAttribute("INVALID", "Invalid username or password. Please try again!");
+                request.setAttribute("UPDATEBASIC", dto);
+                request.setAttribute("RESULT", "Update Failed!!!");
+                request.getRequestDispatcher("UpdateBasicInfo").forward(request, response);
             }
+
         } catch (Exception e) {
-            log("ERROR at LoginController" + e.getMessage());
+            e.printStackTrace();
         }
     }
 

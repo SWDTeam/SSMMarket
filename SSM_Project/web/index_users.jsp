@@ -51,16 +51,19 @@
                             <div class="card">
                                 <div class="header">
                                     <h4 class="title">View All Users</h4>
-                                </div>
+                                </div>                                
                                 <div class="content table-responsive table-full-width">
                                     <div class="row">
                                         <div class="col-md-1"></div>
                                         <div class="col-md-3">
+                                            
                                             <select class="form-control border-input">
-                                                <option>Role</option>
-                                                <option>User</option>
-                                                <option>Admin</option>
+                                                <option value="1">Role</option>
+                                                <option value="user">user</option>
+                                                <option value="admin">admin</option>                                                
                                             </select>
+                                               
+                                            
                                         </div>
                                         <div class="row col-md-8">
                                             <div class="col-md-3"></div>
@@ -74,7 +77,7 @@
 
                                     </div>
                                     <thupnm:if test="${not empty requestScope.listUser}">
-                                        <table class="table table-striped">
+                                        <table class="table table-striped" id="list">
                                             <thead>
                                                 <tr>
                                                     <th>No</th>
@@ -82,6 +85,7 @@
                                                     <th>Birthday</th>
                                                     <th>Email</th>
                                                     <th>Gender</th>
+                                                    <th>Role</th>
                                                     <th>Status</th>
                                                     <th>Show</th>
                                                     <th>Ban</th>
@@ -97,8 +101,15 @@
                                                         </td>
                                                         <td>${dto.email}</td>
                                                         <td>${dto.gender}</td>
+                                                        <td>${dto.role}</td>
                                                         <td>${dto.status}</td>
-                                                        <td><i class="btn btn-info ti-zoom-in">Show</i></td>
+                                                        <td>
+                                                            <form action="UpdateBasicInfo">
+                                                                <input type="hidden" name="userId" value="${dto.userId}" />
+                                                                <input type="hidden" name="roleId" value="${dto.roleId}" />
+                                                                <button type="submit"><i class="btn btn-info ti-zoom-in">Show</i></button>
+                                                            </form>
+                                                        </td>
                                                         <td><i class="btn btn-dark ti-close">Ban</i></td>
                                                     </tr>
 
@@ -108,6 +119,7 @@
                                     </thupnm:if>
 
                                 </div>
+                                   
                             </div>
                         </div>
                         <!--pagination-->
@@ -118,5 +130,37 @@
         </div>
     </body>
     <%@include file="layout/admin--script.jsp" %>
+    
+    <script>
+    $(document).ready(function() {
+    $('#list').DataTable( {
+        initComplete: function () {
+            this.api().columns().every( function () {
+                var column = this;
+                var select = $('<select><option value=""></option></select>')
+                    .appendTo( $(column.footer()).empty() )
+                    .on( 'change', function () {
+                        var val = $.fn.dataTable.util.escapeRegex(
+                            $(this).val()
+                        );
+ 
+                        column
+                            .search( val ? '^'+val+'$' : '', true, false )
+                            .draw();
+                    } );
+ 
+                column.data().unique().sort().each( function ( d, j ) {
+        if(column.search() === '^'+d+'$'){
+            select.append( '<option value="'+d+'" selected="selected">'+d+'</option>' )
+        } else {
+            select.append( '<option value="'+d+'">'+d+'</option>' )
+        }
+    } );
+            } );
+        }
+    } );
+} );
+</script>
 </body>
+
 </html>

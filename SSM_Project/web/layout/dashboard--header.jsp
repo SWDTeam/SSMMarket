@@ -9,12 +9,12 @@
     </li>
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="ti-settings"></i>
-        <p>Minh Bác Ái</p>
+        <p>${INFO.username}</p>
         <b class="caret"></b>
       </a>
       <ul class="dropdown-menu">
         <li><a href="#">Profile</a></li>
-        <li><a href="#">Log out</a></li>
+        <li><a href="LogoutController">Log out</a></li>
       </ul>
     </li>
   </ul>

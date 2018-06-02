@@ -5,14 +5,12 @@
  */
 package ssm.controllers;
 
-import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import ssm.dao.AccountDAO;
 import ssm.dto.AccountDTO;
 
@@ -20,7 +18,7 @@ import ssm.dto.AccountDTO;
  *
  * @author ThuPMNSE62369
  */
-public class LoginController extends HttpServlet {
+public class RegisterController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,39 +32,54 @@ public class LoginController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
         try {
+            /* TODO output your page here. You may use following sample code. */
             String email = request.getParameter("txtEmail");
-            String password = request.getParameter("txtPassword");
-            String json = "";
-            System.out.println("do vao loginCustomerController " + email + " - " + password);
-            AccountDAO dao = new AccountDAO();
-            int role = dao.checkLogin(email, password);
-            AccountDTO dto = new AccountDTO();
-            dto = dao.find(email, password);
-            session.setAttribute("INFO", dto);
-            if (dto == null || dto.equals("")) {
-                System.out.println("da vao mobile error");
-                json = new Gson().toJson(dto);
-                System.out.println("KIETT " + json);
-                response.getWriter().write("{}");
+            String name = request.getParameter("txtUsername");
+            String gender = request.getParameter("txtGender");
+            if (gender.equals("male")) {
+                gender = "male";
+            } else {
+                gender = "female";
             }
-            if (role == 1) {
-                System.out.println("chuyen sang trang admin");
-                request.getRequestDispatcher("index.jsp").forward(request, response);
-            } else if (role == 2) {
-                response.setContentType("application/json");
-                json = new Gson().toJson(dto);
-                if (json != "") {
-                    System.out.println("KIETTT " + json);
-                    response.getWriter().write(json);
+            String address = request.getParameter("txtAddress");
+            String phone = request.getParameter("txtPhone");
+            String password = request.getParameter("txtPassword");
+            String confirmPassword = request.getParameter("txtConfirmPassword");
+            boolean checked = false;
+            if (!password.equals(confirmPassword)) {
+                request.setAttribute("ERROR", "Confirm password and password must be the same!");
+                checked = true;
+            }
+            AccountDAO dao = new AccountDAO();
+            AccountDTO user = new AccountDTO();
+            user.setEmail(email);
+            user.setUsername(name);
+            user.setGender(gender);
+            user.setAddress(address);
+            user.setPhone(phone);
+            user.setPassword(password);
+
+            if (!checked) {
+                if (!dao.checkEmail(email)) {
+                    if (dao.addNewUser(user)) {
+                        PrintWriter out = response.getWriter();
+                        out.append("success");
+                        int id = dao.getUserIdByEmail(email);
+                        user.setUserId(id);
+                        boolean result = dao.addRole(user.getUserId());
+                    } else {
+                        request.setAttribute("ERROR", "Failed!");
+                    }
+                } else {
+                    request.setAttribute("EmailError", "Email is existed!");
+                    request.getRequestDispatcher("").forward(request, response);
                 }
             } else {
-                System.out.println("vào web error ");
-                request.setAttribute("INVALID", "Invalid username or password. Please try again!");
+                request.getRequestDispatcher("").forward(request, response);
             }
         } catch (Exception e) {
-            log("ERROR at LoginController" + e.getMessage());
+            log("Error at RegisterController " + e.getMessage());
         }
     }
 

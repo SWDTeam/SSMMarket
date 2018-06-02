@@ -15,18 +15,38 @@ import java.util.Date;
 public class AccountDTO implements Serializable {
     
     public static final int ROLE_USER = 2;
+    public static final String STATUS_ACTIVE = "active";
     
-    private int userId;  
+    private int userId, roleId;  
     private String username, password, phone, email, gender, address, status, role;
     private Date birthday;
 
     public AccountDTO() {
     }
 
-    public AccountDTO(String username, String password, String email) {
+    public AccountDTO(int userId, String username, String password, String phone, String email, String gender, String address, String status, Date birthday) {
+        this.userId = userId;
         this.username = username;
         this.password = password;
+        this.phone = phone;
         this.email = email;
+        this.gender = gender;
+        this.address = address;
+        this.status = status;
+        this.birthday = birthday;
+    }
+
+    public AccountDTO(int userId, String username, String password, String phone, String email, String gender, String address, String status, String role, Date birthday) {
+        this.userId = userId;
+        this.username = username;
+        this.password = password;
+        this.phone = phone;
+        this.email = email;
+        this.gender = gender;
+        this.address = address;
+        this.status = status;
+        this.role = role;
+        this.birthday = birthday;
     }
 
     public int getUserId() {
@@ -107,6 +127,14 @@ public class AccountDTO implements Serializable {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public int getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
     }
     
     
