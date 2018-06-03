@@ -236,7 +236,7 @@ public class AccountDAO {
             preStm.setString(4, account.getGender());
             preStm.setString(5, account.getAddress());
             preStm.setString(6, account.getStatus());
-            preStm.setInt(8, account.getUserId());
+            preStm.setInt(7, account.getUserId());
             return preStm.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -370,5 +370,83 @@ public class AccountDAO {
             closeConnection();
         }
         return userId;
+    }
+    
+        public List<AccountDTO> findByLikeUsername(String search) {
+        List<AccountDTO> result = new ArrayList<>();
+        try {
+            String sql = "select a.userId, a.userName, a.email, a.dateOfBirth, a.gender, r.roleName, a.status, ar.roleId " +
+                         "from Account a, AccountRole ar, Role r " +
+                         "where a.userId = ar.userId and r.roleId = ar.roleId and a.userName like ?";
+            conn = DBConnection.getConnection();
+            preStm = conn.prepareStatement(sql);
+            preStm.setString(1, "%" + search + "%");
+            rs = preStm.executeQuery();
+            int userId, roleId;
+            String username = "", email = "", gender = "", roleName = "", status = "";
+            Date dob;
+            while (rs.next()) {
+                userId = rs.getInt("userId");
+                username = rs.getString("userName");
+                email = rs.getString("email");
+                dob = rs.getDate("dateOfBirth");
+                gender = rs.getString("gender");
+                roleName = rs.getString("roleName");
+                status = rs.getString("status");
+                roleId = rs.getInt("roleId");
+                AccountDTO dto = new AccountDTO();
+                dto.setUserId(userId);
+                dto.setUsername(username);
+                dto.setEmail(email);
+                dto.setBirthday(dob);
+                dto.setGender(gender);
+                dto.setRole(roleName);
+                dto.setStatus(status);
+                dto.setRoleId(roleId);
+                result.add(dto);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return result;
+    }
+    
+    public boolean changePassword(int id, String newPassword) {
+        try {
+            conn = DBConnection.getConnection();
+            String sql = "update Account set password = ? where userId = ?";
+            preStm = conn.prepareStatement(sql);
+            preStm.setString(1, newPassword);
+            preStm.setInt(2, id);
+            return preStm.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return false;
+    }
+    
+    public AccountDTO findInfo(int userId) {
+        AccountDTO dto = null;
+        try {
+            String sql = "select password from Account where userId = ?";
+            conn = DBConnection.getConnection();
+            preStm = conn.prepareStatement(sql);
+            preStm.setInt(1, userId);
+            rs = preStm.executeQuery();
+            String password = "";
+            if (rs.next()) {
+                password = rs.getString("password");
+                dto = new AccountDTO(password);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return dto;
     }
 }

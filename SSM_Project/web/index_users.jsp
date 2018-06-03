@@ -67,12 +67,14 @@
                                         </div>
                                         <div class="row col-md-8">
                                             <div class="col-md-3"></div>
+                                            <form action="SearchController" method="POST">
                                             <div class="col-md-6" style="padding-bottom: 2%;">
-                                                <input type="text" placeholder="Name..." class="form-control border-input">
+                                                <input type="text" placeholder="Name..." name="txtSearch" class="form-control border-input">
                                             </div>
                                             <div class="col-md-3 pull-right" >
-                                                <button class="btn btn-success">Filter</button>
+                                                <button class="btn btn-success" type="submit">Filter</button>
                                             </div>
+                                            </form>
                                         </div>
 
                                     </div>
@@ -105,9 +107,10 @@
                                                         <td>${dto.status}</td>
                                                         <td>
                                                             <form action="UpdateBasicInfo">
+                                                                <input type="hidden" name="lastSearch" value="${requestScope.lastSearch}" />
                                                                 <input type="hidden" name="userId" value="${dto.userId}" />
                                                                 <input type="hidden" name="roleId" value="${dto.roleId}" />
-                                                                <button type="submit"><i class="btn btn-info ti-zoom-in">Show</i></button>
+                                                                <button type="submit" class="btn btn-info ti-zoom-in">Show</button>
                                                             </form>
                                                         </td>
                                                         <td><i class="btn btn-dark ti-close">Ban</i></td>
@@ -128,39 +131,7 @@
                 </div>
             </div>
         </div>
-    </body>
     <%@include file="layout/admin--script.jsp" %>
-    
-    <script>
-    $(document).ready(function() {
-    $('#list').DataTable( {
-        initComplete: function () {
-            this.api().columns().every( function () {
-                var column = this;
-                var select = $('<select><option value=""></option></select>')
-                    .appendTo( $(column.footer()).empty() )
-                    .on( 'change', function () {
-                        var val = $.fn.dataTable.util.escapeRegex(
-                            $(this).val()
-                        );
- 
-                        column
-                            .search( val ? '^'+val+'$' : '', true, false )
-                            .draw();
-                    } );
- 
-                column.data().unique().sort().each( function ( d, j ) {
-        if(column.search() === '^'+d+'$'){
-            select.append( '<option value="'+d+'" selected="selected">'+d+'</option>' )
-        } else {
-            select.append( '<option value="'+d+'">'+d+'</option>' )
-        }
-    } );
-            } );
-        }
-    } );
-} );
-</script>
 </body>
 
 </html>

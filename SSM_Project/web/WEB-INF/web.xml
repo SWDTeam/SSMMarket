@@ -36,6 +36,10 @@
         <servlet-name>LogoutController</servlet-name>
         <servlet-class>ssm.controllers.LogoutController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ResetPasswordController</servlet-name>
+        <servlet-class>ssm.controllers.ResetPasswordController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProductDAO</servlet-name>
         <url-pattern>/ProductDAO</url-pattern>
@@ -71,6 +75,10 @@
     <servlet-mapping>
         <servlet-name>LogoutController</servlet-name>
         <url-pattern>/LogoutController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ResetPasswordController</servlet-name>
+        <url-pattern>/ResetPasswordController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -5,14 +5,12 @@
  */
 package ssm.controllers;
 
-import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import ssm.dao.AccountDAO;
 import ssm.dto.AccountDTO;
 
@@ -20,7 +18,7 @@ import ssm.dto.AccountDTO;
  *
  * @author ThuPMNSE62369
  */
-public class LoginController extends HttpServlet {
+public class ResetPasswordController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,40 +32,39 @@ public class LoginController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
         try {
-            String email = request.getParameter("txtEmail");
-            String password = request.getParameter("txtPassword");
-            String json = "";
-            System.out.println("do vao loginCustomerController " + email + " - " + password);
-            AccountDAO dao = new AccountDAO();
-            int role = dao.checkLogin(email, password);
-            AccountDTO dto = new AccountDTO();
-            dto = dao.find(email, password);
-            session.setAttribute("INFO", dto);
-            if (dto == null || dto.equals("")) {
-                System.out.println("da vao mobile error");
-                json = new Gson().toJson(dto);
-                System.out.println("KIETT " + json);
-                response.getWriter().write("{}");
+            String userId = request.getParameter("userId");
+            String oldPass = request.getParameter("oldPassword");
+            String newPass = request.getParameter("newPassword");
+            String confirm = request.getParameter("confirmPassword");
+            boolean check = false;
+            if (!confirm.equals(newPass)) {
+                request.setAttribute("errorConfirm", "Confirm password must be same as new password");
+                check = true;
             }
-            if (role == 1) {
-                System.out.println("chuyen sang trang admin");
-                request.getRequestDispatcher("index.jsp").forward(request, response);
-            } else if (role == 2) {
-                response.setContentType("application/json");
-                json = new Gson().toJson(dto);
-                if (json != "") {
-                    System.out.println("KIETTT " + json);
-                    response.getWriter().write(json);
+            AccountDAO dao = new AccountDAO();
+            AccountDTO dto = new AccountDTO();
+            AccountDTO pass = dao.findInfo(Integer.parseInt(userId.trim()));
+            if (!oldPass.equals(pass.getPassword())) {
+                request.setAttribute("errorPass", "Wrong password!");
+                check = true;
+            }
+            dto.setPassword(newPass);
+            request.setAttribute("RESETPASS", dto);
+            if (!check) {
+                if (dao.changePassword(Integer.parseInt(userId.trim()), newPass)) {
+                    request.setAttribute("RESULT", "Reset Successfully!!!");
+                    request.getRequestDispatcher("change_password.jsp").forward(request, response);
+                } else {
+                    request.setAttribute("RESULT", "Reset Failed!");
+                    request.getRequestDispatcher("change_password.jsp").forward(request, response);
                 }
             } else {
-                System.out.println("vào web error ");
-                request.setAttribute("INVALID", "Invalid username or password. Please try again!");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
+                request.getRequestDispatcher("change_password.jsp").forward(request, response);
             }
         } catch (Exception e) {
-            log("ERROR at LoginController" + e.getMessage());
+            e.printStackTrace();
+            log("Error at ResetPasswordController " + e.getMessage());
         }
     }
 

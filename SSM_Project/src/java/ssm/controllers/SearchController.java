@@ -12,6 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import ssm.dao.AccountDAO;
 import ssm.dto.AccountDTO;
 
@@ -34,9 +35,10 @@ public class SearchController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String search = request.getParameter("txtRole");
+            String search = request.getParameter("txtSearch");
             AccountDAO dao = new AccountDAO();
-            List<AccountDTO> result = dao.findByRole(search);
+            List<AccountDTO> result = dao.findByLikeUsername(search);
+            request.setAttribute("lastSearch", search);
             request.setAttribute("listUser", result);
             request.getRequestDispatcher("index_users.jsp").forward(request, response);
         } catch (Exception e) {
