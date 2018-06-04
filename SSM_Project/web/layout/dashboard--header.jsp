@@ -1,15 +1,8 @@
 <div class="collapse navbar-collapse">
   <ul class="nav navbar-nav navbar-right">
-    <li>
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="ti-panel"></i>
-        <p>View All Users</p></a>
-    </li>
-    <li><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="ti-panel"></i>
-        <p>Add Admin</p></a>
-    </li>
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="ti-settings"></i>
-        <p>Minh Bï¿½c ï¿½i</p>
+        <p>Minh Bái Ái</p>
         <b class="caret"></b>
       </a>
       <ul class="dropdown-menu">
