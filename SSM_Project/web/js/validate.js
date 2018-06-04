@@ -15,10 +15,21 @@ $("#form--profile").submit(function () {
   return flag;
 });
 
+//-------------add admin page-------------
+$("#form--add--admin").submit(function () {
+  flag = checkAddNAdmin();
+  return flag;
+});
+//-------------change password page-------------
 $("#form--change--password").submit(function () {
   flag = checkChangePassword();
   return flag;
-})
+});
+//-------------new product page-------------
+$("#form--new--product").submit(function () {
+  flag = checkNewProduct();
+  return flag;
+});
 function resetTextErrors() {
   $("#error--email").text("");
   $("#error--name").text("");
@@ -26,7 +37,111 @@ function resetTextErrors() {
   $("#error--gender").text("");
   $("#error--role").text("");
   $("#error--status").text("");
+  $("#error--pass").text("");
+  $("#error--confirm--pass").text("");
+  $("#error--old--pass").text("");
+  $("#error--manufacturer").text("").css("color", "red");
+  $("#error--price").text("").css("color", "red");
+  $("#error--quantity").text("").css("color", "red");
+  $("#error--date--manufacture").text("").css("color", "red");
+  $("#error--date--expiration").text("").css("color", "red");
+  $("#error--pic").text("").css("color", "red");
+  $("#error--editor").text("").css("color", "red");
+}
 
+function checkNewProduct() {
+  resetTextErrors();
+  var t = true;
+  var name = $("#p--name").val();
+  var price = $("#p--price").val();
+  var amount = $("#p--quantity").val();
+  var manu = $("#p--manufacturer").val();
+  var dateManu = $("#p--date--manufacture").val();
+  var endManu = $("#p--date--expiration").val();
+  var img = $("#p--pic").val();
+  var editor = CKEDITOR.instances.editor1.document.getBody().getChild(0).getText();
+
+  var numberExp = /^[0-9]*$/
+
+  if (editor.trim() === null || editor.trim() === "") {
+    $("#error--editor").text("Description can't be blank");
+    t = false;
+  } else if (editor.length > 1000) {
+    $("#error--editor").text("Description length maxium 1000 characters");
+    t = false;
+  }
+  if (name === "" || name === null) {
+    $("#error--name").text("Name can't be blank!").css("color", "red");
+    t = false;
+  } else if (name.length > 100) {
+    $("#error--name").text("Name maximum is 100 characters!").css("color", "red");
+    t = false;
+  }
+  if (price === "" || price === null) {
+    $("#error--price").text("Price can't be blank");
+    t = false;
+  } else if (!price.match(numberExp)) {
+    $("#error--price").text("Price is invaild");
+    t = false;
+  } else if (price.length > 6) {
+    $("#error--price").text("Max price is $999.999");
+    t = false;
+  }
+  if (manu === null || manu === "") {
+    $("#error--manufacturer").text("Manufacturer can't be blank");
+    t = false;
+  } else if (manu.length > 50) {
+    $("#error--manufacturer").text("Manufacturer max length is 50 characters");
+    t = false;
+  }
+  if (amount === null || amount === "") {
+    $("#error--quantity").text("Quantity can't be blank");
+    t = false;
+  } else if (!amount.match(numberExp)) {
+    $("#error--quantity").text("Quantity is vaild");
+    t = false;
+  } else if (amount.length > 4) {
+    $("#error--quantity").text("Max quantity is 9999 item");
+    t = false;
+  }
+  if (dateManu === null || dateManu === "") {
+    $("#error--date--manufacture").text("Date of manufacture can't be blank");
+    t = false;
+  }
+  if (endManu === null || endManu === "") {
+    $("#error--date--expiration").text("Expiration date can't be blank");
+    t = false;
+  }
+  dateManu = new Date(dateManu);
+  endManu = new Date(endManu);
+  if (endManu < dateManu) {
+    $("#error--date--expiration").text("Expiration date invaild!");
+    t = false;
+  }
+  if (img === null || img === ""){
+    $("#error--pic").text("At least having one image!");
+    t = false;
+  }
+  return t;
+}
+
+
+function checkChangePassword() {
+  resetTextErrors();
+  var t = true;
+  var oldPass = $("#u--old--pass").val();
+
+  t = checkPassword();
+  if (oldPass === "" || oldPass === null) {
+    $("#error--old--pass").text("Current password is invaild!").css("color", "red");
+    t = false;
+  }
+  return t;
+}
+
+function checkEmailNameRole() {
+  resetTextErrors();
+  var t = true;
   var email = $("#u--mail").val();
   var name = $("#u--name").val();
   var role = $("#u--role").val();
@@ -40,8 +155,11 @@ function resetTextErrors() {
   if (name === "" || name === null) {
     $("#error--name").text("Name can't be blank!").css("color", "red");
     t = false;
-  } else if (name.match(alphaExp)) {
-    $("#error--name").text("Name is invaild!").css("color", "red");
+  } else if (!name.match(alphaExp)) {
+    $("#error--name").text("First character must uppercase! Don't use speacial characters").css("color", "red");
+    t = false;
+  } else if (name.length > 50) {
+    $("#error--name").text("Name maximum is 50 characters!").css("color", "red");
     t = false;
   }
   if (role === "" || role === null) {

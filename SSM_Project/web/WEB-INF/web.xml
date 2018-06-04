@@ -40,6 +40,10 @@
         <servlet-name>ResetPasswordController</servlet-name>
         <servlet-class>ssm.controllers.ResetPasswordController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddAdminController</servlet-name>
+        <servlet-class>ssm.controllers.AddAdminController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProductDAO</servlet-name>
         <url-pattern>/ProductDAO</url-pattern>
@@ -79,6 +83,10 @@
     <servlet-mapping>
         <servlet-name>ResetPasswordController</servlet-name>
         <url-pattern>/ResetPasswordController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddAdminController</servlet-name>
+        <url-pattern>/AddAdminController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -4,7 +4,7 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="ti-panel"></i>
                 <p>View All Users</p></a>
         </li>
-        <li><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="ti-panel"></i>
+        <li><a href="new_admin.jsp" class="dropdown-toggle" data-toggle="dropdown"><i class="ti-panel"></i>
                 <p>Add Admin</p></a>
         </li>
         <li class="dropdown">

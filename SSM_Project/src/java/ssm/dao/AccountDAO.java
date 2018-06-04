@@ -85,18 +85,16 @@ public class AccountDAO {
             rs = preStm.executeQuery();
             String email = "", username = "", gender = "", phone = "", password = "", address = "", status = "";
             int userId;
-            Date dob;
             if (rs.next()) {
                 userId = rs.getInt("userId");
                 email = rs.getString("email");
                 username = rs.getString("userName");
                 gender = rs.getString("gender");
-                dob = rs.getDate("dateOfBirth");
                 phone = rs.getString("phone");
                 password = rs.getString("password");
                 address = rs.getString("address");
                 status = rs.getString("status");
-                dto = new AccountDTO(userId, username, password, phone, email, gender, address, status, dob);
+                dto = new AccountDTO(userId, username, password, phone, email, gender, address, status);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -162,7 +160,7 @@ public class AccountDAO {
         List<AccountDTO> result = null;
         try {
             conn = DBConnection.getConnection();
-            String sql = "select a.userId, a.userName, a.email, a.dateOfBirth, a.gender, r.roleName, a.status, ar.roleId " +
+            String sql = "select a.userId, a.userName, a.email, a.gender, r.roleName, a.status, ar.roleId " +
                          "from Account a, AccountRole ar, Role r " +
                          "where a.userId = ar.userId and r.roleId = ar.roleId";
             preStm = conn.prepareStatement(sql);
@@ -172,8 +170,7 @@ public class AccountDAO {
                 AccountDTO dto = new AccountDTO();
                 dto.setUserId(rs.getInt("userId"));
                 dto.setUsername(rs.getString("userName"));
-                dto.setEmail(rs.getString("email"));
-                dto.setBirthday(rs.getDate("dateOfBirth"));               
+                dto.setEmail(rs.getString("email"));               
                 dto.setGender(rs.getString("gender"));
                 dto.setRole(rs.getString("roleName"));
                 dto.setStatus(rs.getString("status"));
@@ -193,7 +190,7 @@ public class AccountDAO {
         AccountDTO dto = null;
         try {
             conn = DBConnection.getConnection();
-            String sql = "select a.userId, a.userName, a.email, a.dateOfBirth, a.gender, r.roleName, a.status " +
+            String sql = "select a.userId, a.userName, a.email, a.gender, r.roleName, a.status " +
                          "from Account a, AccountRole ar, Role r " +
                          "where a.userId = ar.userId and r.roleId = ar.roleId and r.roleName = ?";
             preStm = conn.prepareStatement(sql);
@@ -207,13 +204,12 @@ public class AccountDAO {
                 email = rs.getString("email");
                 username = rs.getString("userName");
                 gender = rs.getString("gender");
-                dob = rs.getDate("dateOfBirth");
                 phone = rs.getString("phone");
                 password = rs.getString("password");
                 address = rs.getString("address");
                 status = rs.getString("status");
                 roleName = rs.getString("roleName");
-                dto = new AccountDTO(userId, username, password, phone, email, gender, address, status, role, dob);               
+                dto = new AccountDTO(userId, username, password, phone, email, gender, address, status, role);               
                 result.add(dto);
             }
         } catch (Exception e) {
@@ -343,7 +339,25 @@ public class AccountDAO {
             preStm = conn.prepareStatement(sql);
             preStm.setInt(1, userId);
             preStm.setInt(2, 2);
-            preStm.setString(7, AccountDTO.STATUS_ACTIVE);
+            preStm.setString(3, AccountDTO.STATUS_ACTIVE);
+            checked = preStm.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return checked;
+    }
+    
+    public boolean addRoleAdmin(int userId) {
+        boolean checked = false;
+        try {
+            conn = DBConnection.getConnection();
+            String sql = "insert into AccountRole(userId, roleId, status) values(?, ?, ?)";
+            preStm = conn.prepareStatement(sql);
+            preStm.setInt(1, userId);
+            preStm.setInt(2, 1);
+            preStm.setString(3, AccountDTO.STATUS_ACTIVE);
             checked = preStm.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -375,7 +389,7 @@ public class AccountDAO {
         public List<AccountDTO> findByLikeUsername(String search) {
         List<AccountDTO> result = new ArrayList<>();
         try {
-            String sql = "select a.userId, a.userName, a.email, a.dateOfBirth, a.gender, r.roleName, a.status, ar.roleId " +
+            String sql = "select a.userId, a.userName, a.email, a.gender, r.roleName, a.status, ar.roleId " +
                          "from Account a, AccountRole ar, Role r " +
                          "where a.userId = ar.userId and r.roleId = ar.roleId and a.userName like ?";
             conn = DBConnection.getConnection();
@@ -398,7 +412,6 @@ public class AccountDAO {
                 dto.setUserId(userId);
                 dto.setUsername(username);
                 dto.setEmail(email);
-                dto.setBirthday(dob);
                 dto.setGender(gender);
                 dto.setRole(roleName);
                 dto.setStatus(status);
@@ -448,5 +461,24 @@ public class AccountDAO {
             closeConnection();
         }
         return dto;
+    }
+    
+    public boolean addNewAdmin(AccountDTO account) {
+        boolean checked = false;
+        try {
+            conn = DBConnection.getConnection();
+            String sql = "insert into Account(email, userName, password, status) values(?, ?, ?, ?)";
+            preStm = conn.prepareStatement(sql);
+            preStm.setString(1, account.getEmail());
+            preStm.setString(2, account.getUsername());
+            preStm.setString(3, account.getPassword());
+            preStm.setString(4, AccountDTO.STATUS_ACTIVE);
+            checked = preStm.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return checked;
     }
 }

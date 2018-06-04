@@ -19,7 +19,6 @@ public class AccountDTO implements Serializable {
     
     private int userId, roleId;  
     private String username, password, phone, email, gender, address, status, role;
-    private Date birthday;
 
     public AccountDTO() {
     }
@@ -28,7 +27,7 @@ public class AccountDTO implements Serializable {
         this.password = password;
     }
 
-    public AccountDTO(int userId, String username, String password, String phone, String email, String gender, String address, String status, Date birthday) {
+    public AccountDTO(int userId, String username, String password, String phone, String email, String gender, String address, String status) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -37,10 +36,9 @@ public class AccountDTO implements Serializable {
         this.gender = gender;
         this.address = address;
         this.status = status;
-        this.birthday = birthday;
     }
 
-    public AccountDTO(int userId, String username, String password, String phone, String email, String gender, String address, String status, String role, Date birthday) {
+    public AccountDTO(int userId, String username, String password, String phone, String email, String gender, String address, String status, String role) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -50,7 +48,6 @@ public class AccountDTO implements Serializable {
         this.address = address;
         this.status = status;
         this.role = role;
-        this.birthday = birthday;
     }
 
     public int getUserId() {
@@ -115,14 +112,6 @@ public class AccountDTO implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
     }
 
     public String getRole() {

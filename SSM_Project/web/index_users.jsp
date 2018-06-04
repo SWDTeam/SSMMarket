@@ -84,7 +84,6 @@
                                                 <tr>
                                                     <th>No</th>
                                                     <th>Name</th>
-                                                    <th>Birthday</th>
                                                     <th>Email</th>
                                                     <th>Gender</th>
                                                     <th>Role</th>
@@ -98,9 +97,6 @@
                                                     <tr>
                                                         <td>${counter.count}</td>
                                                         <td>${dto.username}</td>
-                                                        <td>                                          
-                                                            <fmt:formatDate pattern="dd/MM/yyyy" value="${dto.birthday}"/>
-                                                        </td>
                                                         <td>${dto.email}</td>
                                                         <td>${dto.gender}</td>
                                                         <td>${dto.role}</td>
