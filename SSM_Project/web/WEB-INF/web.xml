@@ -43,6 +43,6 @@
         <param-value>Thupnm@222</param-value>
     </context-param>
     <welcome-file-list>
-        <welcome-file>profile.jsp</welcome-file>
+        <welcome-file>show_product.jsp</welcome-file>
     </welcome-file-list>
 </web-app>
