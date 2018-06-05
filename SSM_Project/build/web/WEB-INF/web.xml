@@ -42,7 +42,6 @@
         <servlet-class>ssm.controllers.AddAdminController</servlet-class>
         
     </servlet>
-   
     
     <servlet>
         <servlet-name>RegisterController</servlet-name>
