@@ -28,10 +28,7 @@
         <servlet-name>UpdateBasicInfo</servlet-name>
         <servlet-class>ssm.controllers.UpdateBasicInfo</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>RegisterController</servlet-name>
-        <servlet-class>ssm.controllers.RegisterController</servlet-class>
-    </servlet>
+    
     <servlet>
         <servlet-name>LogoutController</servlet-name>
         <servlet-class>ssm.controllers.LogoutController</servlet-class>
@@ -43,6 +40,21 @@
     <servlet>
         <servlet-name>AddAdminController</servlet-name>
         <servlet-class>ssm.controllers.AddAdminController</servlet-class>
+        
+    </servlet>
+   
+    
+    <servlet>
+        <servlet-name>RegisterController</servlet-name>
+        <servlet-class>kietpt.controller.RegisterController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateCustomerController</servlet-name>
+        <servlet-class>kietpt.controller.UpdateCustomerController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangePassCustomer</servlet-name>
+        <servlet-class>kietpt.controller.ChangePassCustomer</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ProductDAO</servlet-name>
@@ -87,6 +99,12 @@
     <servlet-mapping>
         <servlet-name>AddAdminController</servlet-name>
         <url-pattern>/AddAdminController</url-pattern>
+        <servlet-name>UpdateCustomerController</servlet-name>
+        <url-pattern>/UpdateCustomerController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangePassCustomer</servlet-name>
+        <url-pattern>/ChangePassCustomer</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

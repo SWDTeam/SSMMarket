@@ -38,6 +38,7 @@ public class AccountDTO implements Serializable {
         this.status = status;
     }
 
+<<<<<<< HEAD
     public AccountDTO(int userId, String username, String password, String phone, String email, String gender, String address, String status, String role) {
         this.userId = userId;
         this.username = username;
@@ -48,6 +49,21 @@ public class AccountDTO implements Serializable {
         this.address = address;
         this.status = status;
         this.role = role;
+=======
+    
+    public AccountDTO() {
+    }
+
+    public AccountDTO(int userId, String email, String username, String gender, String phone, String password, String address, String status) {
+        this.userId = userId;
+        this.email = email;
+        this.username = username;
+        this.gender = gender;
+        this.phone = phone;
+        this.password = password;
+        this.address = address;
+        this.status = status;
+>>>>>>> kietweb
     }
 
     public int getUserId() {
@@ -58,6 +74,17 @@ public class AccountDTO implements Serializable {
         this.userId = userId;
     }
 
+<<<<<<< HEAD
+=======
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+>>>>>>> kietweb
     public String getUsername() {
         return username;
     }
@@ -66,6 +93,7 @@ public class AccountDTO implements Serializable {
         this.username = username;
     }
 
+<<<<<<< HEAD
     public String getPassword() {
         return password;
     }
@@ -74,6 +102,18 @@ public class AccountDTO implements Serializable {
         this.password = password;
     }
 
+=======
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    
+
+>>>>>>> kietweb
     public String getPhone() {
         return phone;
     }
@@ -82,6 +122,7 @@ public class AccountDTO implements Serializable {
         this.phone = phone;
     }
 
+<<<<<<< HEAD
     public String getEmail() {
         return email;
     }
@@ -96,6 +137,14 @@ public class AccountDTO implements Serializable {
 
     public void setGender(String gender) {
         this.gender = gender;
+=======
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+>>>>>>> kietweb
     }
 
     public String getAddress() {
@@ -113,6 +162,7 @@ public class AccountDTO implements Serializable {
     public void setStatus(String status) {
         this.status = status;
     }
+<<<<<<< HEAD
 
     public String getRole() {
         return role;
@@ -131,4 +181,7 @@ public class AccountDTO implements Serializable {
     }
     
     
+=======
+    private String status;
+>>>>>>> kietweb
 }

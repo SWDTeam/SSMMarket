@@ -3,13 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/PRM391/ssm/SSM_Project/src/java/ssm/controllers/AddAdminController.java</file>
-            <file>file:/D:/PRM391/ssm/SSM_Project/web/new_admin.jsp</file>
-            <file>file:/D:/PRM391/ssm/SSM_Project/web/index_users.jsp</file>
-            <file>file:/D:/PRM391/ssm/SSM_Project/src/java/ssm/dao/AccountDAO.java</file>
-            <file>file:/D:/PRM391/ssm/SSM_Project/web/layout/user--header.jsp</file>
-            <file>file:/D:/PRM391/ssm/SSM_Project/src/java/ssm/dto/AccountDTO.java</file>
-            <file>file:/D:/PRM391/ssm/SSM_Project/src/java/ssm/controllers/RegisterController.java</file>
+            <file>file:/D:/Faculty/Mobile/WebSmartMarket/SSMMarket-javaweb/SSM_Project/src/java/kietpt/controller/LoginController.java</file>
         </group>
     </open-files>
 </project-private>
