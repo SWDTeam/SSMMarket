@@ -13,7 +13,7 @@
         <div class="limiter">
             <div class="container-login100">
                 <div class="wrap-login100">
-                    <form class="login100-form validate-form" id="form--login" action="LoginController" method="POST">
+                    <form class="login100-form validate-form" id="form--login" action="LoginCusController" method="POST">
                         <span class="login100-form-title p-b-26">SSM Market</span>
                         <span class="login100-form-title p-b-48">Login</span>
 

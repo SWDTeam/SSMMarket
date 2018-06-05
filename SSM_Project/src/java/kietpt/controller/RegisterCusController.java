@@ -3,24 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ssm.controllers;
+package kietpt.controller;
 
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import ssm.dao.AccountDAO;
+import kietpt.dao.AccountDAO;
 import ssm.dto.AccountDTO;
 
 /**
  *
- * @author ThuPMNSE62369
+ * @author kietp
  */
-public class LoginController extends HttpServlet {
+public class RegisterCusController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,40 +34,56 @@ public class LoginController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json");
+        String json = "";
         try {
+            AccountDAO dao = new AccountDAO();
             String email = request.getParameter("txtEmail");
             String password = request.getParameter("txtPassword");
-            String json = "";
-            System.out.println("do vao loginCustomerController " + email + " - " + password);
-            AccountDAO dao = new AccountDAO();
-            int role = dao.checkLogin(email, password);
-            AccountDTO dto = new AccountDTO();
-            dto = dao.find(email, password);
-            session.setAttribute("INFO", dto);
-            if (dto == null || dto.equals("")) {
-                System.out.println("da vao mobile error");
-                json = new Gson().toJson(dto);
-                System.out.println("KIETT " + json);
-                response.getWriter().write("{}");
-            }
-            if (role == 1) {
-                System.out.println("chuyen sang trang admin");
-                request.getRequestDispatcher("index.jsp").forward(request, response);
-            } else if (role == 2) {
-                response.setContentType("application/json");
-                json = new Gson().toJson(dto);
-                if (json != "") {
-                    System.out.println("KIETTT " + json);
+            String username = request.getParameter("txtUsername");
+            String address = request.getParameter("txtAddress");
+            String phone = request.getParameter("txtPhone");
+            String gender = request.getParameter("txtGender");
+            String status = request.getParameter("txtStatus");
+            System.out.println(email + " - " + password + " - " + username + " - " + address + " - " + phone + " - " + gender);
+               
+            AccountDTO cus = new AccountDTO();
+            cus.setEmail(email);
+            cus.setPassword(password);
+            cus.setUsername(username);
+            cus.setAddress(address);
+            cus.setPhone(phone);
+            cus.setGender(gender);
+            cus.setStatus(status);
+            if (!dao.checkEmail(email)) {
+                if (dao.insertCustomer(cus)) {
+                    int userId = dao.getUserIdByEmail(email);
+                    System.out.println("---------------  "+userId);
+                    cus.setUserId(userId);
+                    if (dao.addRole(cus.getUserId())) {
+                        json = new Gson().toJson(cus);
+                        System.out.println("dang ky thanh cong " + json);
+                        response.getWriter().write(json);
+                    } else {
+                        System.out.println("kiet dep chai");
+                        json = new Gson().toJson("{\"result\":\"fail\"}");
+                        System.out.println("dang ky that bai " + json);
+                        response.getWriter().write(json);
+                    }
+                } else {
+                    System.out.println("kiet xau trai");
+                    json = new Gson().toJson("{\"result\":\"fail\"}");
+                    System.out.println("dang ky that bai " + json);
                     response.getWriter().write(json);
                 }
             } else {
-                System.out.println("vào web error ");
-                request.setAttribute("INVALID", "Invalid username or password. Please try again!");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
+                json = new Gson().toJson("{\"result\":\"duplicate\"}");
+                System.out.println("dang ky that bai " + json);
+                response.getWriter().write(json);
             }
         } catch (Exception e) {
-            log("ERROR at LoginController" + e.getMessage());
+            e.printStackTrace();
         }
     }
 
