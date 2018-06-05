@@ -1,17 +1,15 @@
-<%-- 
-    Document   : admin--script
-    Created on : May 28, 2018, 8:37:15 PM
-    Author     : Dell
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>JSP Page</title>
-  </head>
-  <body>
-    <h1>Hello World!</h1>
-  </body>
-</html>
+<script src="admin_page/js/jquery-1.10.2.js"></script>
+<script src="admin_page/js/bootstrap.min.js"></script>
+<script src="admin_page/js/paper-dashboard.js"></script>
+<script src="js/validate.js"></script>
+<!--active menu-->
+<script type="text/javascript">
+  $(document).ready(function () {
+    var pgurl = window.location.href.substr(window.location.href.lastIndexOf("/") + 1);
+//    console.log(pgurl);
+    $(".M--menu a").each(function () {
+      if ($(this).attr("href") === pgurl || $(this).attr("href") == '')
+        $(this).parent().addClass('active').siblings().removeClass('active');
+    });
+  });
+</script>
