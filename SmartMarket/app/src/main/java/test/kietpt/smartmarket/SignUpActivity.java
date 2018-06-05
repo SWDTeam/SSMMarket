@@ -142,7 +142,7 @@ public class SignUpActivity extends AppCompatActivity {
         if(!checkValidate()){
             Toast.makeText(SignUpActivity.this,"Something wrong!!! please sign up again ",Toast.LENGTH_SHORT).show();
         }else{
-            signUpCustomer("http://"+IpConfig.ipConfig+":8084/SSM_Project/RegisterController?txtEmail=" + email.getText().toString()
+            signUpCustomer("http://"+IpConfig.ipConfig+":8084/SSM_Project/RegisterCusController?txtEmail=" + email.getText().toString()
                     + "&txtPassword=" + pass.getText().toString() + "&txtUsername=" + username.getText().toString() +
                     "&txtAddress=" + address.getText().toString() + "&txtPhone=" + phone.getText().toString() + "&txtGender=" + selectedGender.toString()
                     + "&txtStatus=" + "active");

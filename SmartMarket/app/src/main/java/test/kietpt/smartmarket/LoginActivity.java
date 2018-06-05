@@ -55,11 +55,11 @@ public class LoginActivity extends AppCompatActivity {
                 if (email.getText().toString().isEmpty() || pass.getText().toString().isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Please Input Email or Password", Toast.LENGTH_SHORT).show();
                 } else {
-//                    loginCustomer("http://"+IpConfig.ipConfig+":8084/SSM_Project/LoginController?txtEmail=" + email.getText().toString()
-//                            + "&txtPassword=" + pass.getText().toString());
-                    String url = "http://192.168.100.8:8084/Project/MainController?txtAbc=" + "kiet";
-                    loginCustomer("http://192.168.100.8:8084/Project/MainController?action=" + "View" + "&subAction=" +
-                            "subViewPost" + "&subView=" + "sumittedPostMoDetail" + "&txtPostId=" + "165");
+                    loginCustomer("http://"+IpConfig.ipConfig+":8084/SSM_Project/LoginCusController?txtEmail=" + email.getText().toString()
+                            + "&txtPassword=" + pass.getText().toString());
+//                    String url = "http://192.168.100.8:8084/Project/MainController?txtAbc=" + "kiet";
+//                    loginCustomer("http://192.168.100.8:8084/Project/MainController?action=" + "View" + "&subAction=" +
+//                            "subViewPost" + "&subView=" + "sumittedPostMoDetail" + "&txtPostId=" + "165");
                 }
             }
         });
@@ -88,12 +88,12 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     Log.e("ABC", "da vao Login ");
                     try {
-                        String test = response.getString("symbolPic");
-                        Log.e("JSON + ", test);
-                        String test1 = test.substring(38);
-
-
-                        System.out.println(test.substring(38));
+//                        String test = response.getString("symbolPic");
+//                        Log.e("JSON + ", test);
+//                        String test1 = test.substring(38);
+//
+//
+//                        System.out.println(test.substring(38));
 
                         int userId = response.getInt("userId");
                         String emailReponse = response.getString("email");
