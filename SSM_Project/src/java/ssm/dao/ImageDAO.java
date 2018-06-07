@@ -5,23 +5,27 @@
  */
 package ssm.dao;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.imageio.ImageIO;
 import ssm.db.DBConnection;
-import ssm.dto.ProductDTO;
+import ssm.dto.ImageDTO;
 
 /**
  *
  * @author ThuPMNSE62369
  */
-public class ProductDAO {
-
+public class ImageDAO {
+    
     private Connection conn;
     private PreparedStatement preStm;
     private ResultSet rs;
 
-    public ProductDAO() {
+    public ImageDAO() {
     }
 
     private void closeConnection() {
@@ -39,24 +43,15 @@ public class ProductDAO {
             e.printStackTrace();
         }
     }
-
-    public boolean createNewProduct(ProductDTO product) {
+    
+    public boolean createImage(String img, String productId) {
         boolean checked = false;
         try {
             conn = DBConnection.getConnection();
-            String sql = "insert into Product(productId, productName, categoryId, manufacturer, price, quantity, " +
-                         "manuDate, expiredDate, description, status) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "insert into Images(imgKey, productId) values(?, ?)";
             preStm = conn.prepareStatement(sql);
-            preStm.setString(1, product.getProductId());
-            preStm.setString(2, product.getProductName());
-            preStm.setInt(3, product.getCategoryId());
-            preStm.setString(4, product.getManufacturer());
-            preStm.setFloat(5, product.getPrice());
-            preStm.setInt(6, product.getQuantity());
-            preStm.setTimestamp(7, product.getManuDate());
-            preStm.setTimestamp(8, product.getExpiredDate());
-            preStm.setString(9, product.getDescription());
-            preStm.setString(10, ProductDTO.STATUS_ACTIVE);
+            preStm.setString(1, img);
+            preStm.setString(2, productId); 
             checked = preStm.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
@@ -65,5 +60,4 @@ public class ProductDAO {
         }
         return checked;
     }
-
 }
