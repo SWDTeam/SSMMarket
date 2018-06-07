@@ -7,6 +7,7 @@ package ssm.dto;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  *
@@ -18,7 +19,7 @@ public class ProductDTO implements Serializable {
     
     private String productId, productName, manufacturer, description, status;
     private int quantity, categoryId;
-    private Timestamp manuDate, expiredDate;
+    private Date manuDate, expiredDate;
     private float price;
 
     public String getProductId() {
@@ -77,21 +78,23 @@ public class ProductDTO implements Serializable {
         this.categoryId = categoryId;
     }
 
-    public Timestamp getManuDate() {
+    public Date getManuDate() {
         return manuDate;
     }
 
-    public void setManuDate(Timestamp manuDate) {
+    public void setManuDate(Date manuDate) {
         this.manuDate = manuDate;
     }
 
-    public Timestamp getExpiredDate() {
+    public Date getExpiredDate() {
         return expiredDate;
     }
 
-    public void setExpiredDate(Timestamp expiredDate) {
+    public void setExpiredDate(Date expiredDate) {
         this.expiredDate = expiredDate;
     }
+
+    
 
     public float getPrice() {
         return price;

@@ -24,7 +24,6 @@
         <servlet-name>UpdateBasicInfo</servlet-name>
         <servlet-class>ssm.controllers.UpdateBasicInfo</servlet-class>
     </servlet>
-    
     <servlet>
         <servlet-name>LogoutController</servlet-name>
         <servlet-class>ssm.controllers.LogoutController</servlet-class>
@@ -48,6 +47,10 @@
     <servlet>
         <servlet-name>ChangePassCustomer</servlet-name>
         <servlet-class>kietpt.controller.ChangePassCustomer</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetListCategory</servlet-name>
+        <servlet-class>kietpt.controller.GetListCategory</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginCusController</servlet-name>
@@ -96,6 +99,10 @@
     <servlet-mapping>
         <servlet-name>ChangePassCustomer</servlet-name>
         <url-pattern>/ChangePassCustomer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetListCategory</servlet-name>
+        <url-pattern>/GetListCategory</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
