@@ -1,4 +1,4 @@
-package test.kietpt.smartmarket;
+package test.kietpt.smartmarket.ulti;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,7 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import android.widget.Toast;
+
+import test.kietpt.smartmarket.model.Account;
 
 public class Database extends SQLiteOpenHelper {
 
@@ -71,6 +72,7 @@ public class Database extends SQLiteOpenHelper {
     public Account getCustomerInfo(String email) {
         Account account = null;
         SQLiteDatabase db = this.getReadableDatabase();
+        System.out.println(email + " da vao database ");
         Cursor cursor = db.rawQuery("Select * from Account where email = '" + email + "' ", null);
         if (cursor.moveToNext()) {
             int id = cursor.getInt(0);

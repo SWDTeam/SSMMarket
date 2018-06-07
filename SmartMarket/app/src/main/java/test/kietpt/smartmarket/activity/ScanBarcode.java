@@ -1,4 +1,4 @@
-package test.kietpt.smartmarket;
+package test.kietpt.smartmarket.activity;
 
 import android.Manifest;
 import android.content.Intent;
@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import test.kietpt.smartmarket.R;
 
 public class ScanBarcode extends AppCompatActivity {
 

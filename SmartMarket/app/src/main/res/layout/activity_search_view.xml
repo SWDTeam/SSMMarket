@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.SearchViewActi">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        >
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/backincon" />
+       <SearchView
+           android:layout_width="240dp"
+           android:layout_height="wrap_content"
+           android:layout_marginLeft="42dp"
+           >
+       </SearchView>
+        <Button
+            android:id="@+id/btnSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Search"
+
+            android:layout_marginLeft="280dp"
+            android:background="#ffffff"
+            />
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

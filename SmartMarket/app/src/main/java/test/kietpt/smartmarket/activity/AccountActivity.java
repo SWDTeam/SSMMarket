@@ -1,7 +1,6 @@
-package test.kietpt.smartmarket;
+package test.kietpt.smartmarket.activity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,9 +10,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
+
+import test.kietpt.smartmarket.R;
+import test.kietpt.smartmarket.model.Account;
+import test.kietpt.smartmarket.ulti.Database;
 
 public class AccountActivity extends AppCompatActivity {
 
@@ -23,7 +25,7 @@ public class AccountActivity extends AppCompatActivity {
     ImageView imgPicAccount;
     String email;
     Database database = new Database(this);
-    int REQUEST_CODE = 123;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class AccountActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         email = intent.getStringExtra("txtEmail");
+        System.out.println(email + " ----------- ");
         Account account = database.getCustomerInfo(email);
         textViewUsername.setText(account.getUsername().toString());
         if (account.getGender().equals("male")) {
@@ -59,7 +62,7 @@ public class AccountActivity extends AppCompatActivity {
                     Log.e("IIIIII  ", i + " - - - --");
                     Intent intent = new Intent(AccountActivity.this, ProfileActi.class);
                     intent.putExtra("txtEmail", email);
-                    startActivityForResult(intent, REQUEST_CODE);
+                    startActivity(intent);
                 } else if (i == 1) {
                     Log.e("IIIIII  ", i + " - - - --");
 

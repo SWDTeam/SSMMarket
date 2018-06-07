@@ -1,16 +1,11 @@
-package test.kietpt.smartmarket;
+package test.kietpt.smartmarket.activity;
 
-import android.app.DatePickerDialog;
-import android.app.DialogFragment;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -36,6 +31,11 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import java.util.List;
+
+import test.kietpt.smartmarket.R;
+import test.kietpt.smartmarket.model.Account;
+import test.kietpt.smartmarket.ulti.Database;
+import test.kietpt.smartmarket.ulti.IpConfig;
 
 
 public class SignUpActivity extends AppCompatActivity {
@@ -139,10 +139,10 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void onClickSignUp(View view) {
 
-        if(!checkValidate()){
+        if(checkValidate()){
             Toast.makeText(SignUpActivity.this,"Something wrong!!! please sign up again ",Toast.LENGTH_SHORT).show();
         }else{
-            signUpCustomer("http://"+IpConfig.ipConfig+":8084/SSM_Project/RegisterCusController?txtEmail=" + email.getText().toString()
+            signUpCustomer("http://"+ IpConfig.ipConfig+":8084/SSM_Project/RegisterCusController?txtEmail=" + email.getText().toString()
                     + "&txtPassword=" + pass.getText().toString() + "&txtUsername=" + username.getText().toString() +
                     "&txtAddress=" + address.getText().toString() + "&txtPhone=" + phone.getText().toString() + "&txtGender=" + selectedGender.toString()
                     + "&txtStatus=" + "active");

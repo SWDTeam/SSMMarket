@@ -1,4 +1,4 @@
-package test.kietpt.smartmarket;
+package test.kietpt.smartmarket.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -20,6 +19,11 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
+
+import test.kietpt.smartmarket.R;
+import test.kietpt.smartmarket.model.Account;
+import test.kietpt.smartmarket.ulti.Database;
+import test.kietpt.smartmarket.ulti.IpConfig;
 
 public class ChangePassActi extends AppCompatActivity {
 
@@ -110,7 +114,7 @@ public class ChangePassActi extends AppCompatActivity {
 
     public void confirmUpdatePass() {
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(this);
-        alertDialog.setTitle("Confirm your password!!!!!!!");
+        alertDialog.setTitle("Confirm your password!");
         alertDialog.setIcon(R.drawable.pass);
 
         alertDialog.setMessage("Do you want to change password ? ");

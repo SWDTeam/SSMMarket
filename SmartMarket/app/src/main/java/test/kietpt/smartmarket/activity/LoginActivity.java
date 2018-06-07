@@ -1,34 +1,28 @@
-package test.kietpt.smartmarket;
+package test.kietpt.smartmarket.activity;
 
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.json.JSONException;
 import org.json.JSONObject;
+
+import test.kietpt.smartmarket.R;
+import test.kietpt.smartmarket.model.Account;
+import test.kietpt.smartmarket.ulti.Database;
+import test.kietpt.smartmarket.ulti.IpConfig;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -55,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (email.getText().toString().isEmpty() || pass.getText().toString().isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Please Input Email or Password", Toast.LENGTH_SHORT).show();
                 } else {
-                    loginCustomer("http://"+IpConfig.ipConfig+":8084/SSM_Project/LoginCusController?txtEmail=" + email.getText().toString()
+                    loginCustomer("http://"+ IpConfig.ipConfig+":8084/SSM_Project/LoginCusController?txtEmail=" + email.getText().toString()
                             + "&txtPassword=" + pass.getText().toString());
 //                    String url = "http://192.168.100.8:8084/Project/MainController?txtAbc=" + "kiet";
 //                    loginCustomer("http://192.168.100.8:8084/Project/MainController?action=" + "View" + "&subAction=" +
@@ -88,12 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     Log.e("ABC", "da vao Login ");
                     try {
-//                        String test = response.getString("symbolPic");
-//                        Log.e("JSON + ", test);
-//                        String test1 = test.substring(38);
-//
-//
-//                        System.out.println(test.substring(38));
+
 
                         int userId = response.getInt("userId");
                         String emailReponse = response.getString("email");
@@ -117,6 +106,7 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_LONG).show();
 
                         Intent intent = new Intent(LoginActivity.this, AccountActivity.class);
+                        System.out.println(email.getText().toString() + "  Login Activity ");
                         intent.putExtra("txtEmail", email.getText().toString());
                         startActivity(intent);
 

@@ -1,4 +1,4 @@
-package test.kietpt.smartmarket;
+package test.kietpt.smartmarket.model;
 
 import java.io.Serializable;
 import java.util.Date;

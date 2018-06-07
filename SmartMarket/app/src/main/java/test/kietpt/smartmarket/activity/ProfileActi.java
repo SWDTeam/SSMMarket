@@ -1,8 +1,7 @@
-package test.kietpt.smartmarket;
+package test.kietpt.smartmarket.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +25,11 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import test.kietpt.smartmarket.R;
+import test.kietpt.smartmarket.model.Account;
+import test.kietpt.smartmarket.ulti.Database;
+import test.kietpt.smartmarket.ulti.IpConfig;
 
 public class ProfileActi extends AppCompatActivity {
 
