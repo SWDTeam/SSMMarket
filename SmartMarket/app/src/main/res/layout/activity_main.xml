@@ -40,7 +40,7 @@
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="#4377e9"
+                android:background="#6590ef"
                 >
                 <TextView
                     android:layout_margin="5dp"
