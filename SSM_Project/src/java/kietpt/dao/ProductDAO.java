@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import ssm.db.DBConnection;
 import ssm.dto.CategoryDTO;
+import ssm.dto.ProductDTO;
 
 /**
  *
@@ -65,5 +66,45 @@ public class ProductDAO {
             closeConnection(conn, preStm, rs);
         }
         return listCate;
+    }
+
+    public List<ProductDTO> getListProduct() {
+        Connection conn = null;
+        PreparedStatement preStm = null;
+        ResultSet rs = null;
+        List<ProductDTO> listProduct = new ArrayList<>();
+        try {
+            conn = DBConnection.getConnection();
+            String sql = "select top 6 pro.productName, pro.productId,img.imgKey,pro.price,pro.description,pro.productKey "
+                    + "from Product pro, Images img "
+                    + "where pro.productId = img.productId "
+                    + "order by pro.productId desc";
+            preStm = conn.prepareStatement(sql);
+            rs = preStm.executeQuery();
+            String name = "", des = "", urlPic = "", productKey = "";
+            int id;
+            float price;
+            while (rs.next()) {
+                id = rs.getInt("productId");
+                name = rs.getString("productName");
+                des = rs.getString("description");
+                urlPic = rs.getString("imgKey");
+                price = rs.getFloat("price");
+                productKey = rs.getString("productKey");
+                ProductDTO dto = new ProductDTO();
+                dto.setProductId(id);
+                dto.setProductName(name);
+                dto.setDescription(des);
+                dto.setUrlPic(urlPic);
+                dto.setPrice(price);
+                dto.setProductKey(productKey);
+                listProduct.add(dto);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(conn, preStm, rs);
+        }
+        return listProduct;
     }
 }
