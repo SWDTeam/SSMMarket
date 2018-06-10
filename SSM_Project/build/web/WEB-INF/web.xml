@@ -56,6 +56,10 @@
         <servlet-name>GetListProduct</servlet-name>
         <servlet-class>kietpt.controller.GetListProduct</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GetProductListByCateId</servlet-name>
+        <servlet-class>kietpt.controller.GetProductListByCateId</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginCusController</servlet-name>
         <url-pattern>/LoginCusController</url-pattern>
@@ -111,6 +115,10 @@
     <servlet-mapping>
         <servlet-name>GetListProduct</servlet-name>
         <url-pattern>/GetListProduct</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetProductListByCateId</servlet-name>
+        <url-pattern>/GetProductListByCateId</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
