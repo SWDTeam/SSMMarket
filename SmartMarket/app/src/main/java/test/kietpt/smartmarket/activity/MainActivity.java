@@ -14,9 +14,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.android.volley.Request;
@@ -67,8 +69,9 @@ public class MainActivity extends AppCompatActivity {
         if (CheckConnection.haveNetworkConnection(getApplicationContext())) {
             actionBar();
             actionViewFlipper();
-            getListCategory("http://"+ IpConfig.ipConfig+":8084/SSM_Project/GetListCategory");
-            getListHotProduct("http://"+ IpConfig.ipConfig+":8084/SSM_Project/GetListProduct");
+            getListCategory("http://" + IpConfig.ipConfig + ":8084/SSM_Project/GetListCategory");
+            getListHotProduct("http://" + IpConfig.ipConfig + ":8084/SSM_Project/GetListProduct");
+            catchOnMenuItem("");
         } else {
             CheckConnection.showConnection(getApplicationContext(), "Check your connection with wifi");
             finish();
@@ -77,14 +80,31 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void catchOnMenuItem(String url) {
+        listViewMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i == 0) {
+                    drawerLayout.closeDrawer(GravityCompat.START);
+                } else {
+                    Intent intent = new Intent(MainActivity.this, ProductListActi.class);
+                    //Toast.makeText(MainActivity.this, "abc + " + listCategory.get(i).getCateId(), Toast.LENGTH_SHORT).show();
+                    intent.putExtra("cateId",listCategory.get(i).getCateId());
+                    startActivity(intent);
+                }
+
+            }
+        });
+    }
+
     private void getListHotProduct(String s) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(s, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                Log.e("REPOSNSE JSON PRODUCT",response.toString());
-                if(response.toString() != null){
-                    for (int i = 0; i< response.length(); i++){
+                Log.e("REPOSNSE JSON PRODUCT", response.toString());
+                if (response.toString() != null) {
+                    for (int i = 0; i < response.length(); i++) {
                         try {
                             JSONObject jsonObject = response.getJSONObject(i);
                             int id = jsonObject.getInt("productId");
@@ -96,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
                             int cateId = jsonObject.getInt("categoryId");
                             float price = (float) jsonObject.getDouble("price");
 
-                            listProduct.add(new ProductDTO(name,des,urlPic,productKey,cateId,id,price));
+                            listProduct.add(new ProductDTO(name, des, urlPic, productKey, cateId, id, price));
                             hotProductAdapter.notifyDataSetChanged();
 
                         } catch (JSONException e) {
@@ -121,7 +141,7 @@ public class MainActivity extends AppCompatActivity {
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
-                Log.e("RESPONSE JSON CATE ",response.toString());
+                Log.e("RESPONSE JSON CATE ", response.toString());
                 if (response.toString() != null) {
                     for (int i = 0; i < response.length(); i++) {
                         try {
@@ -195,15 +215,15 @@ public class MainActivity extends AppCompatActivity {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
 
         listCategory = new ArrayList<>();
-        listCategory.add(0,new CategoryDTO(0,"Home","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4vmBj6G_kAJeoOsKTEF-woPgV7XLWn-6ydO5hqeqDiiH4wlq4"));
+        listCategory.add(0, new CategoryDTO(0, "Home", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4vmBj6G_kAJeoOsKTEF-woPgV7XLWn-6ydO5hqeqDiiH4wlq4"));
         categoryAdapter = new CategoryAdapter(MainActivity.this, listCategory);
         listViewMenu.setAdapter(categoryAdapter);
 
         listProduct = new ArrayList<>();
-        hotProductAdapter = new HotProductAdapter(MainActivity.this,listProduct);
+        hotProductAdapter = new HotProductAdapter(MainActivity.this, listProduct);
         recyclerView.setHasFixedSize(true);
 
-        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.setAdapter(hotProductAdapter);
     }
 }
