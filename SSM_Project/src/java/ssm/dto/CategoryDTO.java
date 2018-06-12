@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class CategoryDTO implements Serializable {
     
     private int categoryId;
-    private String categoryName, urlPic, status;
+    private String categoryName, status;
 
     public int getCategoryId() {
         return categoryId;
@@ -32,14 +32,6 @@ public class CategoryDTO implements Serializable {
         this.categoryName = categoryName;
     }
 
-    public String getUrlPic() {
-        return urlPic;
-    }
-
-    public void setUrlPic(String urlPic) {
-        this.urlPic = urlPic;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -47,6 +39,5 @@ public class CategoryDTO implements Serializable {
     public void setStatus(String status) {
         this.status = status;
     }
-    
-    
+
 }

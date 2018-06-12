@@ -83,4 +83,28 @@ public class CategoryDAO {
         }
         return categoryId;
     }
+    
+        public List<CategoryDTO> showAllCategory() {
+        List<CategoryDTO> result = null;
+        try {
+            String sql = "select categoryId, categoryName, status from Category";
+            conn = DBConnection.getConnection();
+            preStm = conn.prepareStatement(sql);
+            rs = preStm.executeQuery();
+            CategoryDTO cate = null;
+            result = new ArrayList<>();
+            while (rs.next()) {
+                cate = new CategoryDTO();
+                cate.setCategoryId(rs.getInt("categoryId"));
+                cate.setCategoryName(rs.getString("categoryName"));
+                cate.setStatus(rs.getString("status"));
+                result.add(cate);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return result;
+    }
 }

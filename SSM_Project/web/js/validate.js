@@ -30,6 +30,33 @@ $("#form--new--product").submit(function () {
   flag = checkNewProduct();
   return flag;
 });
+
+//-------------new cate-------------
+flag = true;
+$("#form--add--cate").submit(function () {
+  flag = checkNewCate();
+  return flag;
+});
+function checkNewCate() {
+  $("#error--name").text("").css("color", "red");
+  $("#error--pic").text("").css("color", "red");
+  var t = true;
+  var name = $("#c--name").val();
+//  console.log(name);
+  var img = $("#c--pic").val();
+  if (name === "" || name === null) {
+    $("#error--name").text("Name can't be blank!");
+    t = false;
+  } else if (name.length > 50) {
+    $("#error--name").text("Name maximum is 50 characters!");
+    t = false;
+  }
+  if (img === null || img === "") {
+    $("#error--pic").text("Image can't empty!");
+    t = false;
+  }
+  return t;
+}
 function resetTextErrors() {
   $("#error--email").text("");
   $("#error--name").text("");
@@ -47,8 +74,8 @@ function resetTextErrors() {
   $("#error--date--expiration").text("").css("color", "red");
   $("#error--pic").text("").css("color", "red");
   $("#error--editor").text("").css("color", "red");
+  $("#error--description").text("").css("color", "red");
 }
-
 function checkNewProduct() {
   resetTextErrors();
   var t = true;
@@ -118,7 +145,7 @@ function checkNewProduct() {
     $("#error--date--expiration").text("Expiration date invaild!");
     t = false;
   }
-  if (img === null || img === ""){
+  if (img === null || img === "") {
     $("#error--pic").text("At least having one image!");
     t = false;
   }

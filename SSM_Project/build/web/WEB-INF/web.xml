@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
-    
         <servlet-name>LoginCusController</servlet-name>
         <servlet-class>kietpt.controller.LoginCusController</servlet-class>
     </servlet>
@@ -25,7 +24,6 @@
         <servlet-name>UpdateBasicInfo</servlet-name>
         <servlet-class>ssm.controllers.UpdateBasicInfo</servlet-class>
     </servlet>
-    
     <servlet>
         <servlet-name>LogoutController</servlet-name>
         <servlet-class>ssm.controllers.LogoutController</servlet-class>
@@ -39,7 +37,14 @@
         <servlet-class>ssm.controllers.AddAdminController</servlet-class>
     </servlet>
     <servlet>
-
+        <servlet-name>ShowCategoryController</servlet-name>
+        <servlet-class>ssm.controllers.ShowCategoryController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddProductController</servlet-name>
+        <servlet-class>ssm.controllers.AddProductController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>RegisterCusController</servlet-name>
         <servlet-class>kietpt.controller.RegisterCusController</servlet-class>
     </servlet>
@@ -51,19 +56,22 @@
         <servlet-name>ChangePassCustomer</servlet-name>
         <servlet-class>kietpt.controller.ChangePassCustomer</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GetListCategory</servlet-name>
+        <servlet-class>kietpt.controller.GetListCategory</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetListProduct</servlet-name>
+        <servlet-class>kietpt.controller.GetListProduct</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetAllCategoriesController</servlet-name>
+        <servlet-class>ssm.controllers.GetAllCategoriesController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginCusController</servlet-name>
         <url-pattern>/LoginCusController</url-pattern>
-   </servlet-mapping>
-    <servlet>
-        <servlet-name>ShowCategoryController</servlet-name>
-        <servlet-class>ssm.controllers.ShowCategoryController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AddProductController</servlet-name>
-        <servlet-class>ssm.controllers.AddProductController</servlet-class>
-    </servlet>
-    
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ForgotPasswordController</servlet-name>
         <url-pattern>/ForgotPasswordController</url-pattern>
@@ -107,12 +115,26 @@
     <servlet-mapping>
         <servlet-name>ChangePassCustomer</servlet-name>
         <url-pattern>/ChangePassCustomer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ShowCategoryController</servlet-name>
         <url-pattern>/ShowCategoryController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AddProductController</servlet-name>
         <url-pattern>/AddProductController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetListCategory</servlet-name>
+        <url-pattern>/GetListCategory</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetListProduct</servlet-name>
+        <url-pattern>/GetListProduct</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetAllCategoriesController</servlet-name>
+        <url-pattern>/GetAllCategoriesController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

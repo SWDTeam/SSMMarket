@@ -7,25 +7,42 @@ package ssm.dto;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  *
  * @author ThuPMNSE62369
  */
 public class ProductDTO implements Serializable {
-    
+
     public static final String STATUS_ACTIVE = "active";
-    
-    private String productId, productName, manufacturer, description, status;
-    private int quantity, categoryId;
-    private Timestamp manuDate, expiredDate;
+
+    private String productName, manufacturer, description, status, urlPic, productKey;
+    private int quantity, categoryId, productId;
+    private Date manuDate, expiredDate;
     private float price;
 
-    public String getProductId() {
+    public String getProductKey() {
+        return productKey;
+    }
+
+    public void setProductKey(String productKey) {
+        this.productKey = productKey;
+    }
+
+    public String getUrlPic() {
+        return urlPic;
+    }
+
+    public void setUrlPic(String urlPic) {
+        this.urlPic = urlPic;
+    }
+
+    public int getProductId() {
         return productId;
     }
 
-    public void setProductId(String productId) {
+    public void setProductId(int productId) {
         this.productId = productId;
     }
 
@@ -77,19 +94,19 @@ public class ProductDTO implements Serializable {
         this.categoryId = categoryId;
     }
 
-    public Timestamp getManuDate() {
+    public Date getManuDate() {
         return manuDate;
     }
 
-    public void setManuDate(Timestamp manuDate) {
+    public void setManuDate(Date manuDate) {
         this.manuDate = manuDate;
     }
 
-    public Timestamp getExpiredDate() {
+    public Date getExpiredDate() {
         return expiredDate;
     }
 
-    public void setExpiredDate(Timestamp expiredDate) {
+    public void setExpiredDate(Date expiredDate) {
         this.expiredDate = expiredDate;
     }
 
@@ -100,6 +117,5 @@ public class ProductDTO implements Serializable {
     public void setPrice(float price) {
         this.price = price;
     }
-    
-    
+
 }

@@ -6,8 +6,10 @@
 package ssm.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import ssm.db.DBConnection;
 import ssm.dto.ProductDTO;
 
@@ -44,17 +46,18 @@ public class ProductDAO {
         boolean checked = false;
         try {
             conn = DBConnection.getConnection();
-            String sql = "insert into Product(productId, productName, categoryId, manufacturer, price, quantity, " +
-                         "manuDate, expiredDate, description, status) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "insert into Product(productName, categoryId, manufacturer, price, quantity, " +
+                         "manuDate, expiredDate, description, status) values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
             preStm = conn.prepareStatement(sql);
-            preStm.setString(1, product.getProductId());
-            preStm.setString(2, product.getProductName());
-            preStm.setInt(3, product.getCategoryId());
-            preStm.setString(4, product.getManufacturer());
-            preStm.setFloat(5, product.getPrice());
-            preStm.setInt(6, product.getQuantity());
-            preStm.setTimestamp(7, product.getManuDate());
-            preStm.setTimestamp(8, product.getExpiredDate());
+            preStm.setString(1, product.getProductName());
+            preStm.setInt(2, product.getCategoryId());
+            preStm.setString(3, product.getManufacturer());
+            preStm.setFloat(4, product.getPrice());
+            preStm.setInt(5, product.getQuantity());
+            Date manuDate = Date.valueOf(product.getManuDate().toString());
+            preStm.setDate(6, manuDate);
+            Date expiredDate = Date.valueOf(product.getExpiredDate().toString());
+            preStm.setDate(7, expiredDate);
             preStm.setString(9, product.getDescription());
             preStm.setString(10, ProductDTO.STATUS_ACTIVE);
             checked = preStm.executeUpdate() > 0;

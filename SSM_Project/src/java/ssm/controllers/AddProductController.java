@@ -70,7 +70,6 @@ public class AddProductController extends HttpServlet {
 
             ProductDAO dao = new ProductDAO();
             ProductDTO dto = new ProductDTO();
-            dto.setProductId("M-001");
             dto.setProductName(productName);
             dto.setCategoryId(categoryId);
             dto.setManufacturer(manu);
@@ -81,7 +80,7 @@ public class AddProductController extends HttpServlet {
             dto.setDescription(description);
             
             if (dao.createNewProduct(dto)) {
-                String proId = dto.getProductId();
+                int proId = dto.getProductId();
                 System.out.println("ssss " + proId);
                 imageDAO.createImage(picture, proId);
                 request.setAttribute("RESULT", "Add product successfully!");

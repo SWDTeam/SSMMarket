@@ -44,14 +44,14 @@ public class ImageDAO {
         }
     }
     
-    public boolean createImage(String img, String productId) {
+    public boolean createImage(String img, int productId) {
         boolean checked = false;
         try {
             conn = DBConnection.getConnection();
             String sql = "insert into Images(imgKey, productId) values(?, ?)";
             preStm = conn.prepareStatement(sql);
             preStm.setString(1, img);
-            preStm.setString(2, productId); 
+            preStm.setInt(2, productId); 
             checked = preStm.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();
