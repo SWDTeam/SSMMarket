@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import kietpt.dao.ProductDAO;
-import ssm.dto.CategoryDTO;
-import ssm.dto.ProductDTO;
+import thupnm.dto.CategoryDTO;
+import thupnm.dto.ProductDTO;
 
 /**
  *

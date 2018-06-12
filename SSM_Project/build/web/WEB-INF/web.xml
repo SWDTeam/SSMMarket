@@ -6,43 +6,43 @@
     </servlet>
     <servlet>
         <servlet-name>ForgotPasswordController</servlet-name>
-        <servlet-class>ssm.controllers.ForgotPasswordController</servlet-class>
+        <servlet-class>thupnm.controllers.ForgotPasswordController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ShowUserController</servlet-name>
-        <servlet-class>ssm.controllers.ShowUserController</servlet-class>
+        <servlet-class>thupnm.controllers.ShowUserController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SearchController</servlet-name>
-        <servlet-class>ssm.controllers.SearchController</servlet-class>
+        <servlet-class>thupnm.controllers.SearchController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UpdateInfoController</servlet-name>
-        <servlet-class>ssm.controllers.UpdateInfoController</servlet-class>
+        <servlet-class>thupnm.controllers.UpdateInfoController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UpdateBasicInfo</servlet-name>
-        <servlet-class>ssm.controllers.UpdateBasicInfo</servlet-class>
+        <servlet-class>thupnm.controllers.UpdateBasicInfo</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LogoutController</servlet-name>
-        <servlet-class>ssm.controllers.LogoutController</servlet-class>
+        <servlet-class>thupnm.controllers.LogoutController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ResetPasswordController</servlet-name>
-        <servlet-class>ssm.controllers.ResetPasswordController</servlet-class>
+        <servlet-class>thupnm.controllers.ResetPasswordController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddAdminController</servlet-name>
-        <servlet-class>ssm.controllers.AddAdminController</servlet-class>
+        <servlet-class>thupnm.controllers.AddAdminController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ShowCategoryController</servlet-name>
-        <servlet-class>ssm.controllers.ShowCategoryController</servlet-class>
+        <servlet-class>thupnm.controllers.ShowCategoryController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddProductController</servlet-name>
-        <servlet-class>ssm.controllers.AddProductController</servlet-class>
+        <servlet-class>thupnm.controllers.AddProductController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RegisterCusController</servlet-name>
@@ -66,7 +66,11 @@
     </servlet>
     <servlet>
         <servlet-name>GetAllCategoriesController</servlet-name>
-        <servlet-class>ssm.controllers.GetAllCategoriesController</servlet-class>
+        <servlet-class>thupnm.controllers.GetAllCategoriesController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewInfoCategory</servlet-name>
+        <servlet-class>thupnm.controllers.ViewInfoCategory</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginCusController</servlet-name>
@@ -135,6 +139,10 @@
     <servlet-mapping>
         <servlet-name>GetAllCategoriesController</servlet-name>
         <url-pattern>/GetAllCategoriesController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewInfoCategory</servlet-name>
+        <url-pattern>/ViewInfoCategory</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import kietpt.dao.AccountDAO;
-import ssm.dto.AccountDTO;
+import thupnm.dto.AccountDTO;
 
 /**
  *

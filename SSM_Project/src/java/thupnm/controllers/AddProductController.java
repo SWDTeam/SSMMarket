@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ssm.controllers;
+package thupnm.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,12 +15,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import ssm.dao.CategoryDAO;
-import ssm.dao.ImageDAO;
-import ssm.dao.ProductDAO;
-import ssm.dto.CategoryDTO;
-import ssm.dto.ImageDTO;
-import ssm.dto.ProductDTO;
+import thupnm.dao.CategoryDAO;
+import thupnm.dao.ImageDAO;
+import thupnm.dao.ProductDAO;
+import thupnm.dto.CategoryDTO;
+import thupnm.dto.ImageDTO;
+import thupnm.dto.ProductDTO;
 
 /**
  *

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ssm.dao;
+package thupnm.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,9 +23,9 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import ssm.db.DBConnection;
-import ssm.dto.AccountDTO;
-import ssm.dto.AccountRoleDTO;
-import ssm.dto.RoleDTO;
+import thupnm.dto.AccountDTO;
+import thupnm.dto.AccountRoleDTO;
+import thupnm.dto.RoleDTO;
 
 /**
  *

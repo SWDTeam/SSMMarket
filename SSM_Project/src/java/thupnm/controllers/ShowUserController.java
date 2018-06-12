@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ssm.controllers;
+package thupnm.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,14 +12,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import ssm.dao.CategoryDAO;
-import ssm.dto.CategoryDTO;
+import javax.servlet.http.HttpSession;
+import thupnm.dao.AccountDAO;
+import thupnm.dto.AccountDTO;
 
 /**
  *
  * @author ThuPMNSE62369
  */
-public class GetAllCategoriesController extends HttpServlet {
+public class ShowUserController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,12 +35,13 @@ public class GetAllCategoriesController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            CategoryDAO dao = new CategoryDAO();
-            List<CategoryDTO> list = dao.showAllCategory();
-            request.setAttribute("listCategory", list);
-            request.getRequestDispatcher("index_categories.jsp").forward(request, response);
+            AccountDAO dao = new AccountDAO();
+            List<AccountDTO> listUser = dao.getAllUser();
+            request.setAttribute("listUser", listUser);
         } catch (Exception e) {
-            e.printStackTrace();
+            log("ERROR at ShowUserController" + e.getMessage());
+        } finally {
+            request.getRequestDispatcher("index_users.jsp").forward(request, response);
         }
     }
 

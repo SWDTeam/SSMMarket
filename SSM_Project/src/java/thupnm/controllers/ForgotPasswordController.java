@@ -3,23 +3,35 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kietpt.controller;
+package thupnm.controllers;
 
-import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import kietpt.dao.AccountDAO;
-import thupnm.dto.AccountDTO;
+import thupnm.dao.AccountDAO;
 
 /**
  *
- * @author kietp
+ * @author ThuPMNSE62369
  */
-public class ChangePassCustomer extends HttpServlet {
+public class ForgotPasswordController extends HttpServlet {
+    
+    private String host;
+    private String port;
+    private String pass;
+ 
+    @Override
+    public void init() {
+        // reads SMTP server setting from web.xml file
+        ServletContext context = getServletContext();
+        host = context.getInitParameter("host");
+        port = context.getInitParameter("port");
+        pass = context.getInitParameter("pass");
+    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,37 +45,17 @@ public class ChangePassCustomer extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/json");
-        String json = "";
-        try {
-            System.out.println(" da vao change Pass Customer Controller ");
+        try (PrintWriter out = response.getWriter()) {
+            String email = request.getParameter("txtEmail");          
             AccountDAO dao = new AccountDAO();
-            String email = request.getParameter("txtEmail");
-            String oldPass = request.getParameter("txtOldPassword");
-            String newPass = request.getParameter("txtNewPassword");
-            System.out.println(email + " - " + oldPass + " - " + newPass);
-            AccountDTO account = new AccountDTO();
-            if (dao.checkPassword(email, oldPass)) {
-                if (dao.changPassCustomer(email, newPass)) {
-                    account.setEmail(email);
-                    account.setPassword(newPass);
-                    json = new Gson().toJson(account);
-                    System.out.println("chage pass thanh cong " + json);
-                    response.getWriter().write(json);
-                } else {
-                    System.out.println("kiet xau trai");
-                    json = new Gson().toJson("{\"result\":\"fail\"}");
-                    System.out.println("change pass that bai " + json);
-                    response.getWriter().write(json);
-                }
-            } else {
-                System.out.println("kiet xau trai");
-                System.out.println("change pass that bai " + json);
-                response.getWriter().write("{}");
-            }
+            String message = dao.resetPassword();
+            String subject = "Reset Your Password";
+            dao.sendEmail(host, port, email, "Your new password: " + message, subject, pass);
+            boolean check = dao.changePassword(email, message);
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
+            log("Error at ForgotPasswordController " + e.getMessage());
         }
     }
 

@@ -3,24 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ssm.controllers;
+package thupnm.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import ssm.dao.AccountDAO;
-import ssm.dto.AccountDTO;
+import thupnm.dao.CategoryDAO;
+import thupnm.dto.CategoryDTO;
 
 /**
  *
  * @author ThuPMNSE62369
  */
-public class ShowUserController extends HttpServlet {
+public class ViewInfoCategory extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,14 +33,14 @@ public class ShowUserController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            AccountDAO dao = new AccountDAO();
-            List<AccountDTO> listUser = dao.getAllUser();
-            request.setAttribute("listUser", listUser);
+            String cateId = request.getParameter("cateId");
+            CategoryDAO dao = new CategoryDAO();
+            CategoryDTO dto = dao.viewInfoCategory(Integer.parseInt(cateId));
+            request.setAttribute("VIEWCATE", dto);
         } catch (Exception e) {
-            log("ERROR at ShowUserController" + e.getMessage());
-        } finally {
-            request.getRequestDispatcher("index_users.jsp").forward(request, response);
+            e.printStackTrace();
         }
+        request.getRequestDispatcher("GetAllCategoriesController").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import ssm.db.DBConnection;
 import kietpt.dto.CategoryDTO;
-import ssm.dto.ProductDTO;
+import thupnm.dto.ProductDTO;
 
 /**
  *

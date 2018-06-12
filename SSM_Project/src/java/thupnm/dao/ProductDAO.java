@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ssm.dao;
+package thupnm.dao;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -11,7 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 import ssm.db.DBConnection;
-import ssm.dto.ProductDTO;
+import thupnm.dto.ProductDTO;
 
 /**
  *

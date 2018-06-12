@@ -10,7 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Date;
 import ssm.db.DBConnection;
-import ssm.dto.AccountDTO;
+import thupnm.dto.AccountDTO;
 
 /**
  *

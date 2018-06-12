@@ -3,14 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/PRM391/ssm/SSM_Project/src/java/ssm/dto/CategoryDTO.java</file>
-            <file>file:/D:/PRM391/ssm/SSM_Project/web/js/validate.js</file>
-            <file>file:/D:/PRM391/ssm/SSM_Project/src/java/ssm/dao/AccountDAO.java</file>
-            <file>file:/D:/PRM391/ssm/SSM_Project/web/new_product.jsp</file>
+            <file>file:/D:/PRM391/ssm/SSM_Project/src/java/thupnm/controllers/GetAllCategoriesController.java</file>
+            <file>file:/D:/PRM391/ssm/SSM_Project/src/java/thupnm/dto/CategoryDTO.java</file>
+            <file>file:/D:/PRM391/ssm/SSM_Project/src/java/thupnm/dao/CategoryDAO.java</file>
             <file>file:/D:/PRM391/ssm/SSM_Project/web/index_categories.jsp</file>
-            <file>file:/D:/PRM391/ssm/SSM_Project/src/java/ssm/dao/CategoryDAO.java</file>
-            <file>file:/D:/PRM391/ssm/SSM_Project/src/java/ssm/controllers/GetAllCategoriesController.java</file>
-            <file>file:/D:/PRM391/ssm/SSM_Project/src/java/ssm/dto/AccountDTO.java</file>
+            <file>file:/D:/PRM391/ssm/SSM_Project/src/java/thupnm/controllers/ViewInfoCategory.java</file>
+            <file>file:/D:/PRM391/ssm/SSM_Project/src/java/thupnm/controllers/UpdateBasicInfo.java</file>
         </group>
     </open-files>
 </project-private>

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ssm.dao;
+package thupnm.dao;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -13,7 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.imageio.ImageIO;
 import ssm.db.DBConnection;
-import ssm.dto.ImageDTO;
+import thupnm.dto.ImageDTO;
 
 /**
  *

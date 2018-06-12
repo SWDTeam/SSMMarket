@@ -73,15 +73,20 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <%--<thupnm:forEach items="${requestScope.listCategory}" var="dto" varStatus="counter">--%>
+                                                    <thupnm:forEach items="${requestScope.listCategory}" var="dto" varStatus="counter">
                                                         <tr>
-                                                            <td>${dto.categoryId}</td>
+                                                            <td>${counter.count}</td>
                                                             <td>${dto.categoryName}</td>
-                                                            <td>3</td>
-                                                            <td><i class="btn btn-info ti-pencil"></i></td>
+                                                            <td align="center">${requestScope.total[counter.index]}</td>
+                                                            <td>
+                                                                <form action="ViewInfoCategory" method="POST">
+                                                                    <input type="hidden" value="${dto.categoryId}" name="cateId"/>
+                                                                    <button type="submit" class="btn btn-info ti-pencil"/>
+                                                                </form>
+                                                            </td>
                                                             <td><i class="btn btn-danger ti-trash"></i></td>
                                                         </tr>
-                                                    <%--</thupnm:forEach>--%>
+                                                    </thupnm:forEach>
                                                 </tbody>
                                             </table>
                                         </div>
@@ -100,7 +105,7 @@
                                                 <div class="row">
                                                     <div class="form-group col-md-10 col-md-offset-1">
                                                         <label>Name</label>
-                                                        <input type="text" class="form-control border-input" id="c--name"/>
+                                                        <input type="text" value="${VIEWCATE.categoryName}" class="form-control border-input" id="c--name"/>
                                                         <span id="error--name"></span>
                                                         <br/>
                                                         <label>Image</label> <br/>

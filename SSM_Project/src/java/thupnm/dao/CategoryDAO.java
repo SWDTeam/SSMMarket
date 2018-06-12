@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ssm.dao;
+package thupnm.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,15 +11,15 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import ssm.db.DBConnection;
-import ssm.dto.AccountDTO;
-import ssm.dto.CategoryDTO;
+import thupnm.dto.AccountDTO;
+import thupnm.dto.CategoryDTO;
 
 /**
  *
  * @author ThuPMNSE62369
  */
 public class CategoryDAO {
-    
+
     private Connection conn;
     private PreparedStatement preStm;
     private ResultSet rs;
@@ -42,7 +42,7 @@ public class CategoryDAO {
             e.printStackTrace();
         }
     }
-    
+
     public List<CategoryDTO> getCategory() {
         List<CategoryDTO> result = null;
         try {
@@ -64,7 +64,12 @@ public class CategoryDAO {
         }
         return result;
     }
-    
+
+    /**
+     * 
+     * @param categoryName
+     * @return 
+     */
     public int viewCategoryId(String categoryName) {
         int categoryId = 0;
         try {
@@ -83,8 +88,8 @@ public class CategoryDAO {
         }
         return categoryId;
     }
-    
-        public List<CategoryDTO> showAllCategory() {
+
+    public List<CategoryDTO> showAllCategory() {
         List<CategoryDTO> result = null;
         try {
             String sql = "select categoryId, categoryName, status from Category";
@@ -106,5 +111,67 @@ public class CategoryDAO {
             closeConnection();
         }
         return result;
+    }
+    
+    public int getProductCount(int cateId) {
+        int productCount = 0;
+        try {
+            String sql = "SELECT count(Product.productId) as productCount " +
+                       "FROM (Category c INNER JOIN Product ON c.categoryId = Product.categoryId) " +
+                       "group by c.categoryId having c.categoryId = ?";
+            conn = DBConnection.getConnection();
+            preStm = conn.prepareStatement(sql);
+            preStm.setInt(1, cateId);
+            rs = preStm.executeQuery();
+            if (rs.next()) {
+                productCount = rs.getInt("productCount");
+                
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return productCount;
+    }
+    
+    public boolean createNewCategory(CategoryDTO category) {
+        boolean checked = false;
+        try {
+            conn = DBConnection.getConnection();
+            String sql = "insert into Category(categoryName, status, imgPic) values (?, ?, ?)";
+            preStm = conn.prepareStatement(sql);
+            preStm.setString(1, category.getCategoryName());
+            preStm.setString(2, CategoryDTO.STATUS_ACTIVE);
+            preStm.setString(3, category.getImgPic());
+            checked = preStm.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return checked;
+    }
+    
+    public CategoryDTO viewInfoCategory(int id) {
+        CategoryDTO category = new CategoryDTO();
+        try {
+            conn = DBConnection.getConnection();
+            String sql = "select categoryName, status, imgPic from Category where categoryId = ?";
+            preStm = conn.prepareStatement(sql);
+            preStm.setInt(1, id);
+            rs = preStm.executeQuery();
+            if (rs.next()) {
+                category.setCategoryName(rs.getString("categoryName"));
+                category.setStatus(rs.getString("status"));
+                category.setImgPic(rs.getString("imgPic"));
+                return category;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return null;
     }
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ssm.dto;
+package thupnm.dto;
 
 import java.io.Serializable;
 
@@ -13,8 +13,9 @@ import java.io.Serializable;
  */
 public class CategoryDTO implements Serializable {
     
-    private int categoryId;
-    private String categoryName, status;
+    public static final String STATUS_ACTIVE = "active";
+    private int categoryId, productCount;
+    private String categoryName, status, imgPic;
 
     public int getCategoryId() {
         return categoryId;
@@ -40,4 +41,19 @@ public class CategoryDTO implements Serializable {
         this.status = status;
     }
 
+    public int getProductCount() {
+        return productCount;
+    }
+
+    public void setProductCount(int productCount) {
+        this.productCount = productCount;
+    }
+
+    public String getImgPic() {
+        return imgPic;
+    }
+
+    public void setImgPic(String imgPic) {
+        this.imgPic = imgPic;
+    }
 }
