@@ -7,8 +7,6 @@ package thupnm.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +18,7 @@ import thupnm.dto.CategoryDTO;
  *
  * @author ThuPMNSE62369
  */
-public class GetAllCategoriesController extends HttpServlet {
+public class AddAndUpdateCategory extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,18 +33,35 @@ public class GetAllCategoriesController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            List<Integer> total = new ArrayList<>();
+            String cateId = request.getParameter("cateId");
+            String cateName = request.getParameter("cateName");
+            String imgPic = request.getParameter("imgPic");
+            boolean checked = false;
+
             CategoryDAO dao = new CategoryDAO();
-            List<CategoryDTO> list = dao.showAllCategory();
-            for (int i = 0; i < list.size(); i++) {
-                int productCount = dao.getProductCount(list.get(i).getCategoryId());
-                total.add(productCount);
-            }           
-            request.setAttribute("listCategory", list);
-            request.setAttribute("total", total);
-            request.getRequestDispatcher("index_categories.jsp").forward(request, response);
+            CategoryDTO cate = new CategoryDTO();
+            cate.setCategoryName(cateName);
+            cate.setImgPic(imgPic);
+
+            if (cateId.isEmpty() || cateId == null) {
+                if (dao.createNewCategory(cate)) {
+                    request.setAttribute("RESULT", "Add new category successfully!");
+                    request.getRequestDispatcher("GetAllCategoriesController").forward(request, response);
+                } else {
+                    request.setAttribute("RESULT", "Add new category failed!");
+                    request.getRequestDispatcher("GetAllCategoriesController").forward(request, response);
+                }
+            } else {
+                if (dao.updateCategory(cate)) {
+                    request.setAttribute("RESULT", "Update category successfully!");
+                    request.getRequestDispatcher("GetAllCategoriesController").forward(request, response);
+                } else {
+                    request.setAttribute("RESULT", "Update category failed!");
+                    request.getRequestDispatcher("GetAllCategoriesController").forward(request, response);
+                }
+            }
         } catch (Exception e) {
-            log("Error at GetAllCategoriesController " + e.getMessage());
+            log("Error at AddAndUpdateCategoryController " + e.getMessage());
         }
     }
 

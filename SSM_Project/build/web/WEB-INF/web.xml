@@ -72,6 +72,18 @@
         <servlet-name>ViewInfoCategory</servlet-name>
         <servlet-class>thupnm.controllers.ViewInfoCategory</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddAndUpdateCategory</servlet-name>
+        <servlet-class>thupnm.controllers.AddAndUpdateCategory</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangeStatusCategory</servlet-name>
+        <servlet-class>thupnm.controllers.ChangeStatusCategory</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchCategoryController</servlet-name>
+        <servlet-class>thupnm.controllers.SearchCategoryController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginCusController</servlet-name>
         <url-pattern>/LoginCusController</url-pattern>
@@ -143,6 +155,18 @@
     <servlet-mapping>
         <servlet-name>ViewInfoCategory</servlet-name>
         <url-pattern>/ViewInfoCategory</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddAndUpdateCategory</servlet-name>
+        <url-pattern>/AddAndUpdateCategory</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangeStatusCategory</servlet-name>
+        <url-pattern>/ChangeStatusCategory</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchCategoryController</servlet-name>
+        <url-pattern>/SearchCategoryController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

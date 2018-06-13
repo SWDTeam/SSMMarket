@@ -8,7 +8,7 @@
             <file>file:/D:/PRM391/ssm/SSM_Project/src/java/thupnm/dao/CategoryDAO.java</file>
             <file>file:/D:/PRM391/ssm/SSM_Project/web/index_categories.jsp</file>
             <file>file:/D:/PRM391/ssm/SSM_Project/src/java/thupnm/controllers/ViewInfoCategory.java</file>
-            <file>file:/D:/PRM391/ssm/SSM_Project/src/java/thupnm/controllers/UpdateBasicInfo.java</file>
+            <file>file:/D:/PRM391/ssm/SSM_Project/src/java/thupnm/controllers/SearchCategoryController.java</file>
         </group>
     </open-files>
 </project-private>

@@ -17,8 +17,8 @@
             </a>
             <ul class="dropdown-menu">
                 <li><a href="profile.jsp">Profile</a></li>
-                <li><a href="LogoutController">Log out</a></li>
                 <li><a href="change_password.jsp">Change Password</a></li>
+                <li><a href="LogoutController">Log out</a></li>
             </ul>
         </li>
     </ul>

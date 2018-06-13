@@ -54,7 +54,7 @@ public class AccountDAO {
     }
 
     public int checkLogin(String email, String password) {
-        int roleId = 0;       
+        int roleId = 0;
         try {
             String sql = "select ar.roleId from Account a, AccountRole ar where a.userId = ar.userId "
                     + "and a.email = ? and a.password = ?";
@@ -104,16 +104,16 @@ public class AccountDAO {
         return dto;
     }
 
-    public void sendEmail(String host, String port, String toAddress, String message, String subject, String password) 
+    public void sendEmail(String host, String port, String toAddress, String message, String subject, String password)
             throws AddressException, MessagingException {
-        
+
         // sets SMTP server properties
         Properties properties = new Properties();
         properties.put("mail.smtp.host", host);
         properties.put("mail.smtp.port", port);
         properties.put("mail.smtp.auth", "true");
         properties.put("mail.smtp.starttls.enable", "true");
- 
+
         // creates a new session with an authenticator
         Authenticator auth = new Authenticator() {
             @Override
@@ -124,10 +124,10 @@ public class AccountDAO {
         Session session = Session.getInstance(properties, auth);
         // creates a new e-mail message
         Message msg = new MimeMessage(session);
- 
+
         msg.setFrom(new InternetAddress(toAddress));
-        InternetAddress[] toAddresses = { new InternetAddress(toAddress) };
-        msg.setRecipients(Message.RecipientType.TO, toAddresses);     
+        InternetAddress[] toAddresses = {new InternetAddress(toAddress)};
+        msg.setRecipients(Message.RecipientType.TO, toAddresses);
         msg.setSentDate(new Date());
         msg.setSubject(subject);
         msg.setText(message);
@@ -139,9 +139,9 @@ public class AccountDAO {
         String temp = Long.toHexString(Double.doubleToLongBits(Math.random()));
         return temp;
     }
-    
+
     public boolean changePassword(String email, String newPassword) {
-        try {            
+        try {
             String sql = "UPDATE Account SET password = ? WHERE email = ?";
             conn = DBConnection.getConnection();
             preStm = conn.prepareStatement(sql);
@@ -155,14 +155,14 @@ public class AccountDAO {
         }
         return false;
     }
-    
+
     public List<AccountDTO> getAllUser() {
         List<AccountDTO> result = null;
         try {
             conn = DBConnection.getConnection();
-            String sql = "select a.userId, a.userName, a.email, a.gender, r.roleName, a.status, ar.roleId " +
-                         "from Account a, AccountRole ar, Role r " +
-                         "where a.userId = ar.userId and r.roleId = ar.roleId";
+            String sql = "select a.userId, a.userName, a.email, a.gender, r.roleName, a.status, ar.roleId "
+                    + "from Account a, AccountRole ar, Role r "
+                    + "where a.userId = ar.userId and r.roleId = ar.roleId";
             preStm = conn.prepareStatement(sql);
             rs = preStm.executeQuery();
             result = new ArrayList<>();
@@ -170,7 +170,7 @@ public class AccountDAO {
                 AccountDTO dto = new AccountDTO();
                 dto.setUserId(rs.getInt("userId"));
                 dto.setUsername(rs.getString("userName"));
-                dto.setEmail(rs.getString("email"));               
+                dto.setEmail(rs.getString("email"));
                 dto.setGender(rs.getString("gender"));
                 dto.setRole(rs.getString("roleName"));
                 dto.setStatus(rs.getString("status"));
@@ -184,22 +184,22 @@ public class AccountDAO {
         }
         return result;
     }
-    
-    public List<AccountDTO> findByRole (String role) {
+
+    public List<AccountDTO> findByRole(String role) {
         List<AccountDTO> result = new ArrayList<>();
         AccountDTO dto = null;
         try {
             conn = DBConnection.getConnection();
-            String sql = "select a.userId, a.userName, a.email, a.gender, r.roleName, a.status " +
-                         "from Account a, AccountRole ar, Role r " +
-                         "where a.userId = ar.userId and r.roleId = ar.roleId and r.roleName = ?";
+            String sql = "select a.userId, a.userName, a.email, a.gender, r.roleName, a.status "
+                    + "from Account a, AccountRole ar, Role r "
+                    + "where a.userId = ar.userId and r.roleId = ar.roleId and r.roleName = ?";
             preStm = conn.prepareStatement(sql);
             preStm.setString(1, role);
             rs = preStm.executeQuery();
             String email = "", username = "", gender = "", phone = "", password = "", address = "", status = "", roleName = "";
             int userId;
             Date dob;
-            while (rs.next()) {                
+            while (rs.next()) {
                 userId = rs.getInt("userId");
                 email = rs.getString("email");
                 username = rs.getString("userName");
@@ -209,7 +209,7 @@ public class AccountDAO {
                 address = rs.getString("address");
                 status = rs.getString("status");
                 roleName = rs.getString("roleName");
-                dto = new AccountDTO(userId, username, password, phone, email, gender, address, status, role);               
+                dto = new AccountDTO(userId, username, password, phone, email, gender, address, status, role);
                 result.add(dto);
             }
         } catch (Exception e) {
@@ -219,7 +219,7 @@ public class AccountDAO {
         }
         return result;
     }
-    
+
     public boolean updateBasicInfo(AccountDTO account) {
         try {
             conn = DBConnection.getConnection();
@@ -241,7 +241,7 @@ public class AccountDAO {
         }
         return false;
     }
-    
+
     public AccountDTO viewInfoAccount(int id, int roleId) {
         AccountDTO account = new AccountDTO();
         try {
@@ -268,7 +268,7 @@ public class AccountDAO {
         }
         return null;
     }
-    
+
     public RoleDTO viewRole(int id, int roleId) {
         RoleDTO role = new RoleDTO();
         try {
@@ -279,7 +279,7 @@ public class AccountDAO {
             preStm.setInt(2, roleId);
             rs = preStm.executeQuery();
             if (rs.next()) {
-                role.setRoleName(rs.getString("roleName"));               
+                role.setRoleName(rs.getString("roleName"));
                 return role;
             }
         } catch (Exception e) {
@@ -289,7 +289,7 @@ public class AccountDAO {
         }
         return null;
     }
-    
+
     public boolean addNewUser(AccountDTO account) {
         boolean checked = false;
         try {
@@ -311,7 +311,7 @@ public class AccountDAO {
         }
         return checked;
     }
-    
+
     public boolean checkEmail(String email) {
         boolean check = false;
         try {
@@ -321,7 +321,7 @@ public class AccountDAO {
             preStm.setString(1, email);
             rs = preStm.executeQuery();
             if (rs.next()) {
-                check = true;  
+                check = true;
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -330,7 +330,7 @@ public class AccountDAO {
         }
         return check;
     }
-    
+
     public boolean addRole(int userId) {
         boolean checked = false;
         try {
@@ -348,7 +348,7 @@ public class AccountDAO {
         }
         return checked;
     }
-    
+
     public boolean addRoleAdmin(int userId) {
         boolean checked = false;
         try {
@@ -366,7 +366,7 @@ public class AccountDAO {
         }
         return checked;
     }
-    
+
     public int getUserIdByEmail(String email) {
         int userId = 0;
         try {
@@ -385,13 +385,13 @@ public class AccountDAO {
         }
         return userId;
     }
-    
-        public List<AccountDTO> findByLikeUsername(String search) {
+
+    public List<AccountDTO> findByLikeUsername(String search) {
         List<AccountDTO> result = new ArrayList<>();
         try {
-            String sql = "select a.userId, a.userName, a.email, a.gender, r.roleName, a.status, ar.roleId " +
-                         "from Account a, AccountRole ar, Role r " +
-                         "where a.userId = ar.userId and r.roleId = ar.roleId and a.userName like ?";
+            String sql = "select a.userId, a.userName, a.email, a.gender, r.roleName, a.status, ar.roleId "
+                    + "from Account a, AccountRole ar, Role r "
+                    + "where a.userId = ar.userId and r.roleId = ar.roleId and a.userName like ?";
             conn = DBConnection.getConnection();
             preStm = conn.prepareStatement(sql);
             preStm.setString(1, "%" + search + "%");
@@ -425,7 +425,7 @@ public class AccountDAO {
         }
         return result;
     }
-    
+
     public boolean changePassword(int id, String newPassword) {
         try {
             conn = DBConnection.getConnection();
@@ -441,7 +441,7 @@ public class AccountDAO {
         }
         return false;
     }
-    
+
     public AccountDTO findInfo(int userId) {
         AccountDTO dto = null;
         try {
@@ -462,7 +462,7 @@ public class AccountDAO {
         }
         return dto;
     }
-    
+
     public boolean addNewAdmin(AccountDTO account) {
         boolean checked = false;
         try {

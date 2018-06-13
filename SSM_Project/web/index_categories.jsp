@@ -52,9 +52,9 @@
                                         <div class="content table-responsive table-full-width">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <form action="" method="POST">
+                                                    <form action="SearchCategoryController" method="POST">
                                                         <div class="col-md-6">
-                                                            <input type="text" placeholder="Name..." class="form-control border-input">
+                                                            <input type="text" name="txtSearch" placeholder="Name..." class="form-control border-input">
                                                         </div>
                                                         <div class="col-md-3" >
                                                             <button class="btn btn-success" type="submit">Filter</button>
@@ -84,7 +84,12 @@
                                                                     <button type="submit" class="btn btn-info ti-pencil"/>
                                                                 </form>
                                                             </td>
-                                                            <td><i class="btn btn-danger ti-trash"></i></td>
+                                                            <td>
+                                                                <form action="ChangeStatusCategory" method="POST">
+                                                                    <input type="hidden" value="${dto.categoryId}" name="cateId"/>
+                                                                    <button type="submit" onclick="return confirmation()" class="btn btn-danger ti-trash"/>
+                                                                </form>
+                                                            </td>
                                                         </tr>
                                                     </thupnm:forEach>
                                                 </tbody>
@@ -100,16 +105,18 @@
                                         <div class="header">
                                             <h4 class="title">Category Form</h4>
                                         </div>
-                                        <form id="form--add--cate">
+                                        <form id="form--add--cate" action="AddAndUpdateCategory" method="POST">
                                             <div class="content">
                                                 <div class="row">
                                                     <div class="form-group col-md-10 col-md-offset-1">
                                                         <label>Name</label>
-                                                        <input type="text" value="${VIEWCATE.categoryName}" class="form-control border-input" id="c--name"/>
+                                                        <input type="hidden" value="${VIEWCATE.categoryId}" name="cateId"/>
+                                                        <input type="text" value="${VIEWCATE.categoryName}" name="cateName"
+                                                               class="form-control border-input" id="c--name"/>
                                                         <span id="error--name"></span>
                                                         <br/>
                                                         <label>Image</label> <br/>
-                                                        <input type="file" class="form-control" id="c--pic">
+                                                        <input type="file" name="imgPic" value="${VIEWCATE.imgPic}" class="form-control" id="c--pic">
                                                         <span id="error--pic"></span>
                                                     </div>
                                                     <div class="col-md-7 col-md-offset-4">
@@ -117,6 +124,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <strong><font color="red">${requestScope.RESULT}</font></strong>
                                         </form>
                                     </div>
                                 </div>
@@ -127,5 +135,11 @@
             </div>
         </div>
         <%@include file="layout/admin--script.jsp" %>
+        
+        <script>
+            function confirmation() {
+                return confirm("Are you sure to disable this category?");
+            }
+        </script>
     </body>
 </html>

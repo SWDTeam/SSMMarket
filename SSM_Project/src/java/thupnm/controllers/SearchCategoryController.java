@@ -20,7 +20,7 @@ import thupnm.dto.CategoryDTO;
  *
  * @author ThuPMNSE62369
  */
-public class GetAllCategoriesController extends HttpServlet {
+public class SearchCategoryController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,19 +34,20 @@ public class GetAllCategoriesController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try {
-            List<Integer> total = new ArrayList<>();
+        try (PrintWriter out = response.getWriter()) {
+            String search = request.getParameter("txtSearch");
             CategoryDAO dao = new CategoryDAO();
-            List<CategoryDTO> list = dao.showAllCategory();
-            for (int i = 0; i < list.size(); i++) {
-                int productCount = dao.getProductCount(list.get(i).getCategoryId());
+            List<CategoryDTO> result = dao.findByLikeCategoryName(search);
+            List<Integer> total = new ArrayList<>();
+            for (int i = 0; i < result.size(); i++) {
+                int productCount = dao.getProductCount(result.get(i).getCategoryId());
                 total.add(productCount);
-            }           
-            request.setAttribute("listCategory", list);
+            }
             request.setAttribute("total", total);
+            request.setAttribute("listCategory", result);
             request.getRequestDispatcher("index_categories.jsp").forward(request, response);
         } catch (Exception e) {
-            log("Error at GetAllCategoriesController " + e.getMessage());
+            log("ERROR at SearchCategoryController" + e.getMessage());
         }
     }
 

@@ -14,6 +14,8 @@ import java.io.Serializable;
 public class CategoryDTO implements Serializable {
     
     public static final String STATUS_ACTIVE = "active";
+    public static final String STATUS_DISABLE = "disabled";
+    
     private int categoryId, productCount;
     private String categoryName, status, imgPic;
 

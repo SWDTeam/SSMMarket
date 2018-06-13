@@ -56,7 +56,7 @@ public class AddAdminController extends HttpServlet {
                         int id = dao.getUserIdByEmail(email);
                         account.setUserId(id);
                         boolean result = dao.addRoleAdmin(account.getUserId());
-                        request.setAttribute("RESULT", "Add new admin successful!");
+                        request.setAttribute("RESULT", "Add new admin successfully!");
                         request.getRequestDispatcher("new_admin.jsp").forward(request, response);
                     } else {
                         request.setAttribute("RESULT", "Add new admin failed!");

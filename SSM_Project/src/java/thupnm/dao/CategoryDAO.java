@@ -66,9 +66,9 @@ public class CategoryDAO {
     }
 
     /**
-     * 
+     *
      * @param categoryName
-     * @return 
+     * @return
      */
     public int viewCategoryId(String categoryName) {
         int categoryId = 0;
@@ -92,7 +92,7 @@ public class CategoryDAO {
     public List<CategoryDTO> showAllCategory() {
         List<CategoryDTO> result = null;
         try {
-            String sql = "select categoryId, categoryName, status from Category";
+            String sql = "select categoryId, categoryName, status from Category where status = 'active'";
             conn = DBConnection.getConnection();
             preStm = conn.prepareStatement(sql);
             rs = preStm.executeQuery();
@@ -112,20 +112,20 @@ public class CategoryDAO {
         }
         return result;
     }
-    
+
     public int getProductCount(int cateId) {
         int productCount = 0;
         try {
-            String sql = "SELECT count(Product.productId) as productCount " +
-                       "FROM (Category c INNER JOIN Product ON c.categoryId = Product.categoryId) " +
-                       "group by c.categoryId having c.categoryId = ?";
+            String sql = "SELECT count(Product.productId) as productCount "
+                    + "FROM (Category c INNER JOIN Product ON c.categoryId = Product.categoryId) "
+                    + "group by c.categoryId having c.categoryId = ?";
             conn = DBConnection.getConnection();
             preStm = conn.prepareStatement(sql);
             preStm.setInt(1, cateId);
             rs = preStm.executeQuery();
             if (rs.next()) {
                 productCount = rs.getInt("productCount");
-                
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -134,7 +134,7 @@ public class CategoryDAO {
         }
         return productCount;
     }
-    
+
     public boolean createNewCategory(CategoryDTO category) {
         boolean checked = false;
         try {
@@ -152,16 +152,17 @@ public class CategoryDAO {
         }
         return checked;
     }
-    
+
     public CategoryDTO viewInfoCategory(int id) {
         CategoryDTO category = new CategoryDTO();
         try {
             conn = DBConnection.getConnection();
-            String sql = "select categoryName, status, imgPic from Category where categoryId = ?";
+            String sql = "select categoryId, categoryName, status, imgPic from Category where categoryId = ?";
             preStm = conn.prepareStatement(sql);
             preStm.setInt(1, id);
             rs = preStm.executeQuery();
             if (rs.next()) {
+                category.setCategoryId(rs.getInt("categoryId"));
                 category.setCategoryName(rs.getString("categoryName"));
                 category.setStatus(rs.getString("status"));
                 category.setImgPic(rs.getString("imgPic"));
@@ -174,5 +175,72 @@ public class CategoryDAO {
         }
         return null;
     }
+
+    public boolean updateCategory(CategoryDTO category) {
+        boolean checked = false;
+        try {
+            conn = DBConnection.getConnection();
+            String sql = "update Category set categoryName = ?, status = ?, imgPic = ? where categoryId = ?";
+            preStm = conn.prepareStatement(sql);
+            preStm.setString(1, category.getCategoryName());
+            preStm.setString(2, category.getStatus());
+            preStm.setString(3, CategoryDTO.STATUS_ACTIVE);
+            preStm.setString(4, category.getImgPic());
+            preStm.setInt(5, category.getCategoryId());
+            checked = preStm.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return checked;
+    }
     
+    public boolean changeStatus(int id) {
+        boolean checked = false;
+        try {
+            conn = DBConnection.getConnection();
+            String sql = "update Category set status = ? where categoryId = ?";
+            preStm = conn.prepareStatement(sql);
+            preStm.setString(1, CategoryDTO.STATUS_DISABLE);
+            preStm.setInt(2, id);
+            checked =  preStm.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return checked;
+    }
+    
+    public List<CategoryDTO> findByLikeCategoryName(String search) {
+        List<CategoryDTO> result = new ArrayList<>();
+        try {
+            String sql = "select categoryId, categoryName, status, imgPic from Category "
+                    + "where status = 'active' and categoryName like ?";
+            conn = DBConnection.getConnection();
+            preStm = conn.prepareStatement(sql);
+            preStm.setString(1, "%" + search + "%");
+            rs = preStm.executeQuery();
+            int categoryId;
+            String categoryName = "", status = "", imgPic = "";
+            while (rs.next()) {
+                categoryId = rs.getInt("categoryId");
+                categoryName = rs.getString("categoryName");
+                status = rs.getString("status");
+                imgPic = rs.getString("imgPic");
+                CategoryDTO dto = new CategoryDTO();
+                dto.setCategoryId(categoryId);
+                dto.setCategoryName(categoryName);
+                dto.setStatus(status);
+                dto.setImgPic(imgPic);
+                result.add(dto);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return result;
+    }
 }

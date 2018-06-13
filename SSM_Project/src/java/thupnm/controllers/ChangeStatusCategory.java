@@ -7,8 +7,6 @@ package thupnm.controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +18,7 @@ import thupnm.dto.CategoryDTO;
  *
  * @author ThuPMNSE62369
  */
-public class GetAllCategoriesController extends HttpServlet {
+public class ChangeStatusCategory extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,18 +33,13 @@ public class GetAllCategoriesController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            List<Integer> total = new ArrayList<>();
+            String id = request.getParameter("cateId");
             CategoryDAO dao = new CategoryDAO();
-            List<CategoryDTO> list = dao.showAllCategory();
-            for (int i = 0; i < list.size(); i++) {
-                int productCount = dao.getProductCount(list.get(i).getCategoryId());
-                total.add(productCount);
-            }           
-            request.setAttribute("listCategory", list);
-            request.setAttribute("total", total);
-            request.getRequestDispatcher("index_categories.jsp").forward(request, response);
+            CategoryDTO dto = new CategoryDTO();      
+            boolean check = dao.changeStatus(Integer.parseInt(id));
+            request.getRequestDispatcher("GetAllCategoriesController").forward(request, response);
         } catch (Exception e) {
-            log("Error at GetAllCategoriesController " + e.getMessage());
+            log("Error at ChangeStatusCategory " + e.getMessage());
         }
     }
 

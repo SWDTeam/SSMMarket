@@ -39,7 +39,7 @@ public class ViewInfoCategory extends HttpServlet {
             CategoryDTO dto = dao.viewInfoCategory(Integer.parseInt(cateId));
             request.setAttribute("VIEWCATE", dto);
         } catch (Exception e) {
-            e.printStackTrace();
+            log("Error at ViewInfoCategory " + e.getMessage());
         }
         request.getRequestDispatcher("GetAllCategoriesController").forward(request, response);
     }
