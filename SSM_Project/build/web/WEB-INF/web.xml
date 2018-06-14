@@ -72,6 +72,20 @@
         <servlet-name>ViewInfoCategory</servlet-name>
         <servlet-class>thupnm.controllers.ViewInfoCategory</servlet-class>
     </servlet>
+    
+    
+    <!--Minh test-->
+    <servlet>
+        <servlet-name>AddImg</servlet-name>
+        <servlet-class>minhhy.controller.AddImg</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddImg</servlet-name>
+        <url-pattern>/AddImg</url-pattern>
+    </servlet-mapping>
+    <!--End Minh test-->
+    
+    
     <servlet>
         <servlet-name>AddAndUpdateCategory</servlet-name>
         <servlet-class>thupnm.controllers.AddAndUpdateCategory</servlet-class>

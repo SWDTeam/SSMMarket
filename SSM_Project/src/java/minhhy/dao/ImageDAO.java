@@ -1,24 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package thupnm.dao;
+package minhhy.dao;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import javax.imageio.ImageIO;
+import minhhy.dto.ImageDTO;
 import ssm.db.DBConnection;
-import thupnm.dto.ImageDTO;
 
-/**
- *
- * @author ThuPMNSE62369
- */
 public class ImageDAO {
 
     private Connection conn;
@@ -44,28 +31,11 @@ public class ImageDAO {
         }
     }
 
-    public boolean createImage(String img, int productId) {
-        boolean checked = false;
-        try {
-            conn = DBConnection.getConnection();
-            String sql = "insert into Images(imgKey, productId) values(?, ?)";
-            preStm = conn.prepareStatement(sql);
-            preStm.setString(1, img);
-            preStm.setInt(2, productId);
-            checked = preStm.executeUpdate() > 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            closeConnection();
-        }
-        return checked;
-    }
-
     public ImageDTO show(int id) {
         ImageDTO dto = new ImageDTO();
         try {
             conn = DBConnection.getConnection();
-            String sql = "select imgKey from Images where imgId = ?";
+            String sql = "select imgKey from Images where imgId =?";
             preStm = conn.prepareStatement(sql);
             preStm.setInt(1, id);
             rs = preStm.executeQuery();
@@ -80,5 +50,21 @@ public class ImageDAO {
             closeConnection();
         }
         return null;
+    }
+
+    public boolean createImage(String img) {
+        boolean checked = false;
+        try {
+            conn = DBConnection.getConnection();
+            String sql = "insert into Images(imgKey) values(?)";
+            preStm = conn.prepareStatement(sql);
+            preStm.setString(1, img);
+            checked = preStm.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return checked;
     }
 }

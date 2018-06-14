@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package thupnm.controllers;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,29 +8,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import thupnm.dao.CategoryDAO;
 import thupnm.dao.ImageDAO;
 import thupnm.dao.ProductDAO;
-import thupnm.dto.CategoryDTO;
 import thupnm.dto.ImageDTO;
 import thupnm.dto.ProductDTO;
 
-/**
- *
- * @author ThuPMNSE62369
- */
 public class AddProductController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -47,17 +26,17 @@ public class AddProductController extends HttpServlet {
             String manu = request.getParameter("manufacturer");
             String price = request.getParameter("price");
             String quantity = request.getParameter("quantity");
-            
+
             String manuDateStr = request.getParameter("manuDate");
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             Date manuDate = sdf.parse(manuDateStr);
             Timestamp started = new Timestamp(manuDate.getTime());
-            
+
             String expiredDateStr = request.getParameter("expiredDate");
             SimpleDateFormat sdfExpired = new SimpleDateFormat("yyyy-MM-dd");
             Date expiredDate = sdfExpired.parse(expiredDateStr);
             Timestamp ended = new Timestamp(expiredDate.getTime());
-            
+
             String description = request.getParameter("editor1");
             System.out.println("bbbbbbbbbbb" + categoryName);
             CategoryDAO cateDAO = new CategoryDAO();
@@ -78,7 +57,7 @@ public class AddProductController extends HttpServlet {
             dto.setManuDate(started);
             dto.setExpiredDate(ended);
             dto.setDescription(description);
-            
+
             if (dao.createNewProduct(dto)) {
                 int proId = dto.getProductId();
                 System.out.println("ssss " + proId);
@@ -89,7 +68,7 @@ public class AddProductController extends HttpServlet {
                 request.setAttribute("RESULT", "Add product failed!");
                 url = "ShowCategoryController";
             }
-            
+
         } catch (Exception e) {
             log("ERROR at AddProductController " + e.getMessage());
         } finally {

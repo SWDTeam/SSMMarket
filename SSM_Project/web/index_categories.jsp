@@ -105,7 +105,7 @@
                                         <div class="header">
                                             <h4 class="title">Category Form</h4>
                                         </div>
-                                        <form id="form--add--cate" action="AddAndUpdateCategory" method="POST">
+                                        <form id="form--add--cate" action="AddAndUpdateCategory" method="POST" enctype="multipart/form-data">
                                             <div class="content">
                                                 <div class="row">
                                                     <div class="form-group col-md-10 col-md-offset-1">
@@ -116,11 +116,11 @@
                                                         <span id="error--name"></span>
                                                         <br/>
                                                         <label>Image</label> <br/>
-                                                        <input type="file" name="imgPic" value="${VIEWCATE.imgPic}" class="form-control" id="c--pic">
-                                                        <span id="error--pic"></span>
+                                                        <input type="file" name="imgPic" class="form-control" id="c--pic">
+                                                        <span id="error--pic">${VIEWCATE.imgPic}</span>
                                                     </div>
                                                     <div class="col-md-7 col-md-offset-4">
-                                                        <button type="submit" class="btn btn-info btn-fill btn-wd">Submit</button>
+                                                        <input type="submit" value="Submit" class="btn btn-info btn-fill btn-wd"/>
                                                     </div>
                                                 </div>
                                             </div>

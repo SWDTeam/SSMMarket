@@ -1,59 +1,30 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package thupnm.controllers;
+package minhhy.controller;
 
-import com.sun.xml.internal.ws.util.StringUtils;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.nio.file.Paths;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
+import minhhy.dao.ImageDAO;
+import minhhy.dto.ImageDTO;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import thupnm.dao.CategoryDAO;
-import thupnm.dto.CategoryDTO;
 
-/**
- *
- * @author ThuPMNSE62369
- */
-@MultipartConfig
-public class AddAndUpdateCategory extends HttpServlet {
+public class AddImg extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            String cateId = request.getParameter("cateId");
-            String cateName = request.getParameter("cateName");
-            Part filePart = request.getPart("imgPic");
-
-            CategoryDAO dao = new CategoryDAO();
-            CategoryDTO cate = new CategoryDTO();
+            ImageDAO dao = new ImageDAO();
+            ImageDTO dto = new ImageDTO();
             FileItemFactory factory = new DiskFileItemFactory();
             ServletFileUpload upload = new ServletFileUpload(factory);
             List items = null;
@@ -71,7 +42,7 @@ public class AddAndUpdateCategory extends HttpServlet {
                 }
                 Iterator iter = items.iterator();
                 Hashtable params = new Hashtable();
-                String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+                String fileName = null;
                 String realPath = null;
                 FileItem itemImg = null;
                 while (iter.hasNext()) {
@@ -95,31 +66,19 @@ public class AddAndUpdateCategory extends HttpServlet {
                     }
                 }
 
-                cate.setImgPic(fileName);
-                System.out.println("aaaaaaa " + cate.getImgPic());
-                cate.setCategoryName(cateName);
-
-                if (cateId.isEmpty() || Objects.isNull(cateId)) {
-                    if (dao.createNewCategory(cate)) {
-                        request.setAttribute("RESULT", "Add new category successfully!");
-                        request.getRequestDispatcher("GetAllCategoriesController").forward(request, response);
-                    } else {
-                        request.setAttribute("RESULT", "Add new category failed!");
-                        request.getRequestDispatcher("GetAllCategoriesController").forward(request, response);
-                    }
+                dto.setImgKey(fileName);
+                System.out.println("aaaaaaa " + dto.getImgKey());
+                if (dao.createImage(dto.getImgKey())) {
+                    request.setAttribute("RESULT", "Add img successfully!");
+                    request.setAttribute("IMG", dto.getImgKey());
+                    request.getRequestDispatcher("show_img.jsp").forward(request, response);
                 } else {
-                    if (dao.updateCategory(cate)) {
-                        request.setAttribute("RESULT", "Update category successfully!");
-                        //request.setAttribute("IMG", cate.getImgPic());
-                        request.getRequestDispatcher("GetAllCategoriesController").forward(request, response);
-                    } else {
-                        request.setAttribute("RESULT", "Update category failed!");
-                        request.getRequestDispatcher("GetAllCategoriesController").forward(request, response);
-                    }
+                    request.setAttribute("RESULT", "Add img failed!");
+                    request.getRequestDispatcher("test_img.jsp").forward(request, response);
                 }
             }
         } catch (Exception e) {
-            log("Error at AddAndUpdateCategoryController " + e.getMessage());
+            log("" + e.getMessage());
         }
     }
 
