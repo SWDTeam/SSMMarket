@@ -21,6 +21,7 @@ import org.json.JSONObject;
 
 import test.kietpt.smartmarket.R;
 import test.kietpt.smartmarket.model.Account;
+import test.kietpt.smartmarket.ulti.CheckConnection;
 import test.kietpt.smartmarket.ulti.Database;
 import test.kietpt.smartmarket.ulti.IpConfig;
 
@@ -29,35 +30,45 @@ public class LoginActivity extends AppCompatActivity {
 
 
     TextInputEditText email, pass;
-    Database database = new Database(this);
-    Button remove, login;
+    Database database;
+    Button login;
     ImageView imgTest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        email = (TextInputEditText) findViewById(R.id.txtEmail);
-        pass = (TextInputEditText) findViewById(R.id.txtPassword);
-        imgTest = (ImageView)findViewById(R.id.imgTest);
 
-        login = (Button) findViewById(R.id.btnLogin);
+        reflect();
+        if (CheckConnection.haveNetworkConnection(this)) {
+            loginInto();
+        } else {
+            CheckConnection.showConnection(this,"Please check your wifi!!!!");
+        }
+    }
+
+    private void loginInto() {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("KIET", email.getText().toString() + " - " + pass.getText().toString());
+                Log.e("LOGIN BUTTON", email.getText().toString() + " - " + pass.getText().toString());
 
                 if (email.getText().toString().isEmpty() || pass.getText().toString().isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Please Input Email or Password", Toast.LENGTH_SHORT).show();
                 } else {
-                    loginCustomer("http://"+ IpConfig.ipConfig+":8084/SSM_Project/LoginCusController?txtEmail=" + email.getText().toString()
+                    loginCustomer("http://" + IpConfig.ipConfig + ":8084/SSM_Project/LoginCusController?txtEmail=" + email.getText().toString()
                             + "&txtPassword=" + pass.getText().toString());
-//                    String url = "http://192.168.100.8:8084/Project/MainController?txtAbc=" + "kiet";
-//                    loginCustomer("http://192.168.100.8:8084/Project/MainController?action=" + "View" + "&subAction=" +
-//                            "subViewPost" + "&subView=" + "sumittedPostMoDetail" + "&txtPostId=" + "165");
                 }
             }
         });
+    }
 
+    private void reflect() {
+        email = (TextInputEditText) findViewById(R.id.txtEmail);
+        pass = (TextInputEditText) findViewById(R.id.txtPassword);
+        imgTest = (ImageView) findViewById(R.id.imgTest);
+        login = (Button) findViewById(R.id.btnLogin);
+        database = new Database(this);
     }
 
 
@@ -72,17 +83,15 @@ public class LoginActivity extends AppCompatActivity {
                 , new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.e("REPONSE : ", response.toString());
+                Log.e("REPONSE LOGIN : ", response.toString());
                 if (email.getText().toString().equals("") || pass.getText().toString().equals("")) {
                     Toast.makeText(LoginActivity.this, "Please input Email or Password", Toast.LENGTH_LONG).show();
                 }
                 if (response.toString().equals("{}")) {
                     Toast.makeText(LoginActivity.this, "Invalid Email or Password", Toast.LENGTH_LONG).show();
-                    Log.e("FAIL", "FAIL  " + response.toString() + " - ");
                 } else {
-                    Log.e("ABC", "da vao Login ");
+                    Log.e("LOGIN ", "da vao Login ");
                     try {
-
 
                         int userId = response.getInt("userId");
                         String emailReponse = response.getString("email");
@@ -95,20 +104,25 @@ public class LoginActivity extends AppCompatActivity {
                         String addressReponse = response.getString("address");
                         String statusReponse = response.getString("status");
 
-                        Account account = new Account(emailReponse, usernameReponse, genderReponse, phoneReponse, passswordReponse,
+                        MainActivity.account = new Account(emailReponse, usernameReponse, genderReponse, phoneReponse, passswordReponse,
                                 addressReponse, statusReponse);
                         if (!database.checkEmail(emailReponse)) {
-                            Log.e("KIETDEPCHAI ", " khong  ton tai");
-                            database.insertCustomer(account);
+                            Log.e("ACCOUNT KO TON TAI  ", " khong  ton tai");
+                            database.insertCustomer(MainActivity.account);
                         } else {
-                            Log.e("KIETDEPCHAI ", " da ton tai");
+                            Log.e("ACCOUNT TON TAI ", " da ton tai");
                         }
-                        Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_LONG).show();
 
-                        Intent intent = new Intent(LoginActivity.this, AccountActivity.class);
-                        System.out.println(email.getText().toString() + "  Login Activity ");
-                        intent.putExtra("txtEmail", email.getText().toString());
-                        startActivity(intent);
+                        if (MainActivity.listCart == null) {
+                            Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(LoginActivity.this, AccountActivity.class);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(LoginActivity.this, ConfirmCartActi.class);
+                            startActivity(intent);
+                        }
+
 
                     } catch (Exception e) {
                         Log.e("ERROR LOGIN + ", e.getMessage());

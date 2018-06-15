@@ -7,12 +7,16 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 import test.kietpt.smartmarket.model.Account;
+import test.kietpt.smartmarket.model.ProductDTO;
 
 public class Database extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "ssmarket";
     public static final String TABLE_NAME_ACCOUNT = "Account";
+    public static final String TABLE_NAME_ORDER_DETAIL = "Order_Detail";
     public static final int DATABASE_VERSION = 2;
 
     // CursorFactory la con tro dung de duyet database
@@ -20,19 +24,6 @@ public class Database extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
 
     }
-
-
-    // truy van ko tra ket qua nhu : create,insert,update,delete
-//    public void queryData(String sql) {
-//        SQLiteDatabase database = getWritableDatabase(); // getWrite dung de ghi gia tri xuong db
-//        database.execSQL(sql);
-//    }
-
-    //truy van tra ve ket qua : select * from where
-//    public Cursor getData(String sql) {
-//        SQLiteDatabase database = getReadableDatabase(); // getRead dung de doc du  lieu tu db
-//        return database.rawQuery(sql, null);
-//    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -46,7 +37,18 @@ public class Database extends SQLiteOpenHelper {
                 "address VARCHAR (500)," +
                 "status VARCHAR (20) ) "
         );
-
+        db.execSQL(" CREATE TABLE IF NOT EXISTS " + TABLE_NAME_ORDER_DETAIL + "(" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "productId INTEGER UNIQUE," +
+                "productKey VARCHAR (50) UNIQUE, " +
+                "productName VARCHAR (500), " +
+                "urlPic VARCHAR (3000), " +
+                "quantity INTEGER, " +
+                "price REAL ," +
+                "categoryId INTEGER ," +
+                "status VARCHAR (50) ) "
+        );
+        Log.e("CREATE TABLE ","tao table thanh cong");
     }
 
     @Override
@@ -54,6 +56,21 @@ public class Database extends SQLiteOpenHelper {
 
     }
 
+    public void insertProduct(ProductDTO dto) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("productId", dto.getProductId());
+        values.put("productKey", dto.getProductKey());
+        values.put("productName", dto.getProductName());
+        values.put("urlPic", dto.getUrlPic());
+        values.put("quantity", dto.getQuantity());
+        values.put("price", dto.getPrice());
+        values.put("categoryId", dto.getCategoryId());
+        values.put("status", dto.getStatus());
+        db.insert(TABLE_NAME_ORDER_DETAIL, null, values);
+        Log.e("DB INSERT + ", "them thanh cong product trong Database ");
+        db.close();
+    }
     public void insertCustomer(Account account) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -65,10 +82,20 @@ public class Database extends SQLiteOpenHelper {
         values.put("address", account.getAddress());
         values.put("status", account.getStatus());
         db.insert(TABLE_NAME_ACCOUNT, null, values);
-        Log.e("DB INSERT + ", "them thanh cong trong Database ");
+        Log.e("DB INSERT + ", "them thanh cong customer trong Database ");
         db.close();
     }
+    public void updateQuantityProduct(ProductDTO dto){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("productId", dto.getProductId());
+        values.put("quantity", dto.getQuantity());
 
+        db.update(TABLE_NAME_ACCOUNT,values,"productId = '"+dto.getProductId()+"'",null);
+
+        Log.e("DB UPDATE + ", "UPDATE thanh cong trong Database ");
+        db.close();
+    }
     public Account getCustomerInfo(String email) {
         Account account = null;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -104,8 +131,38 @@ public class Database extends SQLiteOpenHelper {
         }
     }
 
-    public boolean checkEmail(String mail) {
+    public ArrayList<ProductDTO> getAllProductInCart() {
+        Log.e("IN CART", "da vao de show product cart trong db");
+        ArrayList<ProductDTO> list= new ArrayList<>();
+        SQLiteDatabase sqlDB = this.getReadableDatabase();
+        Cursor dataProduct = sqlDB.rawQuery("Select * From Order_Detail", null);
+        while (dataProduct.moveToNext()) {
+            int id = dataProduct.getInt(0);
+            int productId = dataProduct.getInt(1);
+            String productKey = dataProduct.getString(2);
+            String productName = dataProduct.getString(3);
+            String urlPic = dataProduct.getString(4);
+            int quantity = dataProduct.getInt(5);
+            Float price = dataProduct.getFloat(6);
+            int categoryId = dataProduct.getInt(7);
+            String status = dataProduct.getString(8);
+            ProductDTO dto = new ProductDTO();
+            dto.setId(id);
+            dto.setProductId(productId);
+            dto.setProductKey(productKey);
+            dto.setProductName(productName);
+            dto.setUrlPic(urlPic);
+            dto.setQuantity(quantity);
+            dto.setPrice(price);
+            dto.setCategoryId(categoryId);
+            dto.setStatus(status);
+            list.add(dto);
+        }
+        Log.e("RETURN LIST PRODUCT ","Da return list product");
+        return list;
+    }
 
+    public boolean checkEmail(String mail) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("Select * From Account Where email = '" + mail + "'", null);
         if (cursor.moveToNext()) {
@@ -113,7 +170,21 @@ public class Database extends SQLiteOpenHelper {
         }
         return false;
     }
-
+    public boolean checkProductId(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("Select * From Order_Detail Where productId = '" + id + "'", null);
+        if (cursor.moveToNext()) {
+            return true;
+        }
+        return false;
+    }
+    public void deleteCustomer(String email){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        //values.put("email",email);
+        db.delete(TABLE_NAME_ACCOUNT, "email = '" + email + "'", null);
+        Log.e("DB DELETE + ", "DELETE thanh cong trong Database ");
+    }
     public void updateCustomer(Account account){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();

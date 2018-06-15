@@ -30,20 +30,23 @@ public class ChangePassActi extends AppCompatActivity {
     TextInputEditText oldPass, newPass, confirmPass;
     Button btnChange;
     Database database = new Database(this);
-    String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_pass);
+
+        reflect();
+
+
+    }
+
+    private void reflect() {
         oldPass = (TextInputEditText) findViewById(R.id.txtOldPass);
         newPass = (TextInputEditText) findViewById(R.id.txtNewPass);
         confirmPass = (TextInputEditText) findViewById(R.id.txtConfirmPass);
-
-        Intent intent = getIntent();
-        email = intent.getStringExtra("txtEmail");
-
     }
+
 
     public boolean validatePass() {
         String oldPassword = oldPass.getText().toString();
@@ -78,15 +81,13 @@ public class ChangePassActi extends AppCompatActivity {
                             try {
                                 String email = response.getString("email");
                                 String newPassword = response.getString("password");
-                                Account account = new Account();
-                                account.setEmail(email);
-                                account.setPassword(newPassword);
-                                if (account != null) {
-                                    database.updatePassword(account);
+                                MainActivity.account.setEmail(email);
+                                MainActivity.account.setPassword(newPassword);
+                                if (MainActivity.account != null) {
+                                    database.updatePassword(MainActivity.account);
                                     Toast.makeText(ChangePassActi.this, "Update Password Successfully", Toast.LENGTH_SHORT).show();
                                 }
-                                Intent intent = new Intent(ChangePassActi.this, AccountActivity.class);
-                                intent.putExtra("txtEmail", email);
+                                Intent intent = new Intent(getApplicationContext(), AccountActivity.class);
                                 startActivity(intent);
                             } catch (Exception e) {
                                 Log.e("ERROR PASSWORD + ", e.getMessage());
@@ -121,7 +122,7 @@ public class ChangePassActi extends AppCompatActivity {
         alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                changePassword("http://" + IpConfig.ipConfig + ":8084/SSM_Project/ChangePassCustomer?txtEmail=" + email.toString() + "&txtOldPassword="
+                changePassword("http://" + IpConfig.ipConfig + ":8084/SSM_Project/ChangePassCustomer?txtEmail=" + MainActivity.account.getEmail() + "&txtOldPassword="
                         + oldPass.getText().toString() + "&txtNewPassword=" + newPass.getText().toString());
             }
         });

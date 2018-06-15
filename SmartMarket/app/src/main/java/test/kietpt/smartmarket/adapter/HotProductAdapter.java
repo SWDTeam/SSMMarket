@@ -1,6 +1,7 @@
 package test.kietpt.smartmarket.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,7 +17,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import test.kietpt.smartmarket.R;
+import test.kietpt.smartmarket.activity.ProductDetailActi;
 import test.kietpt.smartmarket.model.ProductDTO;
+import test.kietpt.smartmarket.ulti.CheckConnection;
 
 public class HotProductAdapter extends RecyclerView.Adapter<HotProductAdapter.HotProductHolder>{
     Context context;
@@ -40,8 +43,8 @@ public class HotProductAdapter extends RecyclerView.Adapter<HotProductAdapter.Ho
         ProductDTO productDTO = listProduct.get(position);
         holder.productName.setText(productDTO.getProductName());
         DecimalFormat format = new DecimalFormat("###,###,###");
-        holder.productPrice.setText("Giá: "+format.format(productDTO.getPrice())+" Đ ");
-        Picasso.get().load(productDTO.getUrlPic()).placeholder(R.drawable.address).error(R.drawable.birthdate).into(holder.imgProduct);
+        holder.productPrice.setText("Price: "+format.format(productDTO.getPrice())+" $ ");
+        Picasso.get().load(productDTO.getUrlPic()).placeholder(R.drawable.error).error(R.drawable.errors).into(holder.imgProduct);
 
     }
 
@@ -60,6 +63,16 @@ public class HotProductAdapter extends RecyclerView.Adapter<HotProductAdapter.Ho
             imgProduct = itemView.findViewById(R.id.imgViewHotPro);
             productName = itemView.findViewById(R.id.txtNameHotPro);
             productPrice = itemView.findViewById(R.id.txtPriceHotPro);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(context, ProductDetailActi.class);
+                    intent.putExtra("ProductInfo",listProduct.get(getPosition()));
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    CheckConnection.showConnection(context,listProduct.get(getPosition()).getProductName());
+                    context.startActivity(intent);
+                }
+            });
         }
     }
 

@@ -2,6 +2,7 @@ package test.kietpt.smartmarket.activity;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -11,6 +12,8 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -34,10 +37,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import test.kietpt.smartmarket.R;
 import test.kietpt.smartmarket.adapter.CategoryAdapter;
 import test.kietpt.smartmarket.adapter.HotProductAdapter;
+import test.kietpt.smartmarket.model.Account;
+import test.kietpt.smartmarket.model.Cart;
 import test.kietpt.smartmarket.model.CategoryDTO;
 import test.kietpt.smartmarket.model.ProductDTO;
 import test.kietpt.smartmarket.ulti.CheckConnection;
@@ -60,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
     int id = 0;
     String cateName = "";
     String urlPic = "";
-
+    public static ArrayList<Cart> listCart;
+    public static Account account;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,18 +76,65 @@ public class MainActivity extends AppCompatActivity {
         if (CheckConnection.haveNetworkConnection(getApplicationContext())) {
             actionBar();
             actionViewFlipper();
-            getListCategory("http://" + IpConfig.ipConfig + ":8084/SSM_Project/GetListCategory");
-            getListHotProduct("http://" + IpConfig.ipConfig + ":8084/SSM_Project/GetListProduct");
-            catchOnMenuItem("");
+            getListCategory("http://" + IpConfig.ipConfig + ":8084/SSM_Project/GetListCategory?btnAction="+"view");
+            getListHotProduct("http://" + IpConfig.ipConfig + ":8084/SSM_Project/GetListHotProduct");
+            catchOnMenuItem();
+
         } else {
             CheckConnection.showConnection(getApplicationContext(), "Check your connection with wifi");
             finish();
         }
-
-
     }
 
-    private void catchOnMenuItem(String url) {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menuHome:
+                Intent intentHome = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(intentHome);
+                break;
+            case R.id.menuCart:
+                Intent intentCart = new Intent(getApplicationContext(),MyCartActi.class);
+                startActivity(intentCart);
+                break;
+            case R.id.menuSearch:
+                Intent intentSearch = new Intent(getApplicationContext(),SearchViewActi.class);
+                startActivity(intentSearch);
+                break;
+            case R.id.menuAccount:
+                if(account != null){
+                    Intent intentAccount = new Intent(getApplicationContext(),AccountActivity.class);
+                    startActivity(intentAccount);
+                }else{
+                    Intent intentAccount = new Intent(getApplicationContext(),LoginActivity.class);
+                    startActivity(intentAccount);
+                }
+                break;
+            case R.id.menuCall:
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_CALL);
+                intent.setData(Uri.parse("tel:01676243500"));
+                startActivity(intent);
+                break;
+            case R.id.menuMessage:
+                Intent intentasd = new Intent();
+                intentasd.setAction(Intent.ACTION_SENDTO);
+                intentasd.putExtra("sms_body","");
+                intentasd.setData(Uri.parse("sms:01676243500"));
+                startActivity(intentasd);
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void catchOnMenuItem() {
         listViewMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -88,8 +142,7 @@ public class MainActivity extends AppCompatActivity {
                     drawerLayout.closeDrawer(GravityCompat.START);
                 } else {
                     Intent intent = new Intent(MainActivity.this, ProductListActi.class);
-                    //Toast.makeText(MainActivity.this, "abc + " + listCategory.get(i).getCateId(), Toast.LENGTH_SHORT).show();
-                    intent.putExtra("cateId",listCategory.get(i).getCateId());
+                    intent.putExtra("cateId", listCategory.get(i).getCateId() + "-" + listCategory.get(i).getCateName());
                     startActivity(intent);
                 }
 
@@ -114,9 +167,13 @@ public class MainActivity extends AppCompatActivity {
                             String productKey = jsonObject.getString("productKey");
                             int quantity = jsonObject.getInt("quantity");
                             int cateId = jsonObject.getInt("categoryId");
+                            String manufacture = jsonObject.getString("manufacturer");
+                            String manuDate = jsonObject.getString("manuDate");
+                            String expiredDate = jsonObject.getString("expiredDate");
                             float price = (float) jsonObject.getDouble("price");
-
-                            listProduct.add(new ProductDTO(name, des, urlPic, productKey, cateId, id, price));
+                            String urlTest = "http://"+IpConfig.ipConfig+":8084/SSM_Project/img/"+urlPic;
+                        
+                            listProduct.add(new ProductDTO(name, des, urlTest, productKey, cateId, id, price, manufacture, manuDate, expiredDate));
                             hotProductAdapter.notifyDataSetChanged();
 
                         } catch (JSONException e) {
@@ -149,7 +206,8 @@ public class MainActivity extends AppCompatActivity {
                             id = jsonObject.getInt("cateId");
                             cateName = jsonObject.getString("cateName");
                             urlPic = jsonObject.getString("imgPic");
-                            listCategory.add(new CategoryDTO(id, cateName, urlPic));
+                            String urlTest = "http://"+IpConfig.ipConfig+":8084/SSM_Project/img/"+urlPic;
+                            listCategory.add(new CategoryDTO(id, cateName, urlTest));
                             categoryAdapter.notifyDataSetChanged();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -225,5 +283,12 @@ public class MainActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.setAdapter(hotProductAdapter);
+
+        if (listCart != null) {
+
+        } else {
+            listCart = new ArrayList<>();
+        }
+//
     }
 }

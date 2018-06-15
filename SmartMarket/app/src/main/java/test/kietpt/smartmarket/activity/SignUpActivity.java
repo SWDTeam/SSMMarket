@@ -27,7 +27,6 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONObject;
 
 
-
 import java.util.ArrayList;
 
 import java.util.List;
@@ -43,19 +42,26 @@ public class SignUpActivity extends AppCompatActivity {
     TextInputEditText email, pass, username, address, phone, confirmPass;
     private Spinner spGender;
     private String selectedGender;
-    private Database database = new Database(this);
+    private Database database;
+    TextView checkEmail;
+    TextView checkPass;
+    TextView checkConfirmPass;
+    TextView checkUsername;
+    TextView checkAddress;
+    TextView checkPhone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
-        email = (TextInputEditText) findViewById(R.id.txtEmailSignUp);
-        pass = (TextInputEditText) findViewById(R.id.txtPasswordSignUp);
-        confirmPass = (TextInputEditText) findViewById(R.id.txtConfirmPasswordSignUp);
-        username = (TextInputEditText) findViewById(R.id.txtUsernameSignUp);
-        address = (TextInputEditText) findViewById(R.id.txtAddressSignUp);
-        phone = (TextInputEditText) findViewById(R.id.txtPhoneSignUp);
-        spGender = (Spinner) findViewById(R.id.spGenderSignUp);
+
+        reflect();
+        catchSpinner();
+
+
+    }
+
+    private void catchSpinner() {
         List<String> dataSrc = new ArrayList<>();
         dataSrc.add("male");
         dataSrc.add("female");
@@ -73,7 +79,25 @@ public class SignUpActivity extends AppCompatActivity {
 
             }
         });
+    }
 
+    private void reflect() {
+        email = (TextInputEditText) findViewById(R.id.txtEmailSignUp);
+        pass = (TextInputEditText) findViewById(R.id.txtPasswordSignUp);
+        confirmPass = (TextInputEditText) findViewById(R.id.txtConfirmPasswordSignUp);
+        username = (TextInputEditText) findViewById(R.id.txtUsernameSignUp);
+        address = (TextInputEditText) findViewById(R.id.txtAddressSignUp);
+        phone = (TextInputEditText) findViewById(R.id.txtPhoneSignUp);
+        spGender = (Spinner) findViewById(R.id.spGenderSignUp);
+
+        checkEmail = (TextView) findViewById(R.id.checkEmail);
+        checkPass = (TextView) findViewById(R.id.checkPassword);
+        checkConfirmPass = (TextView) findViewById(R.id.checkConfirmPass);
+        checkUsername = (TextView) findViewById(R.id.checkUsername);
+        checkAddress = (TextView) findViewById(R.id.checkAddress);
+        checkPhone = (TextView) findViewById(R.id.checkPhone);
+
+        database = new Database(this);
     }
 
     public void onClickBack(View view) {
@@ -82,13 +106,6 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     public boolean checkValidate() {
-        TextView checkEmail = (TextView) findViewById(R.id.checkEmail);
-        TextView checkPass = (TextView) findViewById(R.id.checkPassword);
-        TextView checkConfirmPass = (TextView) findViewById(R.id.checkConfirmPass);
-        TextView checkUsername = (TextView) findViewById(R.id.checkUsername);
-        TextView checkAddress = (TextView) findViewById(R.id.checkAddress);
-        TextView checkPhone = (TextView) findViewById(R.id.checkPhone);
-
 
         String txtEmail = email.getText().toString();
         String txtPass = pass.getText().toString();
@@ -107,15 +124,14 @@ public class SignUpActivity extends AppCompatActivity {
             if (txtPass.length() == 0) {
                 checkPass.setVisibility(View.VISIBLE);
                 checkPass.setText("Please not empty");
-                checked = true;
             }
             if (txtConfirmPass.length() == 0) {
                 checkConfirmPass.setVisibility(View.VISIBLE);
                 checkConfirmPass.setText("Please not empty");
-                checked = true;
             }
             checkConfirmPass.setVisibility(View.VISIBLE);
             checkConfirmPass.setText("Please input same password");
+            checked = true;
         }
         if (!txtUsername.matches("[a-zA-Z]{1,50}")) {
             checkUsername.setVisibility(View.VISIBLE);
@@ -139,33 +155,15 @@ public class SignUpActivity extends AppCompatActivity {
 
     public void onClickSignUp(View view) {
 
-        if(checkValidate()){
-            Toast.makeText(SignUpActivity.this,"Something wrong!!! please sign up again ",Toast.LENGTH_SHORT).show();
-        }else{
-            signUpCustomer("http://"+ IpConfig.ipConfig+":8084/SSM_Project/RegisterCusController?txtEmail=" + email.getText().toString()
+        if (checkValidate()) {
+            Toast.makeText(SignUpActivity.this, "Something wrong!!! please sign up again ", Toast.LENGTH_SHORT).show();
+        } else {
+            signUpCustomer("http://" + IpConfig.ipConfig + ":8084/SSM_Project/RegisterCusController?txtEmail=" + email.getText().toString()
                     + "&txtPassword=" + pass.getText().toString() + "&txtUsername=" + username.getText().toString() +
                     "&txtAddress=" + address.getText().toString() + "&txtPhone=" + phone.getText().toString() + "&txtGender=" + selectedGender.toString()
                     + "&txtStatus=" + "active");
         }
 
-    }
-
-    public void getCustomer() {
-        Log.e("123456", "da vao getCustomer() ");
-        SQLiteDatabase sqlDB = database.getReadableDatabase();
-        Cursor dataCustomer = sqlDB.rawQuery("Select * From Account", null);
-        while (dataCustomer.moveToNext()) {
-            int userId = dataCustomer.getInt(0);
-            String email = dataCustomer.getString(1);
-            String username = dataCustomer.getString(2);
-            String gender = dataCustomer.getString(3);
-            String phone = dataCustomer.getString(4);
-            String passsword = dataCustomer.getString(5);
-            String address = dataCustomer.getString(6);
-            String status = dataCustomer.getString(7);
-            Toast.makeText(SignUpActivity.this, userId + " - " + email + " - " + username +
-                    " - " + gender + " - " + phone + " - " + passsword + " - " + address + " - " + status, Toast.LENGTH_SHORT).show();
-        }
     }
 
     public void signUpCustomer(String url) {
@@ -174,7 +172,9 @@ public class SignUpActivity extends AppCompatActivity {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        if (response.toString() != null) {
+                        if (response.toString().equals("{}")) {
+                            Toast.makeText(SignUpActivity.this, "Account has already exsited", Toast.LENGTH_SHORT).show();
+                        } else {
                             try {
                                 int userId = response.getInt("userId");
                                 String email = response.getString("email");
@@ -185,18 +185,15 @@ public class SignUpActivity extends AppCompatActivity {
                                 String address = response.getString("address");
                                 String status = response.getString("status");
 
-
-                                Account account = new Account(userId, email, username, gender, phone, passsword, address, status);
-                                if (account != null) {
-                                    database.insertCustomer(account);
+                                MainActivity.account = new Account(userId, email, username, gender, phone, passsword, address, status);
+                                if (!database.checkEmail(MainActivity.account.getEmail())) {
+                                    database.insertCustomer(MainActivity.account);
                                 }
                                 Toast.makeText(SignUpActivity.this, "Create Successfully", Toast.LENGTH_SHORT).show();
-                                //getCustomer();
-                                database.getAllCustomer();
-                                Toast.makeText(SignUpActivity.this, userId + " - " + email + " - " + username +
-                                        " - " + gender + " - " + phone + " - " + passsword + " - " + address + " - " + status, Toast.LENGTH_SHORT).show();
+                                //database.getAllCustomer();
                                 startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
                             } catch (Exception e) {
+                                Log.e("ERROR SIGNUP ", e.getMessage());
                             }
                         }
                     }

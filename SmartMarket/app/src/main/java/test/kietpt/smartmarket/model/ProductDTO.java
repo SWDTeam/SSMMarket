@@ -2,16 +2,29 @@ package test.kietpt.smartmarket.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class ProductDTO implements Serializable {
     public static final String STATUS_ACTIVE = "active";
 
-    private String productName, manufacturer, description, status, urlPic, productKey;
-    private int quantity, categoryId, productId;
-    private Date manuDate, expiredDate;
+    private String productName, manufacturer, description, status, urlPic, productKey, manuDate, expiredDate;
+    private int quantity, categoryId, productId, id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public ProductDTO() {
+    }
+
     private float price;
 
-    public ProductDTO(String productName, String description, String urlPic, String productKey, int categoryId, int productId, float price) {
+    public ProductDTO(String productName, String description, String urlPic, String productKey, int categoryId,
+                      int productId, float price, String manufacturer, String manuDate, String expiredDate) {
         this.productName = productName;
         this.description = description;
         this.urlPic = urlPic;
@@ -19,6 +32,9 @@ public class ProductDTO implements Serializable {
         this.categoryId = categoryId;
         this.productId = productId;
         this.price = price;
+        this.manufacturer = manufacturer;
+        this.manuDate = manuDate;
+        this.expiredDate = expiredDate;
     }
 
     public String getProductKey() {
@@ -94,22 +110,21 @@ public class ProductDTO implements Serializable {
         this.categoryId = categoryId;
     }
 
-    public Date getManuDate() {
+    public String getManuDate() {
         return manuDate;
     }
 
-    public void setManuDate(Date manuDate) {
+    public void setManuDate(String manuDate) {
         this.manuDate = manuDate;
     }
 
-    public Date getExpiredDate() {
+    public String getExpiredDate() {
         return expiredDate;
     }
 
-    public void setExpiredDate(Date expiredDate) {
+    public void setExpiredDate(String expiredDate) {
         this.expiredDate = expiredDate;
     }
-
 
     public float getPrice() {
         return price;

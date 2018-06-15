@@ -26,7 +26,7 @@
             <android.support.v7.widget.Toolbar
                 app:title="Home"
                 app:titleTextColor="#ffffff"
-                android:background="#000000"
+                android:background="#81835b"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:id="@+id/toolbarMain"

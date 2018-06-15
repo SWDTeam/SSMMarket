@@ -28,6 +28,7 @@ import java.util.List;
 
 import test.kietpt.smartmarket.R;
 import test.kietpt.smartmarket.model.Account;
+import test.kietpt.smartmarket.ulti.CheckConnection;
 import test.kietpt.smartmarket.ulti.Database;
 import test.kietpt.smartmarket.ulti.IpConfig;
 
@@ -37,32 +38,32 @@ public class ProfileActi extends AppCompatActivity {
     Spinner gender;
     String selectdSpinner;
     Database database = new Database(this);
-
+    TextView checkUsername, checkAddress,checkPhone;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        email = (TextInputEditText) findViewById(R.id.txtEmailProfile);
-        email.setEnabled(false);
-        username = (TextInputEditText) findViewById(R.id.txtUsernameProfile);
-        gender = (Spinner) findViewById(R.id.spGenderProfile);
-        address = (TextInputEditText) findViewById(R.id.txtAddressProfile);
-        phone = (TextInputEditText) findViewById(R.id.txtPhoneProfile);
+        reflect();
+        if(CheckConnection.haveNetworkConnection(this)){
+            getDataCusInfo();
+        }else{
+            CheckConnection.showConnection(this,"Please check your wifi!!!");
+        }
 
-        Intent intent = getIntent();
 
-        String abc = intent.getStringExtra("txtEmail");
-        Log.e("Profile + ", "da qua den ProfileActi ");
-        Account account = database.getCustomerInfo(abc);
-        email.setText(account.getEmail().toString());
-        username.setText(account.getUsername().toString());
-        address.setText(account.getAddress().toString());
-        phone.setText(account.getPhone().toString());
+
+    }
+
+    private void getDataCusInfo() {
+        email.setText(MainActivity.account.getEmail().toString());
+        username.setText(MainActivity.account.getUsername().toString());
+        address.setText(MainActivity.account.getAddress().toString());
+        phone.setText(MainActivity.account.getPhone().toString());
 
 
         List<String> dataSrc = new ArrayList<String>();
-        if (account.getGender().toString().equals("male")) {
+        if (MainActivity.account.getGender().toString().equals("male")) {
             dataSrc.add("male");
             dataSrc.add("female");
         } else {
@@ -85,11 +86,20 @@ public class ProfileActi extends AppCompatActivity {
         });
     }
 
-    public boolean checkValidate() {
+    private void reflect() {
+        email = (TextInputEditText) findViewById(R.id.txtEmailProfile);
+        email.setEnabled(false);
+        username = (TextInputEditText) findViewById(R.id.txtUsernameProfile);
+        gender = (Spinner) findViewById(R.id.spGenderProfile);
+        address = (TextInputEditText) findViewById(R.id.txtAddressProfile);
+        phone = (TextInputEditText) findViewById(R.id.txtPhoneProfile);
+        checkUsername = (TextView) findViewById(R.id.checkUsernamePrifle);
+        checkAddress = (TextView) findViewById(R.id.checkAddressProfile);
+        checkPhone = (TextView) findViewById(R.id.checkPhoneProfile);
+    }
 
-        TextView checkUsername = (TextView) findViewById(R.id.checkUsernamePrifle);
-        TextView checkAddress = (TextView) findViewById(R.id.checkAddressProfile);
-        TextView checkPhone = (TextView) findViewById(R.id.checkPhoneProfile);
+
+    public boolean checkValidate() {
 
         String txtUsername = username.getText().toString();
         String txtAddress = address.getText().toString();
@@ -140,18 +150,17 @@ public class ProfileActi extends AppCompatActivity {
                                 String phone = response.getString("phone");
                                 String address = response.getString("address");
 
-                                Account account = new Account();
-                                account.setEmail(email);
-                                account.setUsername(username);
-                                account.setGender(gender);
-                                account.setPhone(phone);
-                                account.setAddress(address);
-                                if (account != null) {
-                                    database.updateCustomer(account);
+                                MainActivity.account = new Account();
+                                MainActivity.account.setEmail(email);
+                                MainActivity.account.setUsername(username);
+                                MainActivity.account.setGender(gender);
+                                MainActivity.account.setPhone(phone);
+                                MainActivity.account.setAddress(address);
+                                if (MainActivity.account != null) {
+                                    database.updateCustomer(MainActivity.account);
                                     Toast.makeText(ProfileActi.this, "Update Successfully", Toast.LENGTH_SHORT).show();
                                 }
                                 Intent intent = new Intent(ProfileActi.this, AccountActivity.class);
-                                intent.putExtra("txtEmail", email);
                                 startActivity(intent);
 
                             } catch (Exception e) {

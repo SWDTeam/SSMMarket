@@ -66,11 +66,11 @@ public class ProductListAdapter extends BaseAdapter {
         ProductDTO dto = listProduct.get(position);
         viewHolder.nameProductList.setText(dto.getProductName());
         DecimalFormat format = new DecimalFormat("###,###,###");
-        viewHolder.priceProductList.setText("Giá: " + format.format(dto.getPrice()) + " Đ ");
+        viewHolder.priceProductList.setText("Price: " + format.format(dto.getPrice()) + " $ ");
         viewHolder.desProductList.setMaxLines(2);
         viewHolder.desProductList.setEllipsize(TextUtils.TruncateAt.END);
         viewHolder.desProductList.setText(dto.getDescription());
-        Picasso.get().load(dto.getUrlPic()).placeholder(R.drawable.address).error(R.drawable.birthdate).into(viewHolder.imgProductList);
+        Picasso.get().load(dto.getUrlPic()).placeholder(R.drawable.error).error(R.drawable.errors).into(viewHolder.imgProductList);
         return convertView;
     }
 }

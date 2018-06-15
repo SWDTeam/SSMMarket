@@ -1,12 +1,17 @@
 package test.kietpt.smartmarket.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -23,6 +28,7 @@ import java.util.ArrayList;
 import test.kietpt.smartmarket.R;
 import test.kietpt.smartmarket.adapter.ProductListAdapter;
 import test.kietpt.smartmarket.model.ProductDTO;
+import test.kietpt.smartmarket.ulti.CheckConnection;
 import test.kietpt.smartmarket.ulti.IpConfig;
 
 public class ProductListActi extends AppCompatActivity {
@@ -30,15 +36,79 @@ public class ProductListActi extends AppCompatActivity {
     ListView listView;
     ProductListAdapter productListAdapter;
     ArrayList<ProductDTO> arrayList;
+    String checked = "";
     int position = 0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_list);
         reflect();
-        getListProductById();
-        backByToolBar();
+        if (CheckConnection.haveNetworkConnection(this)) {
+            getListProductById();
+            backByToolBar();
+            catchProductItem();
+        } else {
+            CheckConnection.showConnection(this, "Please check your wifi ");
+            finish();
+        }
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.menuHome:
+                Intent intentHome = new Intent(getApplicationContext(),MainActivity.class);
+                startActivity(intentHome);
+                break;
+            case R.id.menuCart:
+                Intent intentCart = new Intent(getApplicationContext(),MyCartActi.class);
+                startActivity(intentCart);
+                break;
+            case R.id.menuSearch:
+                Intent intentSearch = new Intent(getApplicationContext(),SearchViewActi.class);
+                startActivity(intentSearch);
+                break;
+            case R.id.menuAccount:
+                if(MainActivity.account != null){
+                    Intent intentAccount = new Intent(getApplicationContext(),AccountActivity.class);
+                    startActivity(intentAccount);
+                }else{
+                    Intent intentAccount = new Intent(getApplicationContext(),LoginActivity.class);
+                    startActivity(intentAccount);
+                }
+                break;
+            case R.id.menuCall:
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_CALL);
+                intent.setData(Uri.parse("tel:01676243500"));
+                startActivity(intent);
+                break;
+            case R.id.menuMessage:
+                Intent intentasd = new Intent();
+                intentasd.setAction(Intent.ACTION_SENDTO);
+                intentasd.putExtra("sms_body","");
+                intentasd.setData(Uri.parse("sms:01676243500"));
+                startActivity(intentasd);
+                break;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void catchProductItem() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(ProductListActi.this, ProductDetailActi.class);
+                intent.putExtra("ProductInfo", arrayList.get(i));
+                startActivity(intent);
+            }
+        });
     }
 
     private void backByToolBar() {
@@ -54,10 +124,14 @@ public class ProductListActi extends AppCompatActivity {
 
     private void getListProductById() {
         Intent intent = getIntent();
-        position = intent.getIntExtra("cateId", -1);
+        checked = intent.getStringExtra("cateId");
+        String[] checked1 = checked.split("-");
+        position = Integer.parseInt(checked1[0]);
+        toolbar.setTitle(checked1[1]);
         Log.e("CATEID PRODUCT LIST ", position + "");
         getData("http://" + IpConfig.ipConfig + ":8084/SSM_Project/GetProductListByCateId?txtCateId=" + position);
     }
+
 
     private void getData(String url) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -67,7 +141,6 @@ public class ProductListActi extends AppCompatActivity {
                 Log.e("RESPONSE PRODUCT LIST ", response.toString());
                 if (response.toString() != null) {
                     try {
-                        //JSONArray jsonArray = new JSONArray(response);
                         for (int i = 0; i < response.length(); i++) {
                             JSONObject jsonObject = response.getJSONObject(i);
                             int id = jsonObject.getInt("productId");
@@ -77,7 +150,12 @@ public class ProductListActi extends AppCompatActivity {
                             String key = jsonObject.getString("productKey");
                             int cateId = jsonObject.getInt("categoryId");
                             float price = (float) jsonObject.getDouble("price");
-                            arrayList.add(new ProductDTO(name, des, urlPic, key, cateId, id, price));
+                            String manufacture = jsonObject.getString("manufacturer");
+                            String manuDate = jsonObject.getString("manuDate");
+                            String expiredDate = jsonObject.getString("expiredDate");
+                            String urlTest = "http://"+IpConfig.ipConfig+":8084/SSM_Project/img/"+urlPic;
+
+                            arrayList.add(new ProductDTO(name, des, urlTest, key, cateId, id, price,manufacture,manuDate,expiredDate));
                             productListAdapter.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
