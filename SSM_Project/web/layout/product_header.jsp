@@ -1,12 +1,12 @@
 <div class="collapse navbar-collapse">
     <ul class="nav navbar-nav navbar-right">
         <li>
-            <a href="index_products.jsp" class="dropdown-toggle" data-toggle="dropdown"><i class="ti-panel"></i>
+            <a href="ShowProductController" class="dropdown-toggle"><i class="ti-panel"></i>
                 <p>View All Products</p>
             </a>
         </li>
         <li>
-            <a href="ShowCategoryController" class="dropdown-toggle" data-toggle="dropdown"><i class="ti-panel"></i>
+            <a href="ShowCategoryController" class="dropdown-toggle" ><i class="ti-panel"></i>
                 <p>Add Product</p>
             </a>
         </li>

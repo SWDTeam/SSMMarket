@@ -7,7 +7,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SSM - New Product</title>
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
-        
+
         <link href="admin_page/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
 
         <link href="admin_page/css/dataTables.bootstrap.min.css" rel="stylesheet"/>
@@ -16,8 +16,12 @@
         <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
         <link href="admin_page/css/themify-icons.css" rel="stylesheet">
 
-        <script src="https://cdn.ckeditor.com/4.7.3/standard/ckeditor.js"></script>
-
+        <script src="https://cdn.ckeditor.com/ckeditor5/10.0.1/classic/ckeditor.js"></script>
+        <style>
+            .ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-blurred.ck-editor__editable_inline{
+                height: 30vw !important;
+            }
+        </style>
     </head>
     <body>
         <div class="wrapper">
@@ -47,7 +51,7 @@
                                 <h4 class="title">Create Product</h4>
                             </div>
 
-                            <form id="form--new--product" action="" method="POST">
+                            <form id="form--new--product" method="POST" enctype="multipart/form-data" action="AddProductController">
                                 <div class="row col-md-offset-1 col-md-10">
                                     <div class="form-group">
                                         <label>Name Of Product</label>
@@ -112,11 +116,15 @@
                                     </div>
                                 </div>
 
-                                <div class="row col-md-offset-1 col-md-10-">
-                                    <div class="col-md-11">
-                                        <textarea class="ckeditor" name="editor1" id="editor"></textarea>
+                                <div class="row col-md-offset-1 col-md-10">
+                                    <div style="height: auto;" class="col-md-11">
+                                        <textarea name="editor1" id="editor"></textarea>
                                         <script>
-                                            CKEDITOR.replace('editor1');
+                                            ClassicEditor
+                                                    .create(document.querySelector('#editor'))
+                                                    .catch(error => {
+                                                        console.error(error);
+                                                    });
                                         </script>	
                                         <span id="error--editor"></span>
                                     </div>

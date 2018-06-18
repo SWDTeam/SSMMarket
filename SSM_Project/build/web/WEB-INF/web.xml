@@ -72,20 +72,24 @@
         <servlet-name>ViewInfoCategory</servlet-name>
         <servlet-class>thupnm.controllers.ViewInfoCategory</servlet-class>
     </servlet>
-    
-    
     <!--Minh test-->
     <servlet>
         <servlet-name>AddImg</servlet-name>
         <servlet-class>minhhy.controller.AddImg</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShowProductDetail</servlet-name>
+        <servlet-class>thupnm.controllers.ShowProductDetail</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShowProductController</servlet-name>
+        <servlet-class>thupnm.controllers.ShowProductController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AddImg</servlet-name>
         <url-pattern>/AddImg</url-pattern>
     </servlet-mapping>
     <!--End Minh test-->
-    
-    
     <servlet>
         <servlet-name>AddAndUpdateCategory</servlet-name>
         <servlet-class>thupnm.controllers.AddAndUpdateCategory</servlet-class>
@@ -181,6 +185,14 @@
     <servlet-mapping>
         <servlet-name>SearchCategoryController</servlet-name>
         <url-pattern>/SearchCategoryController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShowProductDetail</servlet-name>
+        <url-pattern>/ShowProductDetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShowProductController</servlet-name>
+        <url-pattern>/ShowProductController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

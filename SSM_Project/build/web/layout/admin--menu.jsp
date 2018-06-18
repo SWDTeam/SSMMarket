@@ -6,7 +6,7 @@
           <p>Dashboard</p></a></li>
           <li class="M--menu"><a href="ShowUserController"><i class="ti-user"></i>
           <p>Users</p></a></li>
-      <li class="M--menu"><a href="index_products.jsp"><i class="ti-shopping-cart"></i>
+      <li class="M--menu"><a href="ShowProductController"><i class="ti-shopping-cart"></i>
           <p>Products</p></a></li>
       <li class="M--menu"><a href="index_orders.jsp"><i class="ti-money"></i>
           <p>order</p></a></li>

@@ -116,8 +116,8 @@
                                                         <span id="error--name"></span>
                                                         <br/>
                                                         <label>Image</label> <br/>
-                                                        <input type="file" name="imgPic" class="form-control" id="c--pic">
-                                                        <span id="error--pic">${VIEWCATE.imgPic}</span>
+                                                        <input type="file" name="imgPic" class="form-control" id="c--pic">                     
+                                                        <span style="white-space: nowrap; text-overflow: ellipsis; width: 250px; display: block; overflow: hidden" id="error--pic">${VIEWCATE.imgPic}</span>                                                       
                                                     </div>
                                                     <div class="col-md-7 col-md-offset-4">
                                                         <input type="submit" value="Submit" class="btn btn-info btn-fill btn-wd"/>

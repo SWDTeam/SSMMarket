@@ -60,17 +60,16 @@ public class ImageDAO {
         }
         return checked;
     }
-
-    public ImageDTO show(int id) {
+    
+    public ImageDTO showImage(int productId) {
         ImageDTO dto = new ImageDTO();
         try {
             conn = DBConnection.getConnection();
-            String sql = "select imgKey from Images where imgId = ?";
+            String sql = "select imgKey from Images where productId = ?";
             preStm = conn.prepareStatement(sql);
-            preStm.setInt(1, id);
+            preStm.setInt(1, productId);
             rs = preStm.executeQuery();
             if (rs.next()) {
-//        dto.setImgId(rs.getInt("imgId"));
                 dto.setImgKey(rs.getString("imgKey"));
                 return dto;
             }

@@ -3,11 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/PRM391/ssm/SSM_Project/web/test_img.jsp</file>
-            <file>file:/D:/PRM391/ssm/SSM_Project/src/java/thupnm/dto/CategoryDTO.java</file>
-            <file>file:/D:/PRM391/ssm/SSM_Project/src/java/thupnm/dao/CategoryDAO.java</file>
-            <file>file:/D:/PRM391/ssm/SSM_Project/src/java/thupnm/controllers/AddAndUpdateCategory.java</file>
-            <file>file:/D:/PRM391/ssm/SSM_Project/web/index_categories.jsp</file>
+            <file>file:/D:/PRM391/ssm/SSM_Project/src/java/thupnm/dao/ProductDAO.java</file>
+            <file>file:/D:/PRM391/ssm/SSM_Project/src/java/thupnm/controllers/ShowProductDetail.java</file>
+            <file>file:/D:/PRM391/ssm/SSM_Project/web/index_products.jsp</file>
+            <file>file:/D:/PRM391/ssm/SSM_Project/src/java/thupnm/dao/ImageDAO.java</file>
+            <file>file:/D:/PRM391/ssm/SSM_Project/web/show_product.jsp</file>
+            <file>file:/D:/PRM391/ssm/SSM_Project/src/java/thupnm/controllers/AddProductController.java</file>
         </group>
     </open-files>
 </project-private>
