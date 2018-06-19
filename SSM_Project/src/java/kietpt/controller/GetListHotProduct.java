@@ -3,22 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ssm.controllers;
+package kietpt.controller;
 
+import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import ssm.dao.AccountDAO;
-import ssm.dto.AccountDTO;
+import kietpt.dao.ProductDAO;
+import kietpt.dto.CategoryDTO;
+import kietpt.dto.ProductDTO;
 
 /**
  *
- * @author ThuPMNSE62369
+ * @author kietp
  */
-public class AddAdminController extends HttpServlet {
+public class GetListHotProduct extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,45 +35,19 @@ public class AddAdminController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json");
+        String json = "";
         try {
-            /* TODO output your page here. You may use following sample code. */
-            String email = request.getParameter("email");
-            String name = request.getParameter("name");
-            String password = request.getParameter("password");
-            String confirmPassword = request.getParameter("confirm");
-            
-            boolean checked = false;
-            if (!password.equals(confirmPassword)) {
-                request.setAttribute("errorConfirm", "Confirm password and password must be the same!");
-                checked = true;
-            }
-            AccountDAO dao = new AccountDAO();
-            AccountDTO account = new AccountDTO();
-            account.setEmail(email);
-            account.setUsername(name);
-            account.setPassword(password);
-
-            if (!checked) {
-                if (!dao.checkEmail(email)) {
-                    if (dao.addNewAdmin(account)) {
-                        int id = dao.getUserIdByEmail(email);
-                        account.setUserId(id);
-                        boolean result = dao.addRoleAdmin(account.getUserId());
-                        request.setAttribute("RESULT", "Add new admin successful!");
-                        request.getRequestDispatcher("new_admin.jsp").forward(request, response);
-                    } else {
-                        request.setAttribute("RESULT", "Add new admin failed!");
-                        request.getRequestDispatcher("new_admin.jsp").forward(request, response);
-                    }
-                } else {
-                    request.setAttribute("EmailError", "Email is existed!");
-                    request.getRequestDispatcher("new_admin.jsp").forward(request, response);
-                }
-            } else {
-                request.getRequestDispatcher("new_admin.jsp").forward(request, response);
+            ProductDAO dao = new ProductDAO();
+            List<ProductDTO> listProduct = dao.getListCusHotProduct();
+            if (listProduct != null) {
+                json = new Gson().toJson(listProduct);
+                System.out.println("lay danh sach product thanh cong " + json);
+                response.getWriter().write(json);
             }
         } catch (Exception e) {
-            log("Error at AddAdminController " + e.getMessage());
+            e.printStackTrace();
         }
     }
 

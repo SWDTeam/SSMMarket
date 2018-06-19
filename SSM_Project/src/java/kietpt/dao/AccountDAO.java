@@ -10,7 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Date;
 import ssm.db.DBConnection;
-import ssm.dto.AccountDTO;
+import kietpt.dto.AccountDTO;
 
 /**
  *
@@ -118,7 +118,7 @@ public class AccountDAO {
             if (row > 0) {
                 return true;
             }
-        } catch (Exception e) {
+        } catch (Exception e) {e.printStackTrace();
         } finally {
             closeConnection(conn, preStm, rs);
         }
@@ -251,7 +251,6 @@ public class AccountDAO {
             preStm = conn.prepareStatement(sql);
             preStm.setString(1, email);
             rs = preStm.executeQuery();
-            
             if (rs.next()) {
                 userId = rs.getInt("userId");
                 System.out.println("da vao day");

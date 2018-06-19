@@ -5,38 +5,6 @@
         <servlet-class>kietpt.controller.LoginCusController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ForgotPasswordController</servlet-name>
-        <servlet-class>ssm.controllers.ForgotPasswordController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ShowUserController</servlet-name>
-        <servlet-class>ssm.controllers.ShowUserController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SearchController</servlet-name>
-        <servlet-class>ssm.controllers.SearchController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>UpdateInfoController</servlet-name>
-        <servlet-class>ssm.controllers.UpdateInfoController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>UpdateBasicInfo</servlet-name>
-        <servlet-class>ssm.controllers.UpdateBasicInfo</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>LogoutController</servlet-name>
-        <servlet-class>ssm.controllers.LogoutController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ResetPasswordController</servlet-name>
-        <servlet-class>ssm.controllers.ResetPasswordController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AddAdminController</servlet-name>
-        <servlet-class>ssm.controllers.AddAdminController</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>RegisterCusController</servlet-name>
         <servlet-class>kietpt.controller.RegisterCusController</servlet-class>
     </servlet>
@@ -53,52 +21,21 @@
         <servlet-class>kietpt.controller.GetListCategory</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>GetListProduct</servlet-name>
-        <servlet-class>kietpt.controller.GetListProduct</servlet-class>
+        <servlet-name>GetListHotProduct</servlet-name>
+        <servlet-class>kietpt.controller.GetListHotProduct</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>GetProductListByCateId</servlet-name>
         <servlet-class>kietpt.controller.GetProductListByCateId</servlet-class>
     </servlet>
+    
     <servlet-mapping>
         <servlet-name>LoginCusController</servlet-name>
         <url-pattern>/LoginCusController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ForgotPasswordController</servlet-name>
-        <url-pattern>/ForgotPasswordController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ShowUserController</servlet-name>
-        <url-pattern>/ShowUserController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SearchController</servlet-name>
-        <url-pattern>/SearchController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>UpdateInfoController</servlet-name>
-        <url-pattern>/UpdateInfoController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>UpdateBasicInfo</servlet-name>
-        <url-pattern>/UpdateBasicInfo</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>RegisterCusController</servlet-name>
         <url-pattern>/RegisterCusController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>LogoutController</servlet-name>
-        <url-pattern>/LogoutController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ResetPasswordController</servlet-name>
-        <url-pattern>/ResetPasswordController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AddAdminController</servlet-name>
-        <url-pattern>/AddAdminController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UpdateCustomerController</servlet-name>
@@ -113,30 +50,19 @@
         <url-pattern>/GetListCategory</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>GetListProduct</servlet-name>
-        <url-pattern>/GetListProduct</url-pattern>
+        <servlet-name>GetListHotProduct</servlet-name>
+        <url-pattern>/GetListHotProduct</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>GetProductListByCateId</servlet-name>
         <url-pattern>/GetProductListByCateId</url-pattern>
     </servlet-mapping>
+    
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-    <context-param>
-        <param-name>host</param-name>
-        <param-value>smtp.gmail.com</param-value>
-    </context-param>
-    <context-param>
-        <param-name>port</param-name>
-        <param-value>587</param-value>
-    </context-param>
-    <context-param>
-        <param-name>pass</param-name>
-        <param-value>Thupnm@222</param-value>
-    </context-param>
     <welcome-file-list>
         <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>

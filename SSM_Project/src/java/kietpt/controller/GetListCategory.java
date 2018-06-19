@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import kietpt.dao.ProductDAO;
-import ssm.dto.CategoryDTO;
+import kietpt.dto.CategoryDTO;
 
 /**
  *
@@ -37,13 +37,25 @@ public class GetListCategory extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         String json = "";
+        String btAction = request.getParameter("btnAction");
         try {
-            ProductDAO dao = new ProductDAO();
-            List<CategoryDTO> listCate = dao.getListCategory();
-            if (listCate != null) {
-                json = new Gson().toJson(listCate);
-                System.out.println("lay danh sach category thanh cong " + json);
-                response.getWriter().write(json);
+            if (btAction.equals("view")) {
+                ProductDAO dao = new ProductDAO();
+                List<CategoryDTO> listCate = dao.getListCategory();
+                if (listCate != null) {
+                    json = new Gson().toJson(listCate);
+                    System.out.println("lay danh sach category thanh cong " + json);
+                    response.getWriter().write(json);
+                }
+            } else if(btAction.equals("searchName")){
+                String cateName = request.getParameter("txtSearch");
+                ProductDAO dao = new ProductDAO();
+                List<CategoryDTO> listCate = dao.getListCategoryByName(cateName);
+                if (listCate != null) {
+                    json = new Gson().toJson(listCate);
+                    System.out.println("lay danh sach category khi search name thanh cong " + json);
+                    response.getWriter().write(json);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
