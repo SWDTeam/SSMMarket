@@ -38,17 +38,26 @@ public class ResetPasswordController extends HttpServlet {
             String newPass = request.getParameter("newPassword");
             String confirm = request.getParameter("confirmPassword");
             boolean check = false;
+            //check new new pass and confirm pass
             if (!confirm.equals(newPass)) {
                 request.setAttribute("errorConfirm", "Confirm password must be same as new password");
                 check = true;
             }
             AccountDAO dao = new AccountDAO();
             AccountDTO dto = new AccountDTO();
+            //check oldpass is not correct
             AccountDTO pass = dao.findInfo(Integer.parseInt(userId.trim()));
             if (!oldPass.equals(pass.getPassword())) {
                 request.setAttribute("errorPass", "Wrong password!");
                 check = true;
             }
+            
+            //check newpass not equal oldpass
+            if (newPass.equals(oldPass)) {
+                request.setAttribute("errorNewPass", "New password must be different from old password");
+                check = true;
+            }
+            
             dto.setPassword(newPass);
             request.setAttribute("RESETPASS", dto);
             if (!check) {

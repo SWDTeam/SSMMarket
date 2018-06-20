@@ -67,7 +67,7 @@
                                                 <label>New Password</label>
                                                 <input type="password" name="newPassword" class="form-control border-input" id="u--pass">
                                             </div>
-                                            <span id="error--pass"></span>
+                                            <span id="error--pass"><strong><font color="red">${requestScope.errorNewPass}</font></strong></span>
                                         </div>
                                         <div class="col-md-3"></div>
                                     </div>
