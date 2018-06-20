@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 import ssm.db.DBConnection;
 import kietpt.dto.CategoryDTO;
+import kietpt.dto.OrderDTO;
 import kietpt.dto.ProductDTO;
 
 /**
@@ -196,6 +197,92 @@ public class ProductDAO {
             closeConnection(conn, preStm, rs);
         }
         return listProduct;
+    }
+
+    public List<ProductDTO> getListProduct() {
+        Connection conn = null;
+        PreparedStatement preStm = null;
+        ResultSet rs = null;
+        List<ProductDTO> listProduct = new ArrayList<>();
+        try {
+            conn = DBConnection.getConnection();
+            String sql = "select productId,productKey,quantity,price from Product where status = active";
+            preStm = conn.prepareStatement(sql);
+            rs = preStm.executeQuery();
+            String productKey = "";
+            int proId, quan;
+
+            float price;
+            while (rs.next()) {
+                proId = rs.getInt("productId");
+                productKey = rs.getString("productKey");
+                quan = rs.getInt("quantity");
+                price = rs.getFloat("price");
+                ProductDTO dto = new ProductDTO();
+                dto.setProductId(proId);
+                dto.setProductKey(productKey);
+                dto.setQuantity(quan);
+                dto.setPrice(price);
+                listProduct.add(dto);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(conn, preStm, rs);
+        }
+        return listProduct;
+    }
+
+    public int insertOrder(OrderDTO dto) {
+        Connection conn = null;
+        PreparedStatement preStm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+
+            String sql = "insert into Orders values(?,?,?,?,?,?,?,?)";
+                preStm = conn.prepareStatement(sql);
+                preStm.setString(1, dto.getOrderCode());
+                preStm.setDate(2, (java.sql.Date) dto.getStartTime());
+                //preStm.setDate(0, x);
+                preStm.setString(3, "pending");
+            
+            int row = preStm.executeUpdate();
+            if (row > 0) {
+                //return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(conn, preStm, rs);
+        }
+        return 1;
+    }
+
+    public boolean insertOrderDetail(int orderId, List<ProductDTO> listProduct) {
+        Connection conn = null;
+        PreparedStatement preStm = null;
+        ResultSet rs = null;
+        try {
+            conn = DBConnection.getConnection();
+
+            String sql = "insert into Orders_Product values(?,?,?)";
+            for (int i = 0; i < listProduct.size(); i++) {
+                preStm = conn.prepareStatement(sql);
+                preStm.setInt(1, orderId);
+                preStm.setInt(2, listProduct.get(i).getProductId());
+                preStm.setString(3, "pending");
+            }
+            int row = preStm.executeUpdate();
+            if (row > 0) {
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(conn, preStm, rs);
+        }
+        return false;
     }
 
 }

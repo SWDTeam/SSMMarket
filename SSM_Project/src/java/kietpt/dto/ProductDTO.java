@@ -14,13 +14,23 @@ import java.util.Date;
  * @author ThuPMNSE62369
  */
 public class ProductDTO implements Serializable {
-    
+
     public static final String STATUS_ACTIVE = "active";
-    
-    private String productName, manufacturer, description, status,urlPic,productKey;
-    private int quantity, categoryId,productId;
+
+    private String productName, manufacturer, description, status, urlPic, productKey;
+    private int quantity, categoryId, productId;
     private Date manuDate, expiredDate;
     private float price;
+
+    public ProductDTO() {
+    }
+
+    public ProductDTO(String productKey, int quantity, int productId, float price) {
+        this.productKey = productKey;
+        this.quantity = quantity;
+        this.productId = productId;
+        this.price = price;
+    }
 
     public String getProductKey() {
         return productKey;
@@ -45,8 +55,6 @@ public class ProductDTO implements Serializable {
     public void setProductId(int productId) {
         this.productId = productId;
     }
-
-    
 
     public String getProductName() {
         return productName;
@@ -112,8 +120,6 @@ public class ProductDTO implements Serializable {
         this.expiredDate = expiredDate;
     }
 
-    
-
     public float getPrice() {
         return price;
     }
@@ -121,6 +127,5 @@ public class ProductDTO implements Serializable {
     public void setPrice(float price) {
         this.price = price;
     }
-    
-    
+
 }
