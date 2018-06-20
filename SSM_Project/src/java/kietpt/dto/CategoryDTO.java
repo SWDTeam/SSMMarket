@@ -9,24 +9,12 @@ import java.io.Serializable;
 
 /**
  *
- * @author kietp
+ * @author ThuPMNSE62369
  */
 public class CategoryDTO implements Serializable {
 
     private int cateId;
-    private String cateName;
-    private String status;
-    private String imgPic;
-
-    public CategoryDTO() {
-    }
-
-    public CategoryDTO(int cateId, String cateName, String status, String imgPic) {
-        this.cateId = cateId;
-        this.cateName = cateName;
-        this.status = status;
-        this.imgPic = imgPic;
-    }
+    private String cateName, status, imgPic;
 
     public int getCateId() {
         return cateId;

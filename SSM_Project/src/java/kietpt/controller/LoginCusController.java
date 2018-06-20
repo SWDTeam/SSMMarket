@@ -54,8 +54,13 @@ public class LoginCusController extends HttpServlet {
             }
             if (role == 1) {
                 System.out.println("chuyen sang trang admin");
+                session.setAttribute("ROLEADMIN", role);
                 request.getRequestDispatcher("index.jsp").forward(request, response);
-            } else if (role == 2) {
+            } else {
+                request.setAttribute("INVALID", "Invalid username or password. Please try again!");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+            }
+            if (role == 2) {
                 response.setContentType("application/json");
                 json = new Gson().toJson(dto);
                 System.out.println("KIETTT " + json);
@@ -64,6 +69,7 @@ public class LoginCusController extends HttpServlet {
                 System.out.println("vào web error ");
                 request.setAttribute("INVALID", "Invalid username or password. Please try again!");
             }
+
         } catch (Exception e) {
             log("ERROR at LoginController" + e.getMessage());
         }

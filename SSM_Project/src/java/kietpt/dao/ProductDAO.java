@@ -55,6 +55,7 @@ public class ProductDAO {
                 name = rs.getString("categoryName");
                 status = rs.getString("status");
                 urlPic = rs.getString("imgPic");
+                
                 CategoryDTO dto = new CategoryDTO();
                 dto.setCateId(id);
                 dto.setCateName(name);

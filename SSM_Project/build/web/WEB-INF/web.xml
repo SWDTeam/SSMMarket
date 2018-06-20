@@ -6,35 +6,43 @@
     </servlet>
     <servlet>
         <servlet-name>ForgotPasswordController</servlet-name>
-        <servlet-class>ssm.controllers.ForgotPasswordController</servlet-class>
+        <servlet-class>thupnm.controllers.ForgotPasswordController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ShowUserController</servlet-name>
-        <servlet-class>ssm.controllers.ShowUserController</servlet-class>
+        <servlet-class>thupnm.controllers.ShowUserController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SearchController</servlet-name>
-        <servlet-class>ssm.controllers.SearchController</servlet-class>
+        <servlet-class>thupnm.controllers.SearchController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UpdateInfoController</servlet-name>
-        <servlet-class>ssm.controllers.UpdateInfoController</servlet-class>
+        <servlet-class>thupnm.controllers.UpdateInfoController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UpdateBasicInfo</servlet-name>
-        <servlet-class>ssm.controllers.UpdateBasicInfo</servlet-class>
+        <servlet-class>thupnm.controllers.UpdateBasicInfo</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LogoutController</servlet-name>
-        <servlet-class>ssm.controllers.LogoutController</servlet-class>
+        <servlet-class>thupnm.controllers.LogoutController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ResetPasswordController</servlet-name>
-        <servlet-class>ssm.controllers.ResetPasswordController</servlet-class>
+        <servlet-class>thupnm.controllers.ResetPasswordController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>AddAdminController</servlet-name>
-        <servlet-class>ssm.controllers.AddAdminController</servlet-class>
+        <servlet-class>thupnm.controllers.AddAdminController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShowCategoryController</servlet-name>
+        <servlet-class>thupnm.controllers.ShowCategoryController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddProductController</servlet-name>
+        <servlet-class>thupnm.controllers.AddProductController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>RegisterCusController</servlet-name>
@@ -53,52 +61,73 @@
         <servlet-class>kietpt.controller.GetListCategory</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>GetListProduct</servlet-name>
-        <servlet-class>kietpt.controller.GetListProduct</servlet-class>
+        <servlet-name>GetListHotProduct</servlet-name>
+        <servlet-class>kietpt.controller.GetListHotProduct</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>GetProductListByCateId</servlet-name>
         <servlet-class>kietpt.controller.GetProductListByCateId</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>OrderCusController</servlet-name>
+        <servlet-class>kietpt.controller.OrderCusController</servlet-class>
+    </servlet>
+    
+    <servlet>
+        <servlet-name>GetAllCategoriesController</servlet-name>
+        <servlet-class>thupnm.controllers.GetAllCategoriesController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewInfoCategory</servlet-name>
+        <servlet-class>thupnm.controllers.ViewInfoCategory</servlet-class>
+    </servlet>
+    <!--Minh test-->
+    <servlet>
+        <servlet-name>AddImg</servlet-name>
+        <servlet-class>minhhy.controller.AddImg</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShowProductDetail</servlet-name>
+        <servlet-class>thupnm.controllers.ShowProductDetail</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShowProductController</servlet-name>
+        <servlet-class>thupnm.controllers.ShowProductController</servlet-class>
+    </servlet>
+    <!--Thupnm-->
+    <servlet>
+        <servlet-name>ShowProfileController</servlet-name>
+        <servlet-class>thupnm.controllers.ShowProfileController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchProductController</servlet-name>
+        <servlet-class>thupnm.controllers.SearchProductController</servlet-class>
+    </servlet>
+    <!--End Thupnm-->
+    <servlet-mapping>
+        <servlet-name>AddImg</servlet-name>
+        <url-pattern>/AddImg</url-pattern>
+    </servlet-mapping>
+    <!--End Minh test-->
+    <servlet>
+        <servlet-name>AddAndUpdateCategory</servlet-name>
+        <servlet-class>thupnm.controllers.AddAndUpdateCategory</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangeStatusCategory</servlet-name>
+        <servlet-class>thupnm.controllers.ChangeStatusCategory</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchCategoryController</servlet-name>
+        <servlet-class>thupnm.controllers.SearchCategoryController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginCusController</servlet-name>
         <url-pattern>/LoginCusController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ForgotPasswordController</servlet-name>
-        <url-pattern>/ForgotPasswordController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ShowUserController</servlet-name>
-        <url-pattern>/ShowUserController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>SearchController</servlet-name>
-        <url-pattern>/SearchController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>UpdateInfoController</servlet-name>
-        <url-pattern>/UpdateInfoController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>UpdateBasicInfo</servlet-name>
-        <url-pattern>/UpdateBasicInfo</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
         <servlet-name>RegisterCusController</servlet-name>
         <url-pattern>/RegisterCusController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>LogoutController</servlet-name>
-        <url-pattern>/LogoutController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ResetPasswordController</servlet-name>
-        <url-pattern>/ResetPasswordController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AddAdminController</servlet-name>
-        <url-pattern>/AddAdminController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UpdateCustomerController</servlet-name>
@@ -109,17 +138,71 @@
         <url-pattern>/ChangePassCustomer</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ShowCategoryController</servlet-name>
+        <url-pattern>/ShowCategoryController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddProductController</servlet-name>
+        <url-pattern>/AddProductController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>GetListCategory</servlet-name>
         <url-pattern>/GetListCategory</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>GetListProduct</servlet-name>
-        <url-pattern>/GetListProduct</url-pattern>
+        <servlet-name>GetListHotProduct</servlet-name>
+        <url-pattern>/GetListHotProduct</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>GetProductListByCateId</servlet-name>
         <url-pattern>/GetProductListByCateId</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>OrderCusController</servlet-name>
+        <url-pattern>/OrderCusController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetAllCategoriesController</servlet-name>
+        <url-pattern>/GetAllCategoriesController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewInfoCategory</servlet-name>
+        <url-pattern>/ViewInfoCategory</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddAndUpdateCategory</servlet-name>
+        <url-pattern>/AddAndUpdateCategory</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShowUserController</servlet-name>
+        <url-pattern>/ShowUserController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangeStatusCategory</servlet-name>
+        <url-pattern>/ChangeStatusCategory</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchCategoryController</servlet-name>
+        <url-pattern>/SearchCategoryController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShowProductDetail</servlet-name>
+        <url-pattern>/ShowProductDetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShowProductController</servlet-name>
+        <url-pattern>/ShowProductController</url-pattern>
+    </servlet-mapping>
+    <!--Thupnm-->
+    <servlet-mapping>
+        <servlet-name>ShowProfileController</servlet-name>
+        <url-pattern>/ShowProfileController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchProductController</servlet-name>
+        <url-pattern>/SearchProductController</url-pattern>
+    </servlet-mapping>
+    <!--End Thupnm-->
     <session-config>
         <session-timeout>
             30
