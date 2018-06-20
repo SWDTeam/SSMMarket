@@ -62,38 +62,44 @@
                                                     </form>
                                                 </div>
                                             </div>
-                                            <table class="table table-striped" id="list">
-                                                <thead>
-                                                    <tr>
-                                                        <th>ID</th>
-                                                        <th>Name</th>
-                                                        <th>TotalOfProducts</th>
-                                                        <th>Edit</th>
-                                                        <th>Delete</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <thupnm:forEach items="${requestScope.listCategory}" var="dto" varStatus="counter">
+                                            <thupnm:if test="${not empty requestScope.listCategory}">
+                                                <table class="table table-striped" id="list">
+                                                    <thead>
                                                         <tr>
-                                                            <td>${counter.count}</td>
-                                                            <td>${dto.categoryName}</td>
-                                                            <td align="center">${requestScope.total[counter.index]}</td>
-                                                            <td>
-                                                                <form action="ViewInfoCategory" method="POST">
-                                                                    <input type="hidden" value="${dto.categoryId}" name="cateId"/>
-                                                                    <button type="submit" class="btn btn-info ti-pencil"/>
-                                                                </form>
-                                                            </td>
-                                                            <td>
-                                                                <form action="ChangeStatusCategory" method="POST">
-                                                                    <input type="hidden" value="${dto.categoryId}" name="cateId"/>
-                                                                    <button type="submit" onclick="return confirmation()" class="btn btn-danger ti-trash"/>
-                                                                </form>
-                                                            </td>
+                                                            <th>ID</th>
+                                                            <th>Name</th>
+                                                            <th>TotalOfProducts</th>
+                                                            <th>Edit</th>
+                                                            <th>Delete</th>
                                                         </tr>
-                                                    </thupnm:forEach>
-                                                </tbody>
-                                            </table>
+                                                    </thead>
+                                                    <tbody>
+                                                        <thupnm:forEach items="${requestScope.listCategory}" var="dto" varStatus="counter">
+                                                            <tr>
+                                                                <td>${counter.count}</td>
+                                                                <td>${dto.categoryName}</td>
+                                                                <td align="center">${requestScope.total[counter.index]}</td>
+                                                                <td>
+                                                                    <form action="ViewInfoCategory" method="POST">
+                                                                        <input type="hidden" value="${dto.categoryId}" name="cateId"/>
+                                                                        <button type="submit" class="btn btn-info ti-pencil"/>
+                                                                    </form>
+                                                                </td>
+                                                                <td>
+                                                                    <form action="ChangeStatusCategory" method="POST">
+                                                                        <input type="hidden" value="${dto.categoryId}" name="cateId"/>
+                                                                        <button type="submit" onclick="return confirmation()" class="btn btn-danger ti-trash"/>
+                                                                    </form>
+                                                                </td>
+                                                            </tr>
+                                                        </thupnm:forEach>
+                                                    </tbody>
+                                                </table>
+                                            </thupnm:if>
+
+                                            <thupnm:if test="${empty requestScope.listCategory}">
+                                                <strong><font color="red">No record</font></strong>
+                                            </thupnm:if>
                                         </div>
                                     </div>
                                     <!--pagination-->
@@ -135,7 +141,7 @@
             </div>
         </div>
         <%@include file="layout/admin--script.jsp" %>
-        
+
         <script>
             function confirmation() {
                 return confirm("Are you sure to disable this category?");

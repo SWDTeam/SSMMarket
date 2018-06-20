@@ -52,13 +52,14 @@ public class ImageDAO {
         return null;
     }
 
-    public boolean createImage(String img) {
+    public boolean createImage(String img, String proId) {
         boolean checked = false;
         try {
             conn = DBConnection.getConnection();
-            String sql = "insert into Images(imgKey) values(?)";
+            String sql = "insert into Images(imgKey, productId) values(?, ?)";
             preStm = conn.prepareStatement(sql);
             preStm.setString(1, img);
+            preStm.setString(2, proId);
             checked = preStm.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();

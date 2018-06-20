@@ -71,24 +71,26 @@
                                         </div>
                                         <div class="row col-md-5">
                                             <div class="col-md-3"></div>
-                                            <div class="col-md-6" style="padding-bottom: 2%;">
-                                                <input type="text" placeholder="Name..." class="form-control border-input">
-                                            </div>
-                                            <div class="col-md-3 pull-right" >
-                                                <button class="btn btn-success">Filter</button>
-                                            </div>
+                                            <form action="SearchProductController" method="POST">
+                                                <div class="col-md-6" style="padding-bottom: 2%;">
+                                                    <input type="text" name="txtSearch" placeholder="Name..." class="form-control border-input">
+                                                </div>
+                                                <div class="col-md-3 pull-right" >
+                                                    <button type="submit" class="btn btn-success">Filter</button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                     <thupnm:if test="${not empty requestScope.listProduct}">
                                         <table class="table table-striped">
                                             <thead>
-                                                <th>No</th>
-                                                <th>Name</th>
-                                                <th>Price</th>
-                                                <th>Quantity</th>
-                                                <th>Status</th>
-                                                <th>Show</th>
-                                                <th>Action</th>
+                                            <th>No</th>
+                                            <th>Name</th>
+                                            <th>Price</th>
+                                            <th>Quantity</th>
+                                            <th>Status</th>
+                                            <th>Show</th>
+                                            <th>Action</th>
                                             </thead>
                                             <tbody>
                                                 <thupnm:forEach items="${requestScope.listProduct}" var="dto" varStatus="counter">
@@ -109,6 +111,10 @@
                                                 </thupnm:forEach>
                                             </tbody>
                                         </table>
+                                    </thupnm:if>
+                                    
+                                    <thupnm:if test="${empty requestScope.listProduct}">
+                                        <strong><font color="red">No record</font></strong>
                                     </thupnm:if>
                                 </div>
                             </div>

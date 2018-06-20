@@ -5,7 +5,6 @@
  */
 package thupnm.controllers;
 
-import com.sun.xml.internal.ws.util.StringUtils;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -32,7 +31,6 @@ import thupnm.dto.CategoryDTO;
  *
  * @author ThuPMNSE62369
  */
-@MultipartConfig
 public class AddAndUpdateCategory extends HttpServlet {
 
     /**
@@ -48,10 +46,7 @@ public class AddAndUpdateCategory extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            String cateId = request.getParameter("cateId");
-            String cateName = request.getParameter("cateName");
-            Part filePart = request.getPart("imgPic");
-
+            //Part filePart = request.getPart("imgPic");
             CategoryDAO dao = new CategoryDAO();
             CategoryDTO cate = new CategoryDTO();
             FileItemFactory factory = new DiskFileItemFactory();
@@ -71,9 +66,10 @@ public class AddAndUpdateCategory extends HttpServlet {
                 }
                 Iterator iter = items.iterator();
                 Hashtable params = new Hashtable();
-                String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+                //String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+                String fileName = null;
                 String realPath = null;
-                FileItem itemImg = null;
+//                FileItem itemImg = null;
                 while (iter.hasNext()) {
                     FileItem item = (FileItem) iter.next();
                     if (item.isFormField()) {
@@ -81,14 +77,13 @@ public class AddAndUpdateCategory extends HttpServlet {
                     } else {
                         try {
                             String itemName = item.getName();
-                            if (fileName == null) {
-                                fileName = itemName;
-                                System.out.println("Path " + fileName);
-                                realPath = getServletContext().getRealPath("/") + "img\\" + fileName;
-                                System.out.println("Realpath " + realPath);
-                                File savedFile = new File(realPath);
-                                item.write(savedFile);
-                            }
+                            fileName = itemName.substring(itemName.lastIndexOf("\\") + 1);
+                            System.out.println("path " + fileName);
+                            realPath = getServletContext().getRealPath("/").substring(0, getServletContext().getRealPath("/").indexOf("build"))
+                                    + "web\\img\\" + fileName;
+                            System.out.println("Real path " + realPath);
+                            File savedFile = new File(realPath);
+                            item.write(savedFile);
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -97,7 +92,13 @@ public class AddAndUpdateCategory extends HttpServlet {
 
                 cate.setImgPic(fileName);
                 System.out.println("aaaaaaa " + cate.getImgPic());
+
+                String cateId = (String) params.get("cateId");
+                System.out.println("cateid " + cateId);
+
+                String cateName = (String) params.get("cateName");
                 cate.setCategoryName(cateName);
+                System.out.println("catename " + cateName);
 
                 if (cateId.isEmpty() || Objects.isNull(cateId)) {
                     if (dao.createNewCategory(cate)) {
@@ -108,6 +109,7 @@ public class AddAndUpdateCategory extends HttpServlet {
                         request.getRequestDispatcher("GetAllCategoriesController").forward(request, response);
                     }
                 } else {
+                    cate.setCategoryId(Integer.parseInt(cateId));
                     if (dao.updateCategory(cate)) {
                         request.setAttribute("RESULT", "Update category successfully!");
                         //request.setAttribute("IMG", cate.getImgPic());
@@ -119,7 +121,7 @@ public class AddAndUpdateCategory extends HttpServlet {
                 }
             }
         } catch (Exception e) {
-            log("Error at AddAndUpdateCategoryController " + e.getMessage());
+            e.printStackTrace();
         }
     }
 

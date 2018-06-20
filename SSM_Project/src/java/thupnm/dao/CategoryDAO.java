@@ -47,7 +47,7 @@ public class CategoryDAO {
         List<CategoryDTO> result = null;
         try {
             conn = DBConnection.getConnection();
-            String sql = "select categoryId, categoryName from Category";
+            String sql = "select categoryId, categoryName from Category where status = 'active'";
             preStm = conn.prepareStatement(sql);
             rs = preStm.executeQuery();
             result = new ArrayList<>();
@@ -180,13 +180,11 @@ public class CategoryDAO {
         boolean checked = false;
         try {
             conn = DBConnection.getConnection();
-            String sql = "update Category set categoryName = ?, status = ?, imgPic = ? where categoryId = ?";
+            String sql = "update Category set categoryName = ?, imgPic = ? where categoryId = ?";
             preStm = conn.prepareStatement(sql);
             preStm.setString(1, category.getCategoryName());
-            preStm.setString(2, category.getStatus());
-            preStm.setString(3, CategoryDTO.STATUS_ACTIVE);
-            preStm.setString(4, category.getImgPic());
-            preStm.setInt(5, category.getCategoryId());
+            preStm.setString(2, category.getImgPic());
+            preStm.setInt(3, category.getCategoryId());
             checked = preStm.executeUpdate() > 0;
         } catch (Exception e) {
             e.printStackTrace();

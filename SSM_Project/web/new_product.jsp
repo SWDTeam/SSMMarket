@@ -51,7 +51,7 @@
                                 <h4 class="title">Create Product</h4>
                             </div>
 
-                            <form id="form--new--product" method="POST" enctype="multipart/form-data" action="AddProductController">
+                            <form id="form--new--product" method="POST" action="AddProductController" enctype="multipart/form-data">
                                 <div class="row col-md-offset-1 col-md-10">
                                     <div class="form-group">
                                         <label>Name Of Product</label>
@@ -109,8 +109,8 @@
                                     </div>
                                     <div class="col-md-5">
                                         <div class="form-group">
-                                            <label>Picture</label>                                   
-                                            <input type="file" name="picture" class="form-control" id="p--pic">
+                                            <label>Picture</label>  
+                                                <input type="file" name="picture" class="form-control" id="p--pic">
                                         </div>
                                         <span id="error--pic"></span>
                                     </div>

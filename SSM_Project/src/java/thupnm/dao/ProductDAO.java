@@ -123,7 +123,9 @@ public class ProductDAO {
         try {
             conn = DBConnection.getConnection();
             String sql = "select p.productName, p.description, p.manuDate, p.expiredDate, " +
-                         "p.manufacturer, p.price, p.quantity from Product p where p.productId = ?";
+                         "p.manufacturer, p.price, p.quantity, i.imgKey, c.categoryName " +
+                         "from Product p, Images i, Category c where p.productId = i.productId " +
+                         "and c.categoryId = p.categoryId and p.productId = ?";
             preStm = conn.prepareStatement(sql);
             preStm.setInt(1, productId);
             rs = preStm.executeQuery();
@@ -135,6 +137,8 @@ public class ProductDAO {
                 dto.setManufacturer(rs.getString("manufacturer"));
                 dto.setPrice(rs.getFloat("price"));
                 dto.setQuantity(rs.getInt("quantity"));
+                dto.setImgKey(rs.getString("imgKey"));
+                dto.setCategoryName(rs.getString("categoryName"));
                 return dto;
             }
         } catch (Exception e) {
@@ -143,5 +147,39 @@ public class ProductDAO {
             closeConnection();
         }
         return null;
+    }
+    
+    public List<ProductDTO> findByLikeProductName(String search) {
+        List<ProductDTO> result = new ArrayList<>();
+        try {
+            String sql = "select productId, productName, price, quantity, status from Product " +
+                         "where status = 'active' and productName like ?";
+            conn = DBConnection.getConnection();
+            preStm = conn.prepareStatement(sql);
+            preStm.setString(1, "%" + search + "%");
+            rs = preStm.executeQuery();
+            int quantity, productId;
+            float price;
+            String productName = "", status = "";
+            while (rs.next()) {
+                productId = rs.getInt("productId");
+                productName = rs.getString("productName");
+                price = rs.getFloat("price");
+                quantity = rs.getInt("quantity");       
+                status = rs.getString("status");
+                ProductDTO dto = new ProductDTO();
+                dto.setProductId(productId);
+                dto.setProductName(productName);
+                dto.setPrice(price);
+                dto.setQuantity(quantity);
+                dto.setStatus(status);
+                result.add(dto);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return result;
     }
 }

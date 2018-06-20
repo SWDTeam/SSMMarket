@@ -7,5 +7,6 @@
   </head>
   <body>
     <image src="img/${requestScope.IMG}"/>
+     ${requestScope.NAME}
   </body>
 </html>

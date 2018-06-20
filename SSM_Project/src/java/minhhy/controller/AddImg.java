@@ -29,7 +29,7 @@ public class AddImg extends HttpServlet {
             ServletFileUpload upload = new ServletFileUpload(factory);
             List items = null;
 
-            //xu li main image
+//xu li main image
             boolean isMultiPart = ServletFileUpload.isMultipartContent(request);
             System.out.println("aaa" + isMultiPart);
             if (!isMultiPart) {
@@ -65,12 +65,17 @@ public class AddImg extends HttpServlet {
                         }
                     }
                 }
-
+                String proId = (String) params.get("productId");
+                System.out.println("Product ID " + proId);
+                
+                dto.setProductId(proId);
                 dto.setImgKey(fileName);
+                System.out.println("1111111" + proId);
                 System.out.println("aaaaaaa " + dto.getImgKey());
-                if (dao.createImage(dto.getImgKey())) {
+                if (dao.createImage(fileName, proId)) {
                     request.setAttribute("RESULT", "Add img successfully!");
                     request.setAttribute("IMG", dto.getImgKey());
+                    request.setAttribute("NAME", dto.getProductId());
                     request.getRequestDispatcher("show_img.jsp").forward(request, response);
                 } else {
                     request.setAttribute("RESULT", "Add img failed!");

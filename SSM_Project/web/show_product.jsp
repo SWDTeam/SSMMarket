@@ -51,20 +51,16 @@
                                             <div class="card card-user">
                                                 <div class="col-md-12 row" id="M--img--product">
                                                     <!--                          <img src="img/23e3241530edda42484f3006dcff524ea4e7ee992af55-dHcf6g_fw658.png" id="M--img--detail"/>-->
-                                                    <img src="img/${requestScope.IMG}" id="M--img--detail"/>
+                                                    <img src="img/${requestScope.PRODUCT.imgKey}" id="M--img--detail"/>
                                                 </div>
-                                                <div class="row">
+                                                <div class="row col-md-10 col-md-offset-1">
                                                     <h4 class="title" style="text-align: center;">${PRODUCT.productName}<br/>
                                                         <a href="#">
-                                                            <small>table - desk</small>
+                                                            <small>${PRODUCT.categoryName}</small>
                                                         </a>
                                                     </h4>
                                                     <p class="description" style="margin: 4%;">
                                                         ${PRODUCT.description}
-<!--                                                        Expansive Touch Display
-                                                        The Pano supports 40 simultaneous touch points, while the contiguous dual 4K Ultra High Definition (UHD) displays provide a unique 7680 x 2160 pixel surface.
-                                                        Powerful Processing
-                                                        The Pano comes with a powerful desktop Quad Core i7 computer system, 16GB of RAM, 512GB SSD, and a GTX 1070 graphics card. The system includes a built-in sound system with four 90W Yamaha speakers.-->
                                                     </p>
                                                 </div>
                                                 <hr>

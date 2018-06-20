@@ -5,31 +5,22 @@
  */
 package thupnm.controllers;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import thupnm.dao.ImageDAO;
-import thupnm.dto.ImageDTO;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import thupnm.dao.ProductDAO;
-import thupnm.dto.ProductDTO;
+import javax.servlet.http.HttpSession;
+import thupnm.dao.AccountDAO;
+import thupnm.dto.AccountDTO;
+import thupnm.dto.RoleDTO;
 
 /**
  *
  * @author ThuPMNSE62369
  */
-public class ShowProductDetail extends HttpServlet {
+public class ShowProfileController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,37 +34,25 @@ public class ShowProductDetail extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try {
-            String productId = request.getParameter("productId");
-            System.out.println("ggggggg " + productId);
-
-            ProductDAO product = new ProductDAO();
-            ProductDTO dto = product.showProductDetail(Integer.parseInt(productId));
-            System.out.println("ffffffff " + dto.getImgKey());
-            List items = null;
-
-            String fileName = dto.getImgKey();
-            System.out.println("ddddd" + fileName);
-            String realPath = null;
-            FileItem itemImg = null;
-
-            System.out.println("bbbbbbbbb");
-            try {
-                System.out.println("Path " + fileName);
-                realPath = getServletContext().getRealPath("/") + "img\\" + fileName;
-                System.out.println("Realpath " + realPath);
-
-            } catch (Exception e) {
-                e.printStackTrace();
+        try (PrintWriter out = response.getWriter()) {
+            HttpSession session = request.getSession();
+            AccountDAO dao = new AccountDAO();
+            AccountDTO id = (AccountDTO) session.getAttribute("INFO");
+            int roleId = (int) session.getAttribute("ROLEADMIN");
+            AccountDTO result = dao.viewInfoAccount(id.getUserId(), roleId);
+            RoleDTO role = dao.viewRole(id.getUserId(), roleId);
+            if (result != null) {
+                request.setAttribute("UPDATEBASIC", result);
+                request.setAttribute("ROLE", role);
+                request.setAttribute("USERID", id.getUserId());
+                request.setAttribute("ROLEID", roleId);
+                request.getRequestDispatcher("profile.jsp").forward(request, response);
+            } else {
+                request.setAttribute("ERROR", "Something went wrong. Please try again latter!");
+                request.getRequestDispatcher("profile.jsp").forward(request, response);
             }
-            
-            System.out.println("aaaaaaa " + dto.getImgKey());
-            //request.setAttribute("IMG", dto.getImgKey());
-            request.setAttribute("PRODUCT", dto);
-            request.getRequestDispatcher("show_product.jsp").forward(request, response);
-
         } catch (Exception e) {
-            log("ERROR at ShowProductController " + e.getMessage());
+            e.printStackTrace();
         }
     }
 

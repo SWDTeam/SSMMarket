@@ -85,6 +85,16 @@
         <servlet-name>ShowProductController</servlet-name>
         <servlet-class>thupnm.controllers.ShowProductController</servlet-class>
     </servlet>
+    <!--Thupnm-->
+    <servlet>
+        <servlet-name>ShowProfileController</servlet-name>
+        <servlet-class>thupnm.controllers.ShowProfileController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchProductController</servlet-name>
+        <servlet-class>thupnm.controllers.SearchProductController</servlet-class>
+    </servlet>
+    <!--End Thupnm-->
     <servlet-mapping>
         <servlet-name>AddImg</servlet-name>
         <url-pattern>/AddImg</url-pattern>
@@ -194,6 +204,16 @@
         <servlet-name>ShowProductController</servlet-name>
         <url-pattern>/ShowProductController</url-pattern>
     </servlet-mapping>
+    <!--Thupnm-->
+    <servlet-mapping>
+        <servlet-name>ShowProfileController</servlet-name>
+        <url-pattern>/ShowProfileController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchProductController</servlet-name>
+        <url-pattern>/SearchProductController</url-pattern>
+    </servlet-mapping>
+    <!--End Thupnm-->
     <session-config>
         <session-timeout>
             30

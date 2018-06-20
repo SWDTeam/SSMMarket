@@ -56,24 +56,24 @@
                                     <div class="row">
                                         <div class="col-md-1"></div>
                                         <div class="col-md-3">
-                                            
+
                                             <select class="form-control border-input">
                                                 <option value="1">Role</option>
                                                 <option value="user">user</option>
                                                 <option value="admin">admin</option>                                                
                                             </select>
-                                               
-                                            
+
+
                                         </div>
                                         <div class="row col-md-8">
                                             <div class="col-md-3"></div>
                                             <form action="SearchController" method="POST">
-                                            <div class="col-md-6" style="padding-bottom: 2%;">
-                                                <input type="text" placeholder="Name..." name="txtSearch" class="form-control border-input">
-                                            </div>
-                                            <div class="col-md-3 pull-right" >
-                                                <button class="btn btn-success" type="submit">Filter</button>
-                                            </div>
+                                                <div class="col-md-6" style="padding-bottom: 2%;">
+                                                    <input type="text" placeholder="Name..." name="txtSearch" class="form-control border-input">
+                                                </div>
+                                                <div class="col-md-3 pull-right" >
+                                                    <button class="btn btn-success" type="submit">Filter</button>
+                                                </div>
                                             </form>
                                         </div>
 
@@ -117,8 +117,10 @@
                                         </table>
                                     </thupnm:if>
 
-                                </div>
-                                   
+                                    <thupnm:if test="${empty requestScope.listUser}">
+                                        <strong><font color="red">No record</font></strong>
+                                    </thupnm:if>
+                                </div>  
                             </div>
                         </div>
                         <!--pagination-->
@@ -127,7 +129,7 @@
                 </div>
             </div>
         </div>
-    <%@include file="layout/admin--script.jsp" %>
-</body>
+        <%@include file="layout/admin--script.jsp" %>
+    </body>
 
 </html>

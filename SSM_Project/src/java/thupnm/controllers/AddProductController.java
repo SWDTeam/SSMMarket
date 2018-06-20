@@ -28,40 +28,19 @@ import thupnm.dao.ProductDAO;
 import thupnm.dto.ImageDTO;
 import thupnm.dto.ProductDTO;
 
-@MultipartConfig
 public class AddProductController extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            String productName = request.getParameter("productName");
-            String categoryName = request.getParameter("categoryName");
-            String manu = request.getParameter("manufacturer");
-            String price = request.getParameter("price");
-            String quantity = request.getParameter("quantity");
-
-            String manuDateStr = request.getParameter("manuDate");
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            Date manuDate = sdf.parse(manuDateStr);
-            Timestamp started = new Timestamp(manuDate.getTime());
-
-            String expiredDateStr = request.getParameter("expiredDate");
-            SimpleDateFormat sdfExpired = new SimpleDateFormat("yyyy-MM-dd");
-            Date expiredDate = sdfExpired.parse(expiredDateStr);
-            Timestamp ended = new Timestamp(expiredDate.getTime());
-
-            String description = request.getParameter("editor1");
-            CategoryDAO cateDAO = new CategoryDAO();
-            int categoryId = cateDAO.viewCategoryId(categoryName);
-
-            Part filePart = request.getPart("picture");
-
+            //-----------------------
+            //Part filePart = request.getPart("picture");
             FileItemFactory factory = new DiskFileItemFactory();
             ServletFileUpload upload = new ServletFileUpload(factory);
             List items = null;
 
-            //xu li main image
+            //xu li image
             boolean isMultiPart = ServletFileUpload.isMultipartContent(request);
             System.out.println("aaa" + isMultiPart);
             if (!isMultiPart) {
@@ -74,7 +53,10 @@ public class AddProductController extends HttpServlet {
                 }
                 Iterator iter = items.iterator();
                 Hashtable params = new Hashtable();
-                String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+                //String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+                String fileName = null;
+
+                System.out.println("filename " + fileName);
                 String realPath = null;
                 FileItem itemImg = null;
                 while (iter.hasNext()) {
@@ -84,19 +66,52 @@ public class AddProductController extends HttpServlet {
                     } else {
                         try {
                             String itemName = item.getName();
-                            if (fileName == null) {
-                                fileName = itemName;
-                                System.out.println("Path " + fileName);
-                                realPath = getServletContext().getRealPath("/") + "img\\" + fileName;
-                                System.out.println("Realpath " + realPath);
-                                File savedFile = new File(realPath);
-                                item.write(savedFile);
-                            }
+                            fileName = itemName.substring(itemName.lastIndexOf("\\") + 1);
+                            System.out.println("path " + fileName);
+                            realPath = getServletContext().getRealPath("/").substring(0, getServletContext().getRealPath("/").indexOf("build"))
+                                    + "web\\img\\" + fileName;
+                            System.out.println("Real path " + realPath);
+                            
+                            File savedFile = new File(realPath);
+                            item.write(savedFile);
+//                            if (fileName == null) {
+//                                fileName = itemName;
+//                                System.out.println("Path " + fileName);
+//                                realPath = getServletContext().getRealPath("/") + "img\\" + fileName;
+//                                System.out.println("Realpath " + realPath);
+//                                File savedFile = new File(realPath);
+//                                item.write(savedFile);
+//                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
                 }
+
+                //xu ly data product
+                String productName = (String) params.get("productName");
+                System.out.println("proname " + productName);
+
+                String categoryName = (String) params.get("categoryName");
+                System.out.println("catename " + categoryName);
+
+                String manu = (String) params.get("manufacturer");
+                String price = (String) params.get("price");
+                String quantity = (String) params.get("quantity");
+
+                String manuDateStr = (String) params.get("manuDate");
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date manuDate = sdf.parse(manuDateStr);
+                Timestamp started = new Timestamp(manuDate.getTime());
+
+                String expiredDateStr = (String) params.get("expiredDate");
+                SimpleDateFormat sdfExpired = new SimpleDateFormat("yyyy-MM-dd");
+                Date expiredDate = sdfExpired.parse(expiredDateStr);
+                Timestamp ended = new Timestamp(expiredDate.getTime());
+
+                String description = (String) params.get("editor1");
+                CategoryDAO cateDAO = new CategoryDAO();
+                int categoryId = cateDAO.viewCategoryId(categoryName);
 
                 ImageDTO image = new ImageDTO();
                 ImageDAO imageDAO = new ImageDAO();
@@ -116,7 +131,7 @@ public class AddProductController extends HttpServlet {
                 image.setImgKey(fileName);
 
                 System.out.println("aaaaaaa " + image.getImgKey());
-                
+
                 if (dao.createNewProduct(dto)) {
                     int proId = dao.viewProductId(dto.getProductKey());
                     System.out.println("ssss " + proId);
@@ -131,8 +146,9 @@ public class AddProductController extends HttpServlet {
                 }
             }
         } catch (Exception e) {
-            log("ERROR at AddProductController " + e.getMessage());
-        } 
+            e.printStackTrace();
+            //log("ERROR at AddProductController " + e.getMessage());
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

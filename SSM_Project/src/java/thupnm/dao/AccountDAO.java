@@ -398,12 +398,10 @@ public class AccountDAO {
             rs = preStm.executeQuery();
             int userId, roleId;
             String username = "", email = "", gender = "", roleName = "", status = "";
-            Date dob;
             while (rs.next()) {
                 userId = rs.getInt("userId");
                 username = rs.getString("userName");
                 email = rs.getString("email");
-                dob = rs.getDate("dateOfBirth");
                 gender = rs.getString("gender");
                 roleName = rs.getString("roleName");
                 status = rs.getString("status");
@@ -481,4 +479,5 @@ public class AccountDAO {
         }
         return checked;
     }
+    
 }

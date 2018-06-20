@@ -17,10 +17,26 @@ public class ProductDTO implements Serializable {
 
     public static final String STATUS_ACTIVE = "active";
 
-    private String productName, manufacturer, description, status, urlPic, productKey;
+    private String productName, manufacturer, description, status, urlPic, productKey, imgKey, categoryName;
     private int quantity, categoryId, productId;
     private Date manuDate, expiredDate;
     private float price;
+
+    public String getImgKey() {
+        return imgKey;
+    }
+
+    public void setImgKey(String imgKey) {
+        this.imgKey = imgKey;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
 
     public String getProductKey() {
         return productKey;
