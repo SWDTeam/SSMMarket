@@ -13,7 +13,7 @@ import java.util.Date;
  *
  * @author ThuPMNSE62369
  */
-public class ProductDTO implements Serializable {
+public class ProductDto implements Serializable {
 
     public static final String STATUS_ACTIVE = "active";
 
@@ -22,10 +22,10 @@ public class ProductDTO implements Serializable {
     private Date manuDate, expiredDate;
     private float price;
 
-    public ProductDTO() {
+    public ProductDto() {
     }
 
-    public ProductDTO(String productKey, int quantity, int productId, float price) {
+    public ProductDto(String productKey, int quantity, int productId, float price) {
         this.productKey = productKey;
         this.quantity = quantity;
         this.productId = productId;

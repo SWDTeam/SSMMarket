@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import kietpt.dao.AccountDAO;
-import kietpt.dto.AccountDTO;
+import kietpt.dto.AccountDto;
 
 /**
  *
@@ -48,7 +48,7 @@ public class RegisterCusController extends HttpServlet {
             String status = request.getParameter("txtStatus");
             System.out.println(email + " - " + password + " - " + username + " - " + address + " - " + phone + " - " + gender);
                
-            AccountDTO cus = new AccountDTO();
+            AccountDto cus = new AccountDto();
             cus.setEmail(email);
             cus.setPassword(password);
             cus.setUsername(username);

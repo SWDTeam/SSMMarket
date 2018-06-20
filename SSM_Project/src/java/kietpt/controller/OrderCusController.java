@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import kietpt.dao.ProductDAO;
-import kietpt.dto.OrderDTO;
-import kietpt.dto.ProductDTO;
+import kietpt.dto.OrderDto;
+import kietpt.dto.ProductDto;
 
 /**
  *
@@ -40,12 +40,12 @@ public class OrderCusController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try {
 
-            List<ProductDTO> listCart = new ArrayList<>();
-            listCart.add(new ProductDTO("D1", 10, 1, 300));
-            listCart.add(new ProductDTO("D2", 5, 2, 400));
+            List<ProductDto> listCart = new ArrayList<>();
+            listCart.add(new ProductDto("D1", 10, 1, 300));
+            listCart.add(new ProductDto("D2", 5, 2, 400));
 
             ProductDAO dao = new ProductDAO();
-            List<ProductDTO> listProduct = dao.getListProduct();
+            List<ProductDto> listProduct = dao.getListProduct();
             int afterQuantity = 0;
             int flag = 0;
             for (int i = 0; i < listProduct.size(); i++) {
@@ -62,7 +62,7 @@ public class OrderCusController extends HttpServlet {
                 }
             }
             if (flag == 1) {
-                OrderDTO dto = new OrderDTO();
+                OrderDto dto = new OrderDto();
                 Random randomCode = new Random();
                 dto.setOrderCode(String.valueOf(randomCode.nextInt(1000000)));
                 Date date = Calendar.getInstance().getTime();

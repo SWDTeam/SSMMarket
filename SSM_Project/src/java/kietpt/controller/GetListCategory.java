@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import kietpt.dao.ProductDAO;
-import kietpt.dto.CategoryDTO;
+import kietpt.dto.CategoryDto;
 
 /**
  *
@@ -41,7 +41,7 @@ public class GetListCategory extends HttpServlet {
         try {
             if (btAction.equals("view")) {
                 ProductDAO dao = new ProductDAO();
-                List<CategoryDTO> listCate = dao.getListCategory();
+                List<CategoryDto> listCate = dao.getListCategory();
                 if (listCate != null) {
                     json = new Gson().toJson(listCate);
                     System.out.println("lay danh sach category thanh cong " + json);
@@ -50,7 +50,7 @@ public class GetListCategory extends HttpServlet {
             } else if(btAction.equals("searchName")){
                 String cateName = request.getParameter("txtSearch");
                 ProductDAO dao = new ProductDAO();
-                List<CategoryDTO> listCate = dao.getListCategoryByName(cateName);
+                List<CategoryDto> listCate = dao.getListCategoryByName(cateName);
                 if (listCate != null) {
                     json = new Gson().toJson(listCate);
                     System.out.println("lay danh sach category khi search name thanh cong " + json);

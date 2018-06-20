@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import kietpt.dao.AccountDAO;
-import kietpt.dto.AccountDTO;
+import kietpt.dto.AccountDto;
 
 /**
  *
@@ -43,7 +43,7 @@ public class ChangePassCustomer extends HttpServlet {
             String oldPass = request.getParameter("txtOldPassword");
             String newPass = request.getParameter("txtNewPassword");
             System.out.println(email + " - " + oldPass + " - " + newPass);
-            AccountDTO account = new AccountDTO();
+            AccountDto account = new AccountDto();
             if (dao.checkPassword(email, oldPass)) {
                 if (dao.changPassCustomer(email, newPass)) {
                     account.setEmail(email);

@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import ssm.db.DBConnection;
-import kietpt.dto.CategoryDTO;
-import kietpt.dto.OrderDTO;
-import kietpt.dto.ProductDTO;
+import kietpt.dto.CategoryDto;
+import kietpt.dto.OrderDto;
+import kietpt.dto.ProductDto;
 
 /**
  *
@@ -38,11 +38,11 @@ public class ProductDAO {
         }
     }
 
-    public List<CategoryDTO> getListCategory() {
+    public List<CategoryDto> getListCategory() {
         Connection conn = null;
         PreparedStatement preStm = null;
         ResultSet rs = null;
-        List<CategoryDTO> listCate = new ArrayList<>();
+        List<CategoryDto> listCate = new ArrayList<>();
         try {
             conn = DBConnection.getConnection();
             String sql = "Select * From Category ";
@@ -56,7 +56,7 @@ public class ProductDAO {
                 status = rs.getString("status");
                 urlPic = rs.getString("imgPic");
                 
-                CategoryDTO dto = new CategoryDTO();
+                CategoryDto dto = new CategoryDto();
                 dto.setCateId(id);
                 dto.setCateName(name);
                 dto.setStatus(status);
@@ -71,11 +71,11 @@ public class ProductDAO {
         return listCate;
     }
 
-    public List<CategoryDTO> getListCategoryByName(String search) {
+    public List<CategoryDto> getListCategoryByName(String search) {
         Connection conn = null;
         PreparedStatement preStm = null;
         ResultSet rs = null;
-        List<CategoryDTO> listCate = new ArrayList<>();
+        List<CategoryDto> listCate = new ArrayList<>();
         try {
             conn = DBConnection.getConnection();
             String sql = "Select * From Category where categoryName LIKE ? ";
@@ -89,7 +89,7 @@ public class ProductDAO {
                 name = rs.getString("categoryName");
                 status = rs.getString("status");
                 urlPic = rs.getString("imgPic");
-                CategoryDTO dto = new CategoryDTO();
+                CategoryDto dto = new CategoryDto();
                 dto.setCateId(id);
                 dto.setCateName(name);
                 dto.setStatus(status);
@@ -104,11 +104,11 @@ public class ProductDAO {
         return listCate;
     }
 
-    public List<ProductDTO> getListCusHotProduct() {
+    public List<ProductDto> getListCusHotProduct() {
         Connection conn = null;
         PreparedStatement preStm = null;
         ResultSet rs = null;
-        List<ProductDTO> listProduct = new ArrayList<>();
+        List<ProductDto> listProduct = new ArrayList<>();
         try {
             conn = DBConnection.getConnection();
             String sql = "select top 6 pro.productName, pro.productId,img.imgKey,pro.price,pro.description,pro.productKey,"
@@ -132,7 +132,7 @@ public class ProductDAO {
                 manufacture = rs.getString("manufacturer");
                 manuDate = rs.getDate("manuDate");
                 expiredDate = rs.getDate("expiredDate");
-                ProductDTO dto = new ProductDTO();
+                ProductDto dto = new ProductDto();
                 dto.setProductId(id);
                 dto.setProductName(name);
                 dto.setDescription(des);
@@ -152,11 +152,11 @@ public class ProductDAO {
         return listProduct;
     }
 
-    public List<ProductDTO> getListProductByCateId(int id) {
+    public List<ProductDto> getListProductByCateId(int id) {
         Connection conn = null;
         PreparedStatement preStm = null;
         ResultSet rs = null;
-        List<ProductDTO> listProduct = new ArrayList<>();
+        List<ProductDto> listProduct = new ArrayList<>();
         try {
             conn = DBConnection.getConnection();
             String sql = "select pro.productId,pro.productKey,pro.productName,pro.price,pro.description, img.imgKey,"
@@ -180,7 +180,7 @@ public class ProductDAO {
                 manufacture = rs.getString("manufacturer");
                 manuDate = rs.getDate("manuDate");
                 expiredDate = rs.getDate("expiredDate");
-                ProductDTO dto = new ProductDTO();
+                ProductDto dto = new ProductDto();
                 dto.setProductId(id);
                 dto.setProductName(name);
                 dto.setDescription(des);
@@ -200,11 +200,11 @@ public class ProductDAO {
         return listProduct;
     }
 
-    public List<ProductDTO> getListProduct() {
+    public List<ProductDto> getListProduct() {
         Connection conn = null;
         PreparedStatement preStm = null;
         ResultSet rs = null;
-        List<ProductDTO> listProduct = new ArrayList<>();
+        List<ProductDto> listProduct = new ArrayList<>();
         try {
             conn = DBConnection.getConnection();
             String sql = "select productId,productKey,quantity,price from Product where status = active";
@@ -219,7 +219,7 @@ public class ProductDAO {
                 productKey = rs.getString("productKey");
                 quan = rs.getInt("quantity");
                 price = rs.getFloat("price");
-                ProductDTO dto = new ProductDTO();
+                ProductDto dto = new ProductDto();
                 dto.setProductId(proId);
                 dto.setProductKey(productKey);
                 dto.setQuantity(quan);
@@ -234,7 +234,7 @@ public class ProductDAO {
         return listProduct;
     }
 
-    public int insertOrder(OrderDTO dto) {
+    public int insertOrder(OrderDto dto) {
         Connection conn = null;
         PreparedStatement preStm = null;
         ResultSet rs = null;
@@ -260,7 +260,7 @@ public class ProductDAO {
         return 1;
     }
 
-    public boolean insertOrderDetail(int orderId, List<ProductDTO> listProduct) {
+    public boolean insertOrderDetail(int orderId, List<ProductDto> listProduct) {
         Connection conn = null;
         PreparedStatement preStm = null;
         ResultSet rs = null;

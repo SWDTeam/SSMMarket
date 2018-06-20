@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import kietpt.dao.ProductDAO;
-import kietpt.dto.CategoryDTO;
-import kietpt.dto.ProductDTO;
+import kietpt.dto.CategoryDto;
+import kietpt.dto.ProductDto;
 
 /**
  *
@@ -42,7 +42,7 @@ public class GetProductListByCateId extends HttpServlet {
             String cateId = request.getParameter("txtCateId");
             int id = Integer.parseInt(cateId);
             ProductDAO dao = new ProductDAO();
-            List<ProductDTO> listProduct = dao.getListProductByCateId(id);
+            List<ProductDto> listProduct = dao.getListProductByCateId(id);
             if (listProduct != null) {
                 json = new Gson().toJson(listProduct);
                 System.out.println("lay danh sach product boi category thanh cong " + json);

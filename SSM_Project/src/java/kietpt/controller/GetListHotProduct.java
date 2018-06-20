@@ -14,8 +14,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import kietpt.dao.ProductDAO;
-import kietpt.dto.CategoryDTO;
-import kietpt.dto.ProductDTO;
+import kietpt.dto.CategoryDto;
+import kietpt.dto.ProductDto;
 
 /**
  *
@@ -40,7 +40,7 @@ public class GetListHotProduct extends HttpServlet {
         String json = "";
         try {
             ProductDAO dao = new ProductDAO();
-            List<ProductDTO> listProduct = dao.getListCusHotProduct();
+            List<ProductDto> listProduct = dao.getListCusHotProduct();
             if (listProduct != null) {
                 json = new Gson().toJson(listProduct);
                 System.out.println("lay danh sach product thanh cong " + json);

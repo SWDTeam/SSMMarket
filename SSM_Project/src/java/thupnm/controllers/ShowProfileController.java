@@ -39,6 +39,7 @@ public class ShowProfileController extends HttpServlet {
             AccountDAO dao = new AccountDAO();
             AccountDTO id = (AccountDTO) session.getAttribute("INFO");
             int roleId = (int) session.getAttribute("ROLEADMIN");
+            System.out.println("roleid " + roleId);
             AccountDTO result = dao.viewInfoAccount(id.getUserId(), roleId);
             RoleDTO role = dao.viewRole(id.getUserId(), roleId);
             if (result != null) {

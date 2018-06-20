@@ -12,7 +12,7 @@ import java.util.Date;
  *
  * @author ThuPMNSE62369
  */
-public class AccountDTO implements Serializable {
+public class AccountDto implements Serializable {
     
     public static final int ROLE_USER = 2;
     public static final String STATUS_ACTIVE = "active";
@@ -20,14 +20,14 @@ public class AccountDTO implements Serializable {
     private int userId, roleId;  
     private String username, password, phone, email, gender, address, status, role;
 
-    public AccountDTO() {
+    public AccountDto() {
     }
 
-    public AccountDTO(String password) {
+    public AccountDto(String password) {
         this.password = password;
     }
 
-    public AccountDTO(int userId, String username, String password, String phone, String email, String gender, String address, String status) {
+    public AccountDto(int userId, String username, String password, String phone, String email, String gender, String address, String status) {
         this.userId = userId;
         this.username = username;
         this.password = password;
@@ -39,7 +39,7 @@ public class AccountDTO implements Serializable {
     }
 
 
-    public AccountDTO(int userId, String username, String password, String phone, String email, String gender, String address, String status, String role) {
+    public AccountDto(int userId, String username, String password, String phone, String email, String gender, String address, String status, String role) {
         this.userId = userId;
         this.username = username;
         this.password = password;

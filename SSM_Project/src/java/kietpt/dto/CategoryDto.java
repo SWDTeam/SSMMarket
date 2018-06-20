@@ -11,7 +11,7 @@ import java.io.Serializable;
  *
  * @author ThuPMNSE62369
  */
-public class CategoryDTO implements Serializable {
+public class CategoryDto implements Serializable {
 
     private int cateId;
     private String cateName, status, imgPic;

@@ -5,6 +5,7 @@
  */
 package kietpt.controller;
 
+
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import kietpt.dao.AccountDAO;
-import kietpt.dto.AccountDTO;
+import thupnm.dto.AccountDTO;
 
 /**
  *

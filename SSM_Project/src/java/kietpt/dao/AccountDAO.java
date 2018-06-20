@@ -10,7 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.Date;
 import ssm.db.DBConnection;
-import kietpt.dto.AccountDTO;
+import kietpt.dto.AccountDto;
+import thupnm.dto.AccountDTO;
 
 /**
  *
@@ -99,7 +100,47 @@ public class AccountDAO {
         return dto;
     }
     
-    public boolean insertCustomer(AccountDTO dto) {
+    public AccountDto find1(String mail, String pass) {
+        AccountDto dto = null;
+        Connection conn = null;
+        PreparedStatement preStm = null;
+        ResultSet rs = null;
+        try {
+            String sql = "select * from Account where email = ? and password = ?";
+            conn = DBConnection.getConnection();
+            preStm = conn.prepareStatement(sql);
+            preStm.setString(1, mail);
+            preStm.setString(2, pass);
+            rs = preStm.executeQuery();
+            String email = "", username = "", gender = "", phone = "", password = "", address = "", status = "";
+            int userId;
+            if (rs.next()) {
+                userId = rs.getInt("userId");
+                email = rs.getString("email");
+                username = rs.getString("userName");
+                gender = rs.getString("gender");
+                phone = rs.getString("phone");
+                password = rs.getString("password");
+                address = rs.getString("address");
+                status = rs.getString("status");
+                dto = new AccountDto();
+                dto.setUserId(userId);
+                dto.setEmail(email);
+                dto.setUsername(username);
+                dto.setGender(gender);
+                dto.setPhone(phone);
+                dto.setPassword(password);
+                dto.setAddress(address);
+                dto.setStatus(status);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(conn, preStm, rs);
+        }
+        return dto;
+    }
+    public boolean insertCustomer(AccountDto dto) {
         Connection conn = null;
         PreparedStatement preStm = null;
         ResultSet rs = null;
@@ -125,7 +166,7 @@ public class AccountDAO {
         return false;
     }
     
-    public boolean updateCustomer(AccountDTO dto) {
+    public boolean updateCustomer(AccountDto dto) {
         Connection conn = null;
         PreparedStatement preStm = null;
         ResultSet rs = null;

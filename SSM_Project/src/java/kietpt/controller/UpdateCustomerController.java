@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import kietpt.dao.AccountDAO;
-import kietpt.dto.AccountDTO;
+import kietpt.dto.AccountDto;
 
 /**
  *
@@ -47,7 +47,7 @@ public class UpdateCustomerController extends HttpServlet {
             
             System.out.println(email + " - " + username + " - " + address + " - " + phone + " - " + gender);
 
-            AccountDTO cus = new AccountDTO();
+            AccountDto cus = new AccountDto();
             cus.setEmail(email);
             cus.setUsername(username);
             cus.setAddress(address);

@@ -11,12 +11,12 @@ import java.io.Serializable;
  *
  * @author ThuPMNSE62369
  */
-public class AccountRoleDTO implements Serializable {
+public class AccountRoleDto implements Serializable {
     
     private int id, userId, roleId;
     private String status;
 
-    public AccountRoleDTO() {
+    public AccountRoleDto() {
     }
 
     public int getId() {

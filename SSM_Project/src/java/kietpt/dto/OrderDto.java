@@ -12,7 +12,7 @@ import java.util.Date;
  *
  * @author kietp
  */
-public class OrderDTO implements Serializable {
+public class OrderDto implements Serializable {
 
     private int orderId;
     private String orderCode;
@@ -24,10 +24,10 @@ public class OrderDTO implements Serializable {
     private int userId;
     private String status;
 
-    public OrderDTO() {
+    public OrderDto() {
     }
 
-    public OrderDTO(int orderId, String orderCode, Date startTime, Date updateTime, Date paymentTime, String addressShip, float totalPrice, int userId, String status) {
+    public OrderDto(int orderId, String orderCode, Date startTime, Date updateTime, Date paymentTime, String addressShip, float totalPrice, int userId, String status) {
         this.orderId = orderId;
         this.orderCode = orderCode;
         this.startTime = startTime;

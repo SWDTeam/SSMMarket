@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-    <servlet>
-        <servlet-name>LoginCusController</servlet-name>
-        <servlet-class>kietpt.controller.LoginCusController</servlet-class>
-    </servlet>
+    
     <servlet>
         <servlet-name>ForgotPasswordController</servlet-name>
         <servlet-class>thupnm.controllers.ForgotPasswordController</servlet-class>
@@ -45,6 +42,19 @@
         <servlet-class>thupnm.controllers.AddProductController</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>GetAllCategoriesController</servlet-name>
+        <servlet-class>thupnm.controllers.GetAllCategoriesController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewInfoCategory</servlet-name>
+        <servlet-class>thupnm.controllers.ViewInfoCategory</servlet-class>
+    </servlet>
+    <!--kiet pt-->
+    <servlet>
+        <servlet-name>LoginCusController</servlet-name>
+        <servlet-class>kietpt.controller.LoginCusController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>RegisterCusController</servlet-name>
         <servlet-class>kietpt.controller.RegisterCusController</servlet-class>
     </servlet>
@@ -73,14 +83,6 @@
         <servlet-class>kietpt.controller.OrderCusController</servlet-class>
     </servlet>
     
-    <servlet>
-        <servlet-name>GetAllCategoriesController</servlet-name>
-        <servlet-class>thupnm.controllers.GetAllCategoriesController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ViewInfoCategory</servlet-name>
-        <servlet-class>thupnm.controllers.ViewInfoCategory</servlet-class>
-    </servlet>
     <!--Minh test-->
     <servlet>
         <servlet-name>AddImg</servlet-name>
@@ -104,6 +106,7 @@
         <servlet-class>thupnm.controllers.SearchProductController</servlet-class>
     </servlet>
     <!--End Thupnm-->
+    
     <servlet-mapping>
         <servlet-name>AddImg</servlet-name>
         <url-pattern>/AddImg</url-pattern>
@@ -121,6 +124,7 @@
         <servlet-name>SearchCategoryController</servlet-name>
         <servlet-class>thupnm.controllers.SearchCategoryController</servlet-class>
     </servlet>
+    <!--kiet pt mapping-->
     <servlet-mapping>
         <servlet-name>LoginCusController</servlet-name>
         <url-pattern>/LoginCusController</url-pattern>
@@ -140,10 +144,6 @@
     <servlet-mapping>
         <servlet-name>ShowCategoryController</servlet-name>
         <url-pattern>/ShowCategoryController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AddProductController</servlet-name>
-        <url-pattern>/AddProductController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>GetListCategory</servlet-name>
@@ -166,6 +166,14 @@
         <url-pattern>/GetAllCategoriesController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>AddProductController</servlet-name>
+        <url-pattern>/AddProductController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LogoutController</servlet-name>
+        <url-pattern>/LogoutController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ViewInfoCategory</servlet-name>
         <url-pattern>/ViewInfoCategory</url-pattern>
     </servlet-mapping>
@@ -174,12 +182,28 @@
         <url-pattern>/AddAndUpdateCategory</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ShowUserController</servlet-name>
-        <url-pattern>/ShowUserController</url-pattern>
+        <servlet-name>ResetPasswordController</servlet-name>
+        <url-pattern>/ResetPasswordController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateBasicInfo</servlet-name>
+        <url-pattern>/UpdateBasicInfo</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateInfoController</servlet-name>
+        <url-pattern>/UpdateInfoController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ChangeStatusCategory</servlet-name>
         <url-pattern>/ChangeStatusCategory</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShowUserController</servlet-name>
+        <url-pattern>/ShowUserController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchController</servlet-name>
+        <url-pattern>/SearchController</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SearchCategoryController</servlet-name>
@@ -203,6 +227,7 @@
         <url-pattern>/SearchProductController</url-pattern>
     </servlet-mapping>
     <!--End Thupnm-->
+    
     <session-config>
         <session-timeout>
             30
