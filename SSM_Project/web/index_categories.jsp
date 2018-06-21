@@ -119,7 +119,7 @@
                                                         <input type="hidden" value="${VIEWCATE.categoryId}" name="cateId"/>
                                                         <input type="text" value="${VIEWCATE.categoryName}" name="cateName"
                                                                class="form-control border-input" id="c--name"/>
-                                                        <span id="error--name"></span>
+                                                        <span id="error--name"><strong><font color="red">${param.ERRORCATE}</font></strong></span>
                                                         <br/>
                                                         <label>Image</label> <br/>
                                                         <input type="file" name="imgPic" class="form-control" id="c--pic">                     

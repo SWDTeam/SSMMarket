@@ -241,4 +241,23 @@ public class CategoryDAO {
         }
         return result;
     }
+    
+    public boolean checkCategoryName(String cateName) {
+        boolean check = false;
+        try {
+            conn = DBConnection.getConnection();
+            String sql = "Select categoryName from Category where categoryName = ?";
+            preStm = conn.prepareStatement(sql);
+            preStm.setString(1, cateName);
+            rs = preStm.executeQuery();
+            if (rs.next()) {
+                check = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return check;
+    }
 }

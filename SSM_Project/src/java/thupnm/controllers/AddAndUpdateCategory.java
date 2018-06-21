@@ -101,12 +101,19 @@ public class AddAndUpdateCategory extends HttpServlet {
                 System.out.println("catename " + cateName);
 
                 if (cateId.isEmpty() || Objects.isNull(cateId)) {
-                    if (dao.createNewCategory(cate)) {
-                        request.setAttribute("RESULT", "Add new category successfully!");
-                        request.getRequestDispatcher("GetAllCategoriesController").forward(request, response);
+                    if (!dao.checkCategoryName(cateName)) {
+                        if (dao.createNewCategory(cate)) {
+                            request.setAttribute("RESULT", "Add new category successfully!");                          
+                            request.getRequestDispatcher("GetAllCategoriesController").forward(request, response);
+                        } else {
+                            request.setAttribute("RESULT", "Add new category failed!");
+                            request.getRequestDispatcher("GetAllCategoriesController").forward(request, response);
+                        }
                     } else {
-                        request.setAttribute("RESULT", "Add new category failed!");
-                        request.getRequestDispatcher("GetAllCategoriesController").forward(request, response);
+                        //request.setAttribute("ERRORCATE", "Category name is existed!");
+                        String fail = "Category name is existed!";
+                        response.sendRedirect("GetAllCategoriesController?ERRORCATE=" + fail);
+                        //request.getRequestDispatcher("GetAllCategoriesController").forward(request, response);
                     }
                 } else {
                     cate.setCategoryId(Integer.parseInt(cateId));
