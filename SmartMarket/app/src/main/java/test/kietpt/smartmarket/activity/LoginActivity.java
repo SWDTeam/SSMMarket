@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -18,6 +19,9 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import test.kietpt.smartmarket.R;
 import test.kietpt.smartmarket.model.Account;
@@ -56,8 +60,9 @@ public class LoginActivity extends AppCompatActivity {
                 if (email.getText().toString().isEmpty() || pass.getText().toString().isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Please Input Email or Password", Toast.LENGTH_SHORT).show();
                 } else {
-                    loginCustomer("http://" + IpConfig.ipConfig + ":8084/SSM_Project/LoginCusController?txtEmail=" + email.getText().toString()
+                    loginCustomer("http://" + IpConfig.ipConfig + ":8084/SSM_Project/LoginCusMobileController?txtEmail=" + email.getText().toString()
                             + "&txtPassword=" + pass.getText().toString());
+
                 }
             }
         });
@@ -87,13 +92,13 @@ public class LoginActivity extends AppCompatActivity {
                 if (email.getText().toString().equals("") || pass.getText().toString().equals("")) {
                     Toast.makeText(LoginActivity.this, "Please input Email or Password", Toast.LENGTH_LONG).show();
                 }
-                if (response.toString().equals("{}")) {
+                if (response.toString() == null || response.toString().equals("{}")) {
                     Toast.makeText(LoginActivity.this, "Invalid Email or Password", Toast.LENGTH_LONG).show();
                 } else {
                     Log.e("LOGIN ", "da vao Login ");
                     try {
-
-                        int userId = response.getInt("userId");
+                        //JSONObject abc = new JSONObject("dasdas");
+                        int userReponse = response.getInt("userId");
                         String emailReponse = response.getString("email");
                         Log.e("EMAILREPONSE + ", emailReponse);
 
@@ -104,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
                         String addressReponse = response.getString("address");
                         String statusReponse = response.getString("status");
 
-                        MainActivity.account = new Account(emailReponse, usernameReponse, genderReponse, phoneReponse, passswordReponse,
+                        MainActivity.account = new Account(userReponse,emailReponse, usernameReponse, genderReponse, phoneReponse, passswordReponse,
                                 addressReponse, statusReponse);
                         if (!database.checkEmail(emailReponse)) {
                             Log.e("ACCOUNT KO TON TAI  ", " khong  ton tai");

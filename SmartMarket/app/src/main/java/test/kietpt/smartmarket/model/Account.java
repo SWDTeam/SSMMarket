@@ -13,15 +13,7 @@ public class Account implements Serializable {
     private String address;
     private String status;
 
-    public Account(String email, String username, String gender, String phone, String password, String address, String status) {
-        this.email = email;
-        this.username = username;
-        this.gender = gender;
-        this.phone = phone;
-        this.password = password;
-        this.address = address;
-        this.status = status;
-    }
+
 
     public Account() {
     }

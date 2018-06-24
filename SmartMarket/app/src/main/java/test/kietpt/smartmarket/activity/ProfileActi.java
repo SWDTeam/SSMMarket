@@ -106,7 +106,7 @@ public class ProfileActi extends AppCompatActivity {
         String txtPhone = phone.getText().toString();
 
         boolean checked = false;
-        if (!txtUsername.matches("[a-zA-Z]{1,50}")) {
+        if (!txtUsername.matches("^[\\p{L}\\s'.-]+$")) {
             checkUsername.setVisibility(View.VISIBLE);
             checkUsername.setText("Please input name");
             checked = true;

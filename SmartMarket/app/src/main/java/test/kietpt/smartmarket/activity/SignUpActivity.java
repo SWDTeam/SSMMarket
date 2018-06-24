@@ -133,7 +133,8 @@ public class SignUpActivity extends AppCompatActivity {
             checkConfirmPass.setText("Please input same password");
             checked = true;
         }
-        if (!txtUsername.matches("[a-zA-Z]{1,50}")) {
+        //if (!txtUsername.matches("[a-zA-Z]{1,50}")) {
+        if (!txtUsername.matches("^[\\p{L}\\s'.-]+$")) {
             checkUsername.setVisibility(View.VISIBLE);
             checkUsername.setText("Please input name");
             checked = true;

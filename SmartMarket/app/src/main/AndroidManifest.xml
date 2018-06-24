@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="test.kietpt.smartmarket">
-    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="17" />
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
+
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <uses-feature android:name="android.hardware.camera" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -35,12 +39,14 @@
         <activity android:name=".activity.ProfileActi" />
         <activity android:name=".activity.ConfirmCartActi" />
         <activity android:name=".activity.MyCartActi" />
-        <activity android:name=".activity.MyCanceledCartActi" />
+        <activity android:name=".activity.MyCanceledOrdersActi" />
         <activity android:name=".activity.ChangePassActi" />
         <activity android:name=".activity.SearchViewActi" />
         <activity android:name=".activity.ProductListActi" />
         <activity android:name=".activity.ProductDetailActi" />
-        <activity android:name=".activity.CategoryListActi"></activity>
+        <activity android:name=".activity.CategoryListActi" />
+        <activity android:name=".activity.OrderedNotiActi" />
+        <activity android:name=".activity.MyOrderedActi"></activity>
     </application>
 
 </manifest>

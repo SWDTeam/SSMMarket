@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -125,7 +126,6 @@ public class ProductDetailActi extends AppCompatActivity {
 
     public void showProductDetail(){
         Intent intent = getIntent();
-
         ProductDTO dto = (ProductDTO) intent.getSerializableExtra("ProductInfo");
         productId = dto.getProductId();
         productName = dto.getProductName();
@@ -144,7 +144,7 @@ public class ProductDetailActi extends AppCompatActivity {
         txtManuDetail.setText(manu);
         txtManuTimeDetail.setText(manuTime);
         txtExpiredDetail.setText(expiredTime);
-        txtDesDetail.setText(des);
+        txtDesDetail.setText(Html.fromHtml(des,Html.FROM_HTML_MODE_COMPACT));
 
     }
 

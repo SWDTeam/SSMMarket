@@ -20,7 +20,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import test.kietpt.smartmarket.R;
-import test.kietpt.smartmarket.model.Account;
 import test.kietpt.smartmarket.ulti.CheckConnection;
 import test.kietpt.smartmarket.ulti.Database;
 
@@ -53,7 +52,7 @@ public class AccountActivity extends AppCompatActivity {
         }
         arrayList = new ArrayList<String>();
         arrayList.add("My Profile");
-        arrayList.add("My Orders");
+        arrayList.add("My Ordered");
         arrayList.add("My Canceled Orders");
         arrayList.add("Change Password");
         arrayList.add("Logout");
@@ -70,12 +69,12 @@ public class AccountActivity extends AppCompatActivity {
                 } else if (i == 1) {
                     Log.e("IIIIII  ", i + " - - - --");
 
-                    Intent intent = new Intent(AccountActivity.this, MyCartActi.class);
+                    Intent intent = new Intent(AccountActivity.this, MyOrderedActi.class);
                     startActivity(intent);
                 } else if (i == 2) {
                     Log.e("IIIIII  ", i + " - - - --");
 
-                    Intent intent = new Intent(AccountActivity.this, MyCanceledCartActi.class);
+                    Intent intent = new Intent(AccountActivity.this, MyCanceledOrdersActi.class);
                     startActivity(intent);
                 } else if(i == 3){
                     Log.e("IIIIII  ", i + " - - - --");

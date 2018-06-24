@@ -28,7 +28,7 @@ public class Database extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(" CREATE TABLE IF NOT EXISTS " + TABLE_NAME_ACCOUNT + "(" +
-                "userId INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "userId INTEGER PRIMARY KEY ," +
                 "email VARCHAR(50) UNIQUE," +
                 "userName VARCHAR (50), " +
                 "gender VARCHAR (10)," +
@@ -74,6 +74,7 @@ public class Database extends SQLiteOpenHelper {
     public void insertCustomer(Account account) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put("userId",account.getUserId());
         values.put("email", account.getEmail());
         values.put("userName", account.getUsername());
         values.put("gender", account.getGender());
@@ -85,17 +86,7 @@ public class Database extends SQLiteOpenHelper {
         Log.e("DB INSERT + ", "them thanh cong customer trong Database ");
         db.close();
     }
-    public void updateQuantityProduct(ProductDTO dto){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        values.put("productId", dto.getProductId());
-        values.put("quantity", dto.getQuantity());
 
-        db.update(TABLE_NAME_ACCOUNT,values,"productId = '"+dto.getProductId()+"'",null);
-
-        Log.e("DB UPDATE + ", "UPDATE thanh cong trong Database ");
-        db.close();
-    }
     public Account getCustomerInfo(String email) {
         Account account = null;
         SQLiteDatabase db = this.getReadableDatabase();
