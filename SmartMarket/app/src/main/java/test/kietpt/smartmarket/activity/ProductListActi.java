@@ -35,9 +35,9 @@ public class ProductListActi extends AppCompatActivity {
     Toolbar toolbar;
     ListView listView;
     ProductListAdapter productListAdapter;
-    ArrayList<ProductDTO> arrayList;
-    String checked = "";
-    int position = 0;
+    public static ArrayList<ProductDTO> listProduct;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,7 +105,8 @@ public class ProductListActi extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(ProductListActi.this, ProductDetailActi.class);
-                intent.putExtra("ProductInfo", arrayList.get(i));
+                Log.e("i == ",i+"");
+                intent.putExtra("ProductInfo", listProduct.get(i));
                 startActivity(intent);
             }
         });
@@ -124,12 +125,15 @@ public class ProductListActi extends AppCompatActivity {
 
     private void getListProductById() {
         Intent intent = getIntent();
+        String checked = "";
         checked = intent.getStringExtra("cateId");
-        String[] checked1 = checked.split("-");
-        position = Integer.parseInt(checked1[0]);
-        toolbar.setTitle(checked1[1]);
-        Log.e("CATEID PRODUCT LIST ", position + "");
-        getData("http://" + IpConfig.ipConfig + ":8084/SSM_Project/GetProductListByCateId?txtCateId=" + position);
+        Log.e("CHECKED ",checked);
+        String[] cate = checked.split("-");
+        //int position = 0;
+        //position = Integer.parseInt(checked1[0]);
+        toolbar.setTitle(cate[1]);
+        Log.e("CATEID PRODUCT LIST ", Integer.parseInt(cate[0]) + "");
+        getData("http://" + IpConfig.ipConfig + ":8084/SSM_Project/GetProductListByCateId?txtCateId=" + Integer.parseInt(cate[0]));
     }
 
 
@@ -153,9 +157,10 @@ public class ProductListActi extends AppCompatActivity {
                             String manufacture = jsonObject.getString("manufacturer");
                             String manuDate = jsonObject.getString("manuDate");
                             String expiredDate = jsonObject.getString("expiredDate");
+                            int quantity = jsonObject.getInt("quantity");
                             String urlTest = "http://"+IpConfig.ipConfig+":8084/SSM_Project/img/"+urlPic;
 
-                            arrayList.add(new ProductDTO(name, des, urlTest, key, cateId, id, price,manufacture,manuDate,expiredDate));
+                            listProduct.add(new ProductDTO(name, des, urlTest, key, cateId, id, price,manufacture,manuDate,expiredDate,quantity));
                             productListAdapter.notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
@@ -177,8 +182,8 @@ public class ProductListActi extends AppCompatActivity {
     public void reflect() {
         toolbar = (Toolbar) findViewById(R.id.toolbarProductListItem);
         listView = (ListView) findViewById(R.id.listViewProductListItem);
-        arrayList = new ArrayList<>();
-        productListAdapter = new ProductListAdapter(this, arrayList);
+        listProduct = new ArrayList<>();
+        productListAdapter = new ProductListAdapter(this, listProduct);
         listView.setAdapter(productListAdapter);
     }
 }

@@ -1,6 +1,7 @@
 package test.kietpt.smartmarket.activity;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,13 +12,17 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -47,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
         if (CheckConnection.haveNetworkConnection(this)) {
             loginInto();
         } else {
-            CheckConnection.showConnection(this,"Please check your wifi!!!!");
+            CheckConnection.showConnection(this, "Please check your wifi!!!!");
         }
     }
 
@@ -60,8 +65,9 @@ public class LoginActivity extends AppCompatActivity {
                 if (email.getText().toString().isEmpty() || pass.getText().toString().isEmpty()) {
                     Toast.makeText(LoginActivity.this, "Please Input Email or Password", Toast.LENGTH_SHORT).show();
                 } else {
-                    loginCustomer("http://" + IpConfig.ipConfig + ":8084/SSM_Project/LoginCusMobileController?txtEmail=" + email.getText().toString()
-                            + "&txtPassword=" + pass.getText().toString());
+//                    loginCustomer("http://" + IpConfig.ipConfig + ":8084/SSM_Project/LoginCusMobileController?txtEmail=" + email.getText().toString()
+//                            + "&txtPassword=" + pass.getText().toString());
+                    loginCustomer("http://" + IpConfig.ipConfig + ":3000/api/v1/sign_in");
 
                 }
             }
@@ -83,8 +89,21 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginCustomer(String url) {
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.GET, url, null
+        final RequestQueue requestQueue = Volley.newRequestQueue(this);
+        JSONObject jsonObject = new JSONObject();
+        JSONObject js = new JSONObject();
+        try {
+
+            jsonObject.put("email", email.getText().toString());
+            jsonObject.put("password", pass.getText().toString());
+            js.put("session", jsonObject);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.e("TEST JSON ", js + "");
+
+        JsonObjectRequest stringRequest = new JsonObjectRequest(Request.Method.POST, url, js
                 , new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -92,47 +111,49 @@ public class LoginActivity extends AppCompatActivity {
                 if (email.getText().toString().equals("") || pass.getText().toString().equals("")) {
                     Toast.makeText(LoginActivity.this, "Please input Email or Password", Toast.LENGTH_LONG).show();
                 }
-                if (response.toString() == null || response.toString().equals("{}")) {
-                    Toast.makeText(LoginActivity.this, "Invalid Email or Password", Toast.LENGTH_LONG).show();
-                } else {
+                if (response.toString() != null || !response.toString().equals("")) {
                     Log.e("LOGIN ", "da vao Login ");
                     try {
-                        //JSONObject abc = new JSONObject("dasdas");
-                        int userReponse = response.getInt("userId");
-                        String emailReponse = response.getString("email");
-                        Log.e("EMAILREPONSE + ", emailReponse);
+                        boolean checked = response.getBoolean("success");
+                        Log.e("Checked ", checked + "");
+                        if (checked) {
+                            int userReponse = response.getInt("id");
+                            String emailReponse = response.getString("email");
+                            String passReponse = response.getString("password");
+                            Log.e("EMAILREPONSE + ", emailReponse);
+                            String usernameReponse = response.getString("name");
+                            String genderReponse = response.getString("gender");
+                            String phoneReponse = response.getString("phone");
+                            String addressReponse = response.getString("address");
+                            String statusReponse = response.getString("status");
 
-                        String usernameReponse = response.getString("username");
-                        String genderReponse = response.getString("gender");
-                        String phoneReponse = response.getString("phone");
-                        String passswordReponse = response.getString("password");
-                        String addressReponse = response.getString("address");
-                        String statusReponse = response.getString("status");
+                            MainActivity.account = new Account(userReponse, emailReponse, usernameReponse, genderReponse, phoneReponse, pass.getText().toString().toString(),
+                                    addressReponse, statusReponse);
+                            if (!database.checkEmail(emailReponse)) {
+                                Log.e("ACCOUNT KO TON TAI  ", " khong  ton tai");
+                                database.insertCustomer(MainActivity.account);
+                            } else {
+                                Log.e("ACCOUNT TON TAI ", " da ton tai");
+                            }
 
-                        MainActivity.account = new Account(userReponse,emailReponse, usernameReponse, genderReponse, phoneReponse, passswordReponse,
-                                addressReponse, statusReponse);
-                        if (!database.checkEmail(emailReponse)) {
-                            Log.e("ACCOUNT KO TON TAI  ", " khong  ton tai");
-                            database.insertCustomer(MainActivity.account);
+                            if (MainActivity.listCart == null) {
+                                Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(LoginActivity.this, AccountActivity.class);
+                                startActivity(intent);
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(LoginActivity.this, ConfirmCartActi.class);
+                                startActivity(intent);
+                            }
                         } else {
-                            Log.e("ACCOUNT TON TAI ", " da ton tai");
+                            Toast.makeText(LoginActivity.this, "Invalid Email or Password", Toast.LENGTH_LONG).show();
                         }
-
-                        if (MainActivity.listCart == null) {
-                            Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(LoginActivity.this, AccountActivity.class);
-                            startActivity(intent);
-                        } else {
-                            Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(LoginActivity.this, ConfirmCartActi.class);
-                            startActivity(intent);
-                        }
-
 
                     } catch (Exception e) {
                         Log.e("ERROR LOGIN + ", e.getMessage());
                     }
-
+                } else {
+                    Log.e("LOGIN Failed ", "chuoi json tra ve login bi null ");
                 }
             }
         },

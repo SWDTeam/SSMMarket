@@ -20,6 +20,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import test.kietpt.smartmarket.R;
+import test.kietpt.smartmarket.model.OrderDetailDTO;
 import test.kietpt.smartmarket.ulti.CheckConnection;
 import test.kietpt.smartmarket.ulti.Database;
 
@@ -29,9 +30,10 @@ public class AccountActivity extends AppCompatActivity {
     ArrayList<String> arrayList;
     TextView textViewUsername;
     ImageView imgPicAccount;
-    String email;
-    Database database = new Database(this);
+
+    Database database;
     Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,45 +48,49 @@ public class AccountActivity extends AppCompatActivity {
     }
 
     private void getDataInfo() {
-        textViewUsername.setText(MainActivity.account.getUsername());
-        if (MainActivity.account.getGender().equals("male")) {
-            imgPicAccount.setBackground(getDrawable(R.drawable.maleicon));
-        }
-        arrayList = new ArrayList<String>();
-        arrayList.add("My Profile");
-        arrayList.add("My Ordered");
-        arrayList.add("My Canceled Orders");
-        arrayList.add("Change Password");
-        arrayList.add("Logout");
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(AccountActivity.this, android.R.layout.simple_list_item_1, arrayList);
-        listView.setAdapter(arrayAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                if (i == 0) {
-                    Log.e("IIIIII  ", i + " - - - --");
-                    Intent intent = new Intent(AccountActivity.this, ProfileActi.class);
-                    startActivity(intent);
-                } else if (i == 1) {
-                    Log.e("IIIIII  ", i + " - - - --");
-
-                    Intent intent = new Intent(AccountActivity.this, MyOrderedActi.class);
-                    startActivity(intent);
-                } else if (i == 2) {
-                    Log.e("IIIIII  ", i + " - - - --");
-
-                    Intent intent = new Intent(AccountActivity.this, MyCanceledOrdersActi.class);
-                    startActivity(intent);
-                } else if(i == 3){
-                    Log.e("IIIIII  ", i + " - - - --");
-                    Intent intent = new Intent(AccountActivity.this, ChangePassActi.class);
-                    startActivity(intent);
-                }else{
-                    confirmLogout();
-                }
+        try{
+            textViewUsername.setText(MainActivity.account.getUsername());
+            if (MainActivity.account.getGender().equals("male")) {
+                imgPicAccount.setBackground(getDrawable(R.drawable.maleicon));
             }
-        });
+            arrayList = new ArrayList<String>();
+            arrayList.add("My Profile");
+            arrayList.add("My Ordered");
+            arrayList.add("My Canceled Orders");
+            arrayList.add("Change Password");
+            arrayList.add("Logout");
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(AccountActivity.this, android.R.layout.simple_list_item_1, arrayList);
+            listView.setAdapter(arrayAdapter);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                    if (i == 0) {
+                        Log.e("IIIIII  ", i + " - - - --");
+                        Intent intent = new Intent(AccountActivity.this, ProfileActi.class);
+                        startActivity(intent);
+                    } else if (i == 1) {
+                        Log.e("IIIIII  ", i + " - - - --");
+
+                        Intent intent = new Intent(AccountActivity.this, MyOrderedActi.class);
+                        startActivity(intent);
+                    } else if (i == 2) {
+                        Log.e("IIIIII  ", i + " - - - --");
+
+                        Intent intent = new Intent(AccountActivity.this, MyCanceledOrdersActi.class);
+                        startActivity(intent);
+                    } else if (i == 3) {
+                        Log.e("IIIIII  ", i + " - - - --");
+                        Intent intent = new Intent(AccountActivity.this, ChangePassActi.class);
+                        startActivity(intent);
+                    } else {
+                        confirmLogout();
+                    }
+                }
+            });
+        }catch (Exception e){
+            Log.e("TEST123456789",e.getMessage());
+        }
     }
     private void confirmLogout(){
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -113,6 +119,7 @@ public class AccountActivity extends AppCompatActivity {
         textViewUsername = (TextView) findViewById(R.id.txtUsernameAccount);
         imgPicAccount = (ImageView) findViewById(R.id.imgPicAccount);
         toolbar = (Toolbar)findViewById(R.id.toolbarAccount);
+        database = new Database(this);
     }
 
     @Override

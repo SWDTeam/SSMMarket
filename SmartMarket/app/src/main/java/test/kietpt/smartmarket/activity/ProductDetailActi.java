@@ -49,6 +49,7 @@ public class ProductDetailActi extends AppCompatActivity {
     String manuTime="";
     String expiredTime="";
     String des = "";
+    int quantityTemp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,6 +130,7 @@ public class ProductDetailActi extends AppCompatActivity {
         ProductDTO dto = (ProductDTO) intent.getSerializableExtra("ProductInfo");
         productId = dto.getProductId();
         productName = dto.getProductName();
+        Log.e("TEST1234",dto.getProductId()+" - "+dto.getProductName());
         productKey = dto.getProductKey();
         urlPic = dto.getUrlPic();
         price = dto.getPrice();
@@ -136,6 +138,8 @@ public class ProductDetailActi extends AppCompatActivity {
         manuTime = dto.getManuDate();
         expiredTime = dto.getExpiredDate();
         des = dto.getDescription();
+        quantityTemp = dto.getQuantity();
+
         toolbarDetail.setTitle(productName);
         txtNameDetail.setText(productName);
         DecimalFormat format = new DecimalFormat("###,###,###");
@@ -186,9 +190,6 @@ public class ProductDetailActi extends AppCompatActivity {
             for(int i = 0; i<MainActivity.listCart.size(); i++){
                 if(MainActivity.listCart.get(i).getProductId() == productId){
                     MainActivity.listCart.get(i).setProductQuantity(MainActivity.listCart.get(i).getProductQuantity()+quan);
-                    if(MainActivity.listCart.get(i).getProductQuantity() >=10){
-                        MainActivity.listCart.get(i).setProductQuantity(10);
-                    }
                     MainActivity.listCart.get(i).setProductPrice(price*MainActivity.listCart.get(i).getProductQuantity());
                     exist = true;
                 }

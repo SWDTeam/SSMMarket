@@ -1,11 +1,13 @@
 package test.kietpt.smartmarket.activity;
 
+import android.content.Intent;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,26 +47,31 @@ public class MyOrderedActi extends AppCompatActivity {
         setContentView(R.layout.activity_my_ordered);
         reflect();
         actionBar();
-        checkListOrdered();
         getListOrdered("http://" + IpConfig.ipConfig + ":8084/SSM_Project/GetListOrderedCus?userId=" + MainActivity.account.getUserId());
+        catchListOrdered();
     }
-    private void checkListOrdered() {
-        if (listOrderDto.size() <= 0) {
-            orderedAdapter.notifyDataSetChanged();
-            orderedIsEmpty.setVisibility(View.VISIBLE);
-            listView.setVisibility(View.INVISIBLE);
-        } else {
-            orderedAdapter.notifyDataSetChanged();
-            orderedIsEmpty.setVisibility(View.INVISIBLE);
-            listView.setVisibility(View.VISIBLE);
-        }
+
+    private void catchListOrdered() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getApplicationContext(),OrderedDetailActi.class);
+                Toast.makeText(MyOrderedActi.this, "orderId = "+listOrderDto.get(i).getOrderId(), Toast.LENGTH_SHORT).show();
+                intent.putExtra("orderId",listOrderDto.get(i).getOrderId());
+                startActivity(intent);
+            }
+        });
     }
+
     private void getListOrdered(String url) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
                 Log.e("My Ordered :", response.toString());
+                if(response.toString().equals("[]")){
+                    orderedIsEmpty.setVisibility(View.VISIBLE);
+                }
                 if (response.toString() != null) {
                     for (int i = 0; i < response.length(); i++) {
                         try {
@@ -74,10 +81,14 @@ public class MyOrderedActi extends AppCompatActivity {
                             String date = jsonObject.getString("startTime");
                             int quantity = jsonObject.getInt("totalQuantity");
                             float price = (float) jsonObject.getDouble("totalPrice");
-                            Toast.makeText(MyOrderedActi.this, orderId+" - "+orderCode+" - "+date+" - "+quantity+" - "+price, Toast.LENGTH_SHORT).show();
+                            String status = jsonObject.getString("status");
+                            Toast.makeText(MyOrderedActi.this, orderId+" - "+orderCode+" - "+date+" - "+
+                                    quantity+" - "+price+" - "+status, Toast.LENGTH_SHORT).show();
 
-                            listOrderDto.add(new OrderDTO(orderId, orderCode, price, quantity, date));
+                            listOrderDto.add(new OrderDTO(orderId, orderCode, price, quantity, date,status));
                             orderedAdapter.notifyDataSetChanged();
+
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -89,6 +100,7 @@ public class MyOrderedActi extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
+
                     }
                 }
         );
@@ -97,7 +109,6 @@ public class MyOrderedActi extends AppCompatActivity {
     private void actionBar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,7 +122,7 @@ public class MyOrderedActi extends AppCompatActivity {
         listView = (ListView) findViewById(R.id.listviewOrdered);
         orderedIsEmpty = (TextView)findViewById(R.id.txtOrderedIsEmpty);
         listOrderDto = new ArrayList<>();
-        orderedAdapter = new MyOrderedAdapter(this, listOrderDto);
+        orderedAdapter = new MyOrderedAdapter(MyOrderedActi.this, listOrderDto);
         listView.setAdapter(orderedAdapter);
     }
 

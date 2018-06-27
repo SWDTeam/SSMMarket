@@ -17,13 +17,13 @@ public class OrderedNotiActi extends AppCompatActivity {
 
     TextView accountOrderNoti,myOrderOrderNoti,orderCodeOrderNoti,prrceNoti;
     Button btnContinueNoti;
-    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ordered_noti);
         reflect();
-        actionToolbar();
+
         showInforAboutOrder();
     }
 
@@ -57,16 +57,7 @@ public class OrderedNotiActi extends AppCompatActivity {
 
     }
 
-    private void actionToolbar() {
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu,menu);
@@ -111,7 +102,7 @@ public class OrderedNotiActi extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
     private void reflect() {
-        toolbar = (Toolbar)findViewById(R.id.toolbarOrderNoti);
+
         accountOrderNoti = (TextView)findViewById(R.id.accountOrderNoti);
         myOrderOrderNoti = (TextView)findViewById(R.id.myOrderOrderNoti);
         orderCodeOrderNoti = (TextView)findViewById(R.id.orderCodeOrderNoti);

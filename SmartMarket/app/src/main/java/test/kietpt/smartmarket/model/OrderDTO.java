@@ -10,6 +10,15 @@ public class OrderDTO implements Serializable {
     private float totalPrice;
     private int totalQuantity;
     private String orderedDate;
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public OrderDTO() {
     }
@@ -54,11 +63,12 @@ public class OrderDTO implements Serializable {
         this.orderedDate = orderedDate;
     }
 
-    public OrderDTO(int orderId, String orderCode, float totalPrice, int totalQuantity, String orderedDate) {
+    public OrderDTO(int orderId, String orderCode, float totalPrice, int totalQuantity, String orderedDate, String status) {
         this.orderId = orderId;
         this.orderCode = orderCode;
         this.totalPrice = totalPrice;
         this.totalQuantity = totalQuantity;
         this.orderedDate = orderedDate;
+        this.status = status;
     }
 }

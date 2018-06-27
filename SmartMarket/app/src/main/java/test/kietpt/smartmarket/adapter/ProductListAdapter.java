@@ -1,6 +1,7 @@
 package test.kietpt.smartmarket.adapter;
 
 import android.content.Context;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,7 +70,8 @@ public class ProductListAdapter extends BaseAdapter {
         viewHolder.priceProductList.setText("Price: " + format.format(dto.getPrice()) + " $ ");
         viewHolder.desProductList.setMaxLines(2);
         viewHolder.desProductList.setEllipsize(TextUtils.TruncateAt.END);
-        viewHolder.desProductList.setText(dto.getDescription());
+        viewHolder.desProductList.setText(Html.fromHtml(dto.getDescription(),Html.FROM_HTML_MODE_COMPACT));
+
         Picasso.get().load(dto.getUrlPic()).placeholder(R.drawable.error).error(R.drawable.errors).into(viewHolder.imgProductList);
         return convertView;
     }

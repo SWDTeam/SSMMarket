@@ -1,6 +1,7 @@
 package test.kietpt.smartmarket.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,7 +38,7 @@ public class MyOrderedAdapter extends BaseAdapter{
         return position;
     }
     public class ViewHolder{
-        TextView totalPrice,orderedDate,orderCode,totalQuantity;
+        TextView totalPrice,orderedDate,orderCode,totalQuantity,status;
     }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -50,6 +51,7 @@ public class MyOrderedAdapter extends BaseAdapter{
             viewHolder.orderedDate = (TextView)convertView.findViewById(R.id.txtDateOrdered);
             viewHolder.totalPrice = (TextView)convertView.findViewById(R.id.txtPriceOrdered);
             viewHolder.totalQuantity = (TextView)convertView.findViewById(R.id.txtQuantityOrdered);
+            viewHolder.status = (TextView)convertView.findViewById(R.id.txtStatusOrdered);
             convertView.setTag(viewHolder);
         }else{
             viewHolder = (ViewHolder)convertView.getTag();
@@ -58,6 +60,13 @@ public class MyOrderedAdapter extends BaseAdapter{
         viewHolder.orderCode.setText(orderDTO.getOrderCode());
         viewHolder.orderedDate.setText((orderDTO.getOrderedDate()));
         viewHolder.totalQuantity.setText(String.valueOf(orderDTO.getTotalQuantity()));
+        if(orderDTO.getStatus().equals("canceled")){
+            viewHolder.status.setTextColor(Color.parseColor("#FFAE6B35"));
+            viewHolder.status.setText(orderDTO.getStatus());
+        }else{
+            viewHolder.status.setText(orderDTO.getStatus());
+        }
+
         final DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
         viewHolder.totalPrice.setText(decimalFormat.format(orderDTO.getTotalPrice()) + " $ ");
 

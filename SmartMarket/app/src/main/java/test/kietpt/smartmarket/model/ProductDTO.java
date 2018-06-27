@@ -24,7 +24,7 @@ public class ProductDTO implements Serializable {
     private float price;
 
     public ProductDTO(String productName, String description, String urlPic, String productKey, int categoryId,
-                      int productId, float price, String manufacturer, String manuDate, String expiredDate) {
+                      int productId, float price, String manufacturer, String manuDate, String expiredDate,int quantity) {
         this.productName = productName;
         this.description = description;
         this.urlPic = urlPic;
@@ -35,6 +35,7 @@ public class ProductDTO implements Serializable {
         this.manufacturer = manufacturer;
         this.manuDate = manuDate;
         this.expiredDate = expiredDate;
+        this.quantity = quantity;
     }
 
     public String getProductKey() {

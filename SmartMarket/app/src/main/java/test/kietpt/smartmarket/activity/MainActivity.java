@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ArrayList<CategoryDTO> listCategory;
     CategoryAdapter categoryAdapter;
-    ArrayList<ProductDTO> listProduct;
+    ArrayList<ProductDTO> listHotProduct;
     HotProductAdapter hotProductAdapter;
 
     int id = 0;
@@ -172,8 +172,8 @@ public class MainActivity extends AppCompatActivity {
                             String expiredDate = jsonObject.getString("expiredDate");
                             float price = (float) jsonObject.getDouble("price");
                             String urlTest = "http://"+IpConfig.ipConfig+":8084/SSM_Project/img/"+urlPic;
-                        
-                            listProduct.add(new ProductDTO(name, des, urlTest, productKey, cateId, id, price, manufacture, manuDate, expiredDate));
+
+                            listHotProduct.add(new ProductDTO(name, des, urlTest, productKey, cateId, id, price, manufacture, manuDate, expiredDate,quantity));
                             hotProductAdapter.notifyDataSetChanged();
 
                         } catch (JSONException e) {
@@ -277,8 +277,8 @@ public class MainActivity extends AppCompatActivity {
         categoryAdapter = new CategoryAdapter(MainActivity.this, listCategory);
         listViewMenu.setAdapter(categoryAdapter);
 
-        listProduct = new ArrayList<>();
-        hotProductAdapter = new HotProductAdapter(MainActivity.this, listProduct);
+        listHotProduct = new ArrayList<>();
+        hotProductAdapter = new HotProductAdapter(MainActivity.this, listHotProduct);
         recyclerView.setHasFixedSize(true);
 
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));

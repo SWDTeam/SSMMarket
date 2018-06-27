@@ -38,7 +38,7 @@ import test.kietpt.smartmarket.ulti.IpConfig;
 public class ConfirmCartActi extends AppCompatActivity {
 
     ListView listProductInCart;
-    TextView txtCartIsEmpty,emailConfirmCart,phoneConfirmCart;
+    TextView txtCartIsEmpty, emailConfirmCart, phoneConfirmCart;
     static TextView txtTotalPrice;
     Button btnConfirm, btnBackToHome;
     Toolbar toolbar;
@@ -50,7 +50,7 @@ public class ConfirmCartActi extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_cart);
         reflect();
-        actionToolBar();
+
         showInforAccount();
         viewDetailProduct();
         checkCart();
@@ -80,7 +80,7 @@ public class ConfirmCartActi extends AppCompatActivity {
         btnBackToHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(intent);
             }
         });
@@ -91,10 +91,11 @@ public class ConfirmCartActi extends AppCompatActivity {
         for (int i = 0; i < MainActivity.listCart.size(); i++) {
             totalOfPrice += MainActivity.listCart.get(i).getProductPrice();
         }
-        Log.e("TOTLAPRICE ",totalOfPrice+"");
+        Log.e("TOTLAPRICE ", totalOfPrice + "");
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
-        txtTotalPrice.setText(decimalFormat.format(totalOfPrice)+" $ ");
+        txtTotalPrice.setText(decimalFormat.format(totalOfPrice) + " $ ");
     }
+
     private void checkCart() {
         if (MainActivity.listCart.size() <= 0) {
             cartAdapterConfirm.notifyDataSetChanged();
@@ -106,23 +107,13 @@ public class ConfirmCartActi extends AppCompatActivity {
             listProductInCart.setVisibility(View.VISIBLE);
         }
     }
-    private void actionToolBar() {
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-    }
 
     private void reflect() {
         listProductInCart = (ListView) findViewById(R.id.listViewCartItemConfirm);
         txtCartIsEmpty = (TextView) findViewById(R.id.txtCartIsEmptyConfirm);
-        emailConfirmCart = (TextView)findViewById(R.id.emailConfirmCart);
-        phoneConfirmCart = (TextView)findViewById(R.id.phoneConfirmCart);
-        addressShip = (EditText)findViewById(R.id.addressConfirmCart);
+        emailConfirmCart = (TextView) findViewById(R.id.emailConfirmCart);
+        phoneConfirmCart = (TextView) findViewById(R.id.phoneConfirmCart);
+        addressShip = (EditText) findViewById(R.id.addressConfirmCart);
         txtTotalPrice = (TextView) findViewById(R.id.txtTotalPriceConfirm);
         btnConfirm = (Button) findViewById(R.id.btnConfirm);
         btnBackToHome = (Button) findViewById(R.id.btnBackToHome);
@@ -130,30 +121,32 @@ public class ConfirmCartActi extends AppCompatActivity {
         cartAdapterConfirm = new CartConfirmAdapter(ConfirmCartActi.this, MainActivity.listCart);
         listProductInCart.setAdapter(cartAdapterConfirm);
     }
+
     public void confirmCart(View view) {
-        if(MainActivity.listCart.size() <= 0){
+        if (MainActivity.listCart.size() <= 0) {
             Toast.makeText(this, "Please to buy something before confirm ", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             insertCart("http://" + IpConfig.ipConfig + ":8084/SSM_Project/OrderCusController");
         }
 
     }
-    private void insertCart(String url){
+
+    private void insertCart(String url) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e("OrderCode and Price ",response.toString());
-                if(response.toString().contains("/")){
+                Log.e("OrderCode and Price ", response.toString());
+                if (response.toString().contains("/")) {
                     String[] errorQuantity = response.toString().split("/");
-                    for(int i = 0; i< errorQuantity.length; i++){
+                    for (int i = 0; i < errorQuantity.length; i++) {
                         Toast.makeText(ConfirmCartActi.this, errorQuantity[i].toString(), Toast.LENGTH_LONG).show();
                     }
-                }else {
-                        MainActivity.listCart = null;
-                        Intent intent = new Intent(getApplicationContext(), OrderedNotiActi.class);
-                        intent.putExtra("OrderCodeAndPrice", response.toString());
-                        startActivity(intent);
+                } else {
+                    MainActivity.listCart = null;
+                    Intent intent = new Intent(getApplicationContext(), OrderedNotiActi.class);
+                    intent.putExtra("OrderCodeAndPrice", response.toString());
+                    startActivity(intent);
                 }
             }
         }, new Response.ErrorListener() {
@@ -161,27 +154,27 @@ public class ConfirmCartActi extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 Log.e("FAIL INSERT ORDER ", error.getMessage());
             }
-        }){
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-
                 JSONArray jsonArray = new JSONArray();
-                for(int i = 0;i<MainActivity.listCart.size(); i++){
+                for (int i = 0; i < MainActivity.listCart.size(); i++) {
                     JSONObject jsonObject = new JSONObject();
                     try {
-                        jsonObject.put("productId",MainActivity.listCart.get(i).getProductId());
-                        jsonObject.put("productKey",MainActivity.listCart.get(i).getProductKey());
-                        jsonObject.put("productName",MainActivity.listCart.get(i).getProductName());
-                        jsonObject.put("productPrice",MainActivity.listCart.get(i).getProductPrice());
-                        jsonObject.put("productQuantity",MainActivity.listCart.get(i).getProductQuantity());
+                        jsonObject.put("productId", MainActivity.listCart.get(i).getProductId());
+                        jsonObject.put("productKey", MainActivity.listCart.get(i).getProductKey());
+                        jsonObject.put("productName", MainActivity.listCart.get(i).getProductName());
+                        jsonObject.put("productPrice", MainActivity.listCart.get(i).getProductPrice());
+                        jsonObject.put("productQuantity", MainActivity.listCart.get(i).getProductQuantity());
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                     jsonArray.put(jsonObject);
                 }
-                HashMap<String,String> params = new HashMap<String ,String>();
-                params.put("listCart",jsonArray.toString());
-                params.put("userId",String.valueOf(MainActivity.account.getUserId()));
+                HashMap<String, String> params = new HashMap<String, String>();
+                params.put("listCart", jsonArray.toString());
+                params.put("userId", String.valueOf(MainActivity.account.getUserId()));
+                params.put("addressShip",addressShip.getText().toString());
                 return params;
             }
         };

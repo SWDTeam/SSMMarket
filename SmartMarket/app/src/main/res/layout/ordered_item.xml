@@ -28,13 +28,14 @@
                 android:background="@drawable/oredered" />
 
             <TextView
+                android:id="@+id/txtStatusOrdered"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="2dp"
                 android:layout_weight="1"
                 android:text="Pending"
                 android:gravity="center"
-                android:textColor="#36ea26"
+                android:textColor="#35ae43"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 

@@ -8,13 +8,7 @@
     android:orientation="vertical"
     android:weightSum="7"
     >
-    <android.support.v7.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:id="@+id/toolbarOrderNoti"
-        android:background="#467ed2"
-        >
-    </android.support.v7.widget.Toolbar>
+
     <TextView
         android:layout_weight="1"
         android:layout_margin="5dp"

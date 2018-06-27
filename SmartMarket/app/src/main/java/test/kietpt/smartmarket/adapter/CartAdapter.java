@@ -151,7 +151,6 @@ public class CartAdapter extends BaseAdapter {
                             MyCartActi.getDataInCart();
                             notifyDataSetChanged();
 
-
                         }
                     });
                     builder.setNegativeButton("No", new DialogInterface.OnClickListener() {

@@ -5,12 +5,22 @@ import java.util.ArrayList;
 
 public class Cart implements Serializable{
 
-   int productId;
-   String productName;
-   String productKey;
-   String urlPic;
-   Float productPrice;
-   int productQuantity;
+   private int productId;
+   private String productName;
+   private String productKey;
+   private String urlPic;
+   private Float productPrice;
+   private int productQuantity;
+   private int quantityTemp;
+
+    public int getQuantityTemp() {
+        return quantityTemp;
+    }
+
+    public void setQuantityTemp(int quantityTemp) {
+        this.quantityTemp = quantityTemp;
+    }
+
     public Cart(){}
     public Cart(int productId, String productName, String productKey, String urlPic, Float productPrice, int productQuantity) {
         this.productId = productId;
