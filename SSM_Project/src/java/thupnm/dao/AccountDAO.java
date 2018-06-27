@@ -480,4 +480,20 @@ public class AccountDAO {
         return checked;
     }
     
+    public boolean banOrActiveAccount(int id, String status) {
+        boolean checked = false;
+        try {
+            conn = DBConnection.getConnection();
+            String sql = "UPDATE Account SET status = ? WHERE userId = ?";
+            preStm = conn.prepareStatement(sql);
+            preStm.setString(1, status);
+            preStm.setInt(2, id);
+            checked = preStm.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return checked;
+    }
 }

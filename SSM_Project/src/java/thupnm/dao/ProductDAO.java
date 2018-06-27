@@ -182,4 +182,23 @@ public class ProductDAO {
         }
         return result;
     }
+    
+    public boolean checkProductKey(String productKey) {
+        boolean check = false;
+        try {
+            conn = DBConnection.getConnection();
+            String sql = "Select productKey from Product where productKey = ?";
+            preStm = conn.prepareStatement(sql);
+            preStm.setString(1, productKey);
+            rs = preStm.executeQuery();
+            if (rs.next()) {
+                check = true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return check;
+    }
 }

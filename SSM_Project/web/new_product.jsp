@@ -7,21 +7,19 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SSM - New Product</title>
         <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport'/>
-
         <link href="admin_page/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
-
         <link href="admin_page/css/dataTables.bootstrap.min.css" rel="stylesheet"/>
         <link href="admin_page/css/paper-dashboard.css" rel="stylesheet"/>
         <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
         <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
         <link href="admin_page/css/themify-icons.css" rel="stylesheet">
-
         <script src="https://cdn.ckeditor.com/ckeditor5/10.0.1/classic/ckeditor.js"></script>
         <style>
-            .ck.ck-content.ck-editor__editable.ck-rounded-corners.ck-blurred.ck-editor__editable_inline{
-                height: 30vw !important;
+            .ck-editor__editable {
+                height: 25vw;
             }
         </style>
+
     </head>
     <body>
         <div class="wrapper">
@@ -59,40 +57,15 @@
                                     </div>
                                     <span id="error--name"></span>
                                 </div>
-                                <div class="row col-md-offset-1 col-md-10-">
-                                    <div class="col-md-3">
-                                        <div class="form-group">
-                                            <label>Category</label>
-                                            <select class="form-control border-input" name="categoryName">
-                                                <thupnm:forEach var="list" items="${listCategory}">
-                                                    <option value="${list.categoryName}">${list.categoryName}</option>
-                                                </thupnm:forEach>
-                                            </select>
-                                        </div>
+
+                                <!--Product code-->
+                                <div class="row col-md-offset-1 col-md-10">
+                                    <div class="form-group col-md-6">
+                                        <label>Product Code</label>
+                                        <input type="text" name="productKey" class="form-control border-input" id="p--code">
+                                        <span id="error--code"><strong><font color="red">${requestScope.errorKey}</font></strong></span>                 
                                     </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label>Manufacturer</label>
-                                            <input type="text" name="manufacturer" class="form-control border-input" id="p--manufacturer">
-                                        </div>
-                                        <span id="error--manufacturer"></span>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label>Price</label>
-                                            <input type="text" name="price" class="form-control border-input" id="p--price">
-                                        </div>
-                                        <span id="error--price"></span>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label>Quantity</label>
-                                            <input type="text" name="quantity" class="form-control border-input" id="p--quantity">
-                                        </div>
-                                        <span id="error--quantity"></span>
-                                    </div>
-                                </div>
-                                <div class="row col-md-offset-1 col-md-10-">
+
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label>Date Of Manufacture</label>
@@ -107,17 +80,53 @@
                                         </div>
                                         <span id="error--date--expiration"></span>
                                     </div>
-                                    <div class="col-md-5">
-                                        <div class="form-group">
-                                            <label>Picture</label>  
-                                                <input type="file" name="picture" class="form-control" id="p--pic">
+
+                                </div>
+                                <!--End Product code-->
+
+                                <div class="col-md-5 col-md-offset-1">
+                                    <div class="form-group col-md-10">
+                                        <label>Picture</label> <br/>
+                                        <div id="M-btn-Img" class="col-md-11 btn" style="height: 15vw; position: absolute;" class="btn">
                                         </div>
+                                        <input type="file" name="picture" class="col-md-12" id="p--pic" onchange="loadFile(event)" style=" top:0px; height: 15vw;opacity:0;"/>
                                         <span id="error--pic"></span>
                                     </div>
                                 </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label>Category</label>
+                                        <select class="form-control border-input" name="categoryName">
+                                            <thupnm:forEach var="list" items="${listCategory}">
+                                                <option value="${list.categoryName}">${list.categoryName}</option>
+                                            </thupnm:forEach>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label>Manufacturer</label>
+                                        <input type="text" name="manufacturer" class="form-control border-input" id="p--manufacturer">
+                                    </div>
+                                    <span id="error--manufacturer"></span>
+                                </div>
 
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Price</label>
+                                        <input type="text" name="price" class="form-control border-input" id="p--price">
+                                    </div>
+                                    <span id="error--price"></span>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>Quantity</label>
+                                        <input type="text" name="quantity" class="form-control border-input" id="p--quantity">
+                                    </div>
+                                    <span id="error--quantity"></span>
+                                </div>
                                 <div class="row col-md-offset-1 col-md-10">
-                                    <div style="height: auto;" class="col-md-11">
+                                    <div style="height: 30vw;" class="col-md-11">
                                         <textarea name="editor1" id="editor"></textarea>
                                         <script>
                                             ClassicEditor
@@ -141,5 +150,8 @@
             </div>
         </div>
         <%@include file="layout/admin--script.jsp" %>
+
+        <!--Review Image-->
+        <script src="js/load_img.js"></script>
     </body>
 </html>

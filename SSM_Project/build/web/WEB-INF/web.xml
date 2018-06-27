@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-    
     <servlet>
         <servlet-name>ForgotPasswordController</servlet-name>
         <servlet-class>thupnm.controllers.ForgotPasswordController</servlet-class>
@@ -82,7 +81,6 @@
         <servlet-name>OrderCusController</servlet-name>
         <servlet-class>kietpt.controller.OrderCusController</servlet-class>
     </servlet>
-    
     <!--Minh test-->
     <servlet>
         <servlet-name>AddImg</servlet-name>
@@ -106,7 +104,14 @@
         <servlet-class>thupnm.controllers.SearchProductController</servlet-class>
     </servlet>
     <!--End Thupnm-->
-    
+    <servlet>
+        <servlet-name>BanAccountController</servlet-name>
+        <servlet-class>thupnm.controllers.BanAccountController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ActiveAccountController</servlet-name>
+        <servlet-class>thupnm.controllers.ActiveAccountController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AddImg</servlet-name>
         <url-pattern>/AddImg</url-pattern>
@@ -227,7 +232,14 @@
         <url-pattern>/SearchProductController</url-pattern>
     </servlet-mapping>
     <!--End Thupnm-->
-    
+    <servlet-mapping>
+        <servlet-name>BanAccountController</servlet-name>
+        <url-pattern>/BanAccountController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ActiveAccountController</servlet-name>
+        <url-pattern>/ActiveAccountController</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

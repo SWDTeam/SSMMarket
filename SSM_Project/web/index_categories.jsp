@@ -99,7 +99,7 @@
 
                                             <thupnm:if test="${empty requestScope.listCategory}">
                                                 <strong><font color="red">No record</font></strong>
-                                            </thupnm:if>
+                                                </thupnm:if>
                                         </div>
                                     </div>
                                     <!--pagination-->
@@ -122,8 +122,13 @@
                                                         <span id="error--name"><strong><font color="red">${param.ERRORCATE}</font></strong></span>
                                                         <br/>
                                                         <label>Image</label> <br/>
-                                                        <input type="file" name="imgPic" class="form-control" id="c--pic">                     
-                                                        <span style="white-space: nowrap; text-overflow: ellipsis; width: 250px; display: block; overflow: hidden" id="error--pic">${VIEWCATE.imgPic}</span>                                                       
+                                                        <div id="M-btn-Img" class="col-md-11 btn" style="height: 15vw; position: absolute; background-image: url('img/${VIEWCATE.imgPic}'); background-size: cover; background-repeat: no-repeat;" class="btn"></div>
+<!--                                                        <img id="M-btn-Img" alt="Choose an image" class="col-md-11 btn" style="height: 15vw; position: absolute; background-image: url('img/${VIEWCATE.imgPic}');" class="btn"/>-->
+                                                        <input type="file" name="imgPic" class="col-md-12" id="c--pic" onchange="loadFile(event)" style=" top:0px; height: 15vw;opacity:0;"/>
+                                                        <span id="error--pic"></span>
+<!--                                                        <img src="img/${VIEWCATE.imgPic}"  />-->
+                                                        <!--<input type="file" name="imgPic" class="form-control" id="c--pic">-->                     
+                                                        <!--<span style="white-space: nowrap; text-overflow: ellipsis; width: 250px; display: block; overflow: hidden" id="error--pic"></span>-->                                                       
                                                     </div>
                                                     <div class="col-md-7 col-md-offset-4">
                                                         <input type="submit" value="Submit" class="btn btn-info btn-fill btn-wd"/>
@@ -141,7 +146,7 @@
             </div>
         </div>
         <%@include file="layout/admin--script.jsp" %>
-
+        <script src="js/load_img.js"></script>
         <script>
             function confirmation() {
                 return confirm("Are you sure to disable this category?");

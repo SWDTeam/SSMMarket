@@ -89,7 +89,7 @@
                                                     <th>Role</th>
                                                     <th>Status</th>
                                                     <th>Show</th>
-                                                    <th>Ban</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -100,7 +100,14 @@
                                                         <td>${dto.email}</td>
                                                         <td>${dto.gender}</td>
                                                         <td>${dto.role}</td>
-                                                        <td>${dto.status}</td>
+                                                        <td>
+                                                            <thupnm:if test="${dto.status == 'active'}">
+                                                                <font color='blue'>${dto.status}</font>
+                                                            </thupnm:if>
+                                                            <thupnm:if test="${dto.status == 'banned'}">
+                                                                <font color='red'>${dto.status}</font>
+                                                            </thupnm:if>
+                                                        </td>
                                                         <td>
                                                             <form action="UpdateBasicInfo">
                                                                 <input type="hidden" name="lastSearch" value="${requestScope.lastSearch}" />
@@ -109,7 +116,20 @@
                                                                 <button type="submit" class="btn btn-info ti-zoom-in">Show</button>
                                                             </form>
                                                         </td>
-                                                        <td><i class="btn btn-dark ti-close">Ban</i></td>
+                                                        <td>
+                                                            <thupnm:if test="${dto.status == 'active'}">
+                                                                <form action="BanAccountController">
+                                                                    <input type="hidden" name="userId" value="${dto.userId}" />
+                                                                    <button type="submit" class="btn btn-dark ti-lock" onclick="return confirmation()">Ban</button>
+                                                                </form>
+                                                            </thupnm:if>
+                                                            <thupnm:if test="${dto.status == 'banned'}">
+                                                                <form action="ActiveAccountController">
+                                                                    <input type="hidden" name="userId" value="${dto.userId}" />
+                                                                    <button type="submit" class="btn btn-success ti-unlock" onclick="return confirmation()">Active</button>
+                                                                </form>
+                                                            </thupnm:if>
+                                                        </td>
                                                     </tr>
 
                                                 </thupnm:forEach>
@@ -130,6 +150,12 @@
             </div>
         </div>
         <%@include file="layout/admin--script.jsp" %>
+        <script>
+            function confirmation() {
+                return confirm("Are you sure?");
+            }
+
+        </script>
     </body>
 
 </html>

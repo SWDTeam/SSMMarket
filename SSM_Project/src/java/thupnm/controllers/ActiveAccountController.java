@@ -12,15 +12,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.fileupload.FileItem;
-import thupnm.dao.CategoryDAO;
-import thupnm.dto.CategoryDTO;
+import thupnm.dao.AccountDAO;
+import thupnm.dto.AccountDTO;
 
 /**
  *
  * @author ThuPMNSE62369
  */
-public class ViewInfoCategory extends HttpServlet {
+public class ActiveAccountController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -30,35 +29,20 @@ public class ViewInfoCategory extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
-     * 
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            String cateId = request.getParameter("cateId");
-            CategoryDAO dao = new CategoryDAO();
-            CategoryDTO dto = dao.viewInfoCategory(Integer.parseInt(cateId));
-            
-            System.out.println("ffffffff " + dto.getImgPic());
-            List items = null;
-
-            String fileName = dto.getImgPic();
-            String realPath = null;
-            FileItem itemImg = null;
-
-            try {
-                System.out.println("Path " + fileName);
-                realPath = getServletContext().getRealPath("/") + "img\\" + fileName;
-                System.out.println("Realpath " + realPath);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            request.setAttribute("VIEWCATE", dto);
-            request.getRequestDispatcher("GetAllCategoriesController").forward(request, response);
+            String id = request.getParameter("userId");
+            AccountDAO dao = new AccountDAO();
+            AccountDTO dto = new AccountDTO();      
+            boolean check = dao.banOrActiveAccount(Integer.parseInt(id), AccountDTO.STATUS_ACTIVE); 
+            List<AccountDTO> listUser = dao.getAllUser();
+            request.setAttribute("listUser", listUser);
+            request.getRequestDispatcher("index_users.jsp").forward(request, response);
         } catch (Exception e) {
-            log("Error at ViewInfoCategory " + e.getMessage());
+            log("Error at ActiveAccountController " + e.getMessage());
         }
     }
 

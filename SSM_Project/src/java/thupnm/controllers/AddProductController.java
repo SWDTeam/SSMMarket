@@ -71,7 +71,7 @@ public class AddProductController extends HttpServlet {
                             realPath = getServletContext().getRealPath("/").substring(0, getServletContext().getRealPath("/").indexOf("build"))
                                     + "web\\img\\" + fileName;
                             System.out.println("Real path " + realPath);
-                            
+
                             File savedFile = new File(realPath);
                             item.write(savedFile);
 //                            if (fileName == null) {
@@ -92,6 +92,7 @@ public class AddProductController extends HttpServlet {
                 String productName = (String) params.get("productName");
                 System.out.println("proname " + productName);
 
+                String productKey = (String) params.get("productKey");
                 String categoryName = (String) params.get("categoryName");
                 System.out.println("catename " + categoryName);
 
@@ -118,8 +119,14 @@ public class AddProductController extends HttpServlet {
 
                 ProductDAO dao = new ProductDAO();
                 ProductDTO dto = new ProductDTO();
-                Random r = new Random();
-                dto.setProductKey(String.valueOf(r.nextInt(1000000)));
+
+                boolean checked = false;
+                if (dao.checkProductKey(productKey)) {
+                    request.setAttribute("errorKey", "Product key is existed!");
+                    checked = true;
+                }
+
+                dto.setProductKey(productKey);
                 dto.setProductName(productName);
                 dto.setCategoryId(categoryId);
                 dto.setManufacturer(manu);
@@ -132,16 +139,20 @@ public class AddProductController extends HttpServlet {
 
                 System.out.println("aaaaaaa " + image.getImgKey());
 
-                if (dao.createNewProduct(dto)) {
-                    int proId = dao.viewProductId(dto.getProductKey());
-                    System.out.println("ssss " + proId);
-                    imageDAO.createImage(image.getImgKey(), proId);
-                    request.setAttribute("RESULT", "Add product successfully!");
-                    request.setAttribute("IMG", image.getImgKey());
-                    request.getRequestDispatcher("ShowCategoryController").forward(request, response);
+                if (!checked) {
+                    if (dao.createNewProduct(dto)) {
+                        int proId = dao.viewProductId(dto.getProductKey());
+                        System.out.println("ssss " + proId);
+                        imageDAO.createImage(image.getImgKey(), proId);
+                        request.setAttribute("RESULT", "Add product successfully!");
+                        request.setAttribute("IMG", image.getImgKey());
+                        request.getRequestDispatcher("ShowCategoryController").forward(request, response);
+                    } else {
+                        System.out.println("2222222222222222");
+                        request.setAttribute("RESULT", "Add product failed!");
+                        request.getRequestDispatcher("ShowCategoryController").forward(request, response);
+                    }
                 } else {
-                    System.out.println("2222222222222222");
-                    request.setAttribute("RESULT", "Add product failed!");
                     request.getRequestDispatcher("ShowCategoryController").forward(request, response);
                 }
             }

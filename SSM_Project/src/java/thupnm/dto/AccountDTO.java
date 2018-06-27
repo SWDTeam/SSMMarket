@@ -16,6 +16,7 @@ public class AccountDTO implements Serializable {
     
     public static final int ROLE_USER = 2;
     public static final String STATUS_ACTIVE = "active";
+    public static final String STATUS_BANNED = "banned";
     
     private int userId, roleId;  
     private String username, password, phone, email, gender, address, status, role;
