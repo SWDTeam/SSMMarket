@@ -13,7 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import kietpt.dao.ProductDAO;
+import kietpt.dao.ProductDao;
 import kietpt.dto.CategoryDto;
 
 /**
@@ -40,7 +40,7 @@ public class GetListCategory extends HttpServlet {
         String btAction = request.getParameter("btnAction");
         try {
             if (btAction.equals("view")) {
-                ProductDAO dao = new ProductDAO();
+                ProductDao dao = new ProductDao();
                 List<CategoryDto> listCate = dao.getListCategory();
                 if (listCate != null) {
                     json = new Gson().toJson(listCate);
@@ -49,7 +49,7 @@ public class GetListCategory extends HttpServlet {
                 }
             } else if(btAction.equals("searchName")){
                 String cateName = request.getParameter("txtSearch");
-                ProductDAO dao = new ProductDAO();
+                ProductDao dao = new ProductDao();
                 List<CategoryDto> listCate = dao.getListCategoryByName(cateName);
                 if (listCate != null) {
                     json = new Gson().toJson(listCate);

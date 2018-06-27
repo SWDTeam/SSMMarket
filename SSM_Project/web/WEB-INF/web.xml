@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
-    
     <servlet>
         <servlet-name>ForgotPasswordController</servlet-name>
         <servlet-class>thupnm.controllers.ForgotPasswordController</servlet-class>
@@ -82,7 +81,6 @@
         <servlet-name>OrderCusController</servlet-name>
         <servlet-class>kietpt.controller.OrderCusController</servlet-class>
     </servlet>
-    
     <!--Minh test-->
     <servlet>
         <servlet-name>AddImg</servlet-name>
@@ -106,7 +104,30 @@
         <servlet-class>thupnm.controllers.SearchProductController</servlet-class>
     </servlet>
     <!--End Thupnm-->
-    
+    <servlet>
+        <servlet-name>LoginCusMobileController</servlet-name>
+        <servlet-class>kietpt.controller.LoginCusMobileController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetListOrderedCus</servlet-name>
+        <servlet-class>kietpt.controller.GetListOrderedCus</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetOrderDetailCus</servlet-name>
+        <servlet-class>kietpt.controller.GetOrderDetailCus</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetListCanceledOrderCus</servlet-name>
+        <servlet-class>kietpt.controller.GetListCanceledOrderCus</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ConfirmOrderedCus</servlet-name>
+        <servlet-class>kietpt.controller.ConfirmOrderedCus</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GetBarcode</servlet-name>
+        <servlet-class>kietpt.controller.GetBarcode</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AddImg</servlet-name>
         <url-pattern>/AddImg</url-pattern>
@@ -227,7 +248,30 @@
         <url-pattern>/SearchProductController</url-pattern>
     </servlet-mapping>
     <!--End Thupnm-->
-    
+    <servlet-mapping>
+        <servlet-name>LoginCusMobileController</servlet-name>
+        <url-pattern>/LoginCusMobileController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetListOrderedCus</servlet-name>
+        <url-pattern>/GetListOrderedCus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetOrderDetailCus</servlet-name>
+        <url-pattern>/GetOrderDetailCus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetListCanceledOrderCus</servlet-name>
+        <url-pattern>/GetListCanceledOrderCus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConfirmOrderedCus</servlet-name>
+        <url-pattern>/ConfirmOrderedCus</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>GetBarcode</servlet-name>
+        <url-pattern>/GetBarcode</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
@@ -248,4 +292,17 @@
     <welcome-file-list>
         <welcome-file>login.jsp</welcome-file>
     </welcome-file-list>
+    <filter>
+        <filter-name>setCharacterEncodingFilter</filter-name>
+        <filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+    <!-- The mapping for the Set Character Encoding Filter -->
+    <filter-mapping>
+        <filter-name>setCharacterEncodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 </web-app>

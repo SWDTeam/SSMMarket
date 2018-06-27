@@ -21,14 +21,42 @@ public class ProductDto implements Serializable {
     private int quantity, categoryId, productId;
     private Date manuDate, expiredDate;
     private float price;
+    private boolean checked;
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+    public ProductDto(int quantity, int productId, float price,String productKey) {
+        this.quantity = quantity;
+        this.productId = productId;
+        this.price = price;
+        this.productKey = productKey;
+    }
 
     public ProductDto() {
     }
 
-    public ProductDto(String productKey, int quantity, int productId, float price) {
+    public ProductDto(int productId,String productKey, int quantity,boolean checked) {
         this.productKey = productKey;
         this.quantity = quantity;
         this.productId = productId;
+        this.checked = checked;
+    }
+    public ProductDto(int productId,String productKey, int quantity) {
+        this.productKey = productKey;
+        this.quantity = quantity;
+        this.productId = productId;
+    }
+
+    public ProductDto( int productId,String productKey, String productName,int quantity, float price) {
+        this.productKey = productKey;
+        this.quantity = quantity;
+        this.productId = productId;
+        this.productName = productName;
         this.price = price;
     }
 

@@ -8,19 +8,19 @@ package kietpt.controller;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import kietpt.dao.AccountDao;
-import kietpt.dto.AccountDto;
+import thupnm.dto.AccountDTO;
 
 /**
  *
  * @author kietp
  */
-public class RegisterCusController extends HttpServlet {
+public class LoginCusMobileController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,55 +36,30 @@ public class RegisterCusController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
-        String json = "";
         try {
-            AccountDao dao = new AccountDao();
+            String data = request.getParameter("session");
+            System.out.println("data = "+data);
             String email = request.getParameter("txtEmail");
             String password = request.getParameter("txtPassword");
-            String username = request.getParameter("txtUsername");
-            String address = request.getParameter("txtAddress");
-            String phone = request.getParameter("txtPhone");
-            String gender = request.getParameter("txtGender");
-            String status = request.getParameter("txtStatus");
-            System.out.println(email + " - " + password + " - " + username + " - " + address + " - " + phone + " - " + gender);
-               
-            AccountDto cus = new AccountDto();
-            cus.setEmail(email);
-            cus.setPassword(password);
-            cus.setUsername(username);
-            cus.setAddress(address);
-            cus.setPhone(phone);
-            cus.setGender(gender);
-            cus.setStatus(status);
-            if (!dao.checkEmail(email)) {
-                if (dao.insertCustomer(cus)) {
-                    int userId = dao.getUserIdByEmail(email);
-                    System.out.println("---------------  "+userId);
-                    cus.setUserId(userId);
-                    if (dao.addRole(cus.getUserId())) {
-                        json = new Gson().toJson(cus);
-                        System.out.println("dang ky thanh cong " + json);
-                        response.getWriter().write(json);
-                    } else {
-                        System.out.println("kiet dep chai");
-                        json = new Gson().toJson("{\"result\":\"fail\"}");
-                        System.out.println("dang ky that bai " + json);
-                        response.getWriter().write(json);
-                    }
-                } else {
-                    System.out.println("kiet xau trai");
-                    json = new Gson().toJson("{\"result\":\"fail\"}");
-                    System.out.println("dang ky that bai " + json);
-                    response.getWriter().write(json);
-                }
+            String json = "";
+            System.out.println("do vao loginMobileCustomerController " + email + " - " + password);
+            AccountDao dao = new AccountDao();
+            AccountDTO dto = new AccountDTO();
+            dto = dao.find(email, password);
+            int role = dao.checkLogin(email, password);
+            if (role == 2) {
+               json = new Gson().toJson(dto);
+                System.out.println("KIETTT " + json);
+                response.getWriter().write(json);              
             } else {
-                json = new Gson().toJson("{\"result\":\"duplicate\"}");
-                System.out.println("dang ky that bai " + json);
-                response.getWriter().write(json);
+                System.out.println("vào web error ");
+                response.getWriter().write("{}");
+                
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

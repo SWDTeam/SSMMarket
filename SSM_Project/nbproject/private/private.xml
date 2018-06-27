@@ -3,14 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Faculty/Mobile/BackendSSMarket/SSMMarket/SSM_Project/src/java/kietpt/dao/AccountDAO.java</file>
-            <file>file:/D:/Faculty/Mobile/BackendSSMarket/SSMMarket/SSM_Project/src/java/thupnm/controllers/ShowProfileController.java</file>
+            <file>file:/D:/Faculty/Mobile/BackendSSMarket/SSMMarket/SSM_Project/src/java/kietpt/controller/LoginCusMobileController.java</file>
+            <file>file:/D:/Faculty/Mobile/BackendSSMarket/SSMMarket/SSM_Project/src/java/kietpt/dto/OrderDto.java</file>
+            <file>file:/D:/Faculty/Mobile/BackendSSMarket/SSMMarket/SSM_Project/src/java/kietpt/controller/ConfirmOrderedCus.java</file>
+            <file>file:/D:/Faculty/Mobile/BackendSSMarket/SSMMarket/SSM_Project/src/java/kietpt/controller/GetBarcode.java</file>
+            <file>file:/D:/Faculty/Mobile/BackendSSMarket/SSMMarket/SSM_Project/src/java/kietpt/dto/ProductDto.java</file>
             <file>file:/D:/Faculty/Mobile/BackendSSMarket/SSMMarket/SSM_Project/src/java/kietpt/controller/LoginCusController.java</file>
-            <file>file:/D:/Faculty/Mobile/BackendSSMarket/SSMMarket/SSM_Project/web/index.jsp</file>
-            <file>file:/D:/Faculty/Mobile/BackendSSMarket/SSMMarket/SSM_Project/web/login.jsp</file>
-            <file>file:/D:/Faculty/Mobile/BackendSSMarket/SSMMarket/SSM_Project/src/java/kietpt/controller/RegisterCusController.java</file>
+            <file>file:/D:/Faculty/Mobile/BackendSSMarket/SSMMarket/SSM_Project/src/java/kietpt/controller/OrderCusController.java</file>
+            <file>file:/D:/Faculty/Mobile/BackendSSMarket/SSMMarket/SSM_Project/src/java/kietpt/controller/GetOrderDetailCus.java</file>
+            <file>file:/D:/Faculty/Mobile/BackendSSMarket/SSMMarket/SSM_Project/src/java/kietpt/dao/ProductDao.java</file>
             <file>file:/D:/Faculty/Mobile/BackendSSMarket/SSMMarket/SSM_Project/web/WEB-INF/web.xml</file>
-            <file>file:/D:/Faculty/Mobile/BackendSSMarket/SSMMarket/SSM_Project/src/java/thupnm/dao/AccountDAO.java</file>
+            <file>file:/D:/Faculty/Mobile/BackendSSMarket/SSMMarket/SSM_Project/src/java/kietpt/dto/OrderDetailDto.java</file>
         </group>
     </open-files>
 </project-private>

@@ -17,7 +17,7 @@ import thupnm.dto.AccountDTO;
  *
  * @author kietp
  */
-public class AccountDAO {
+public class AccountDao {
     
     public void closeConnection(Connection conn, PreparedStatement stm, ResultSet rs) {
         try {

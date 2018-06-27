@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import kietpt.dao.AccountDAO;
+import kietpt.dao.AccountDao;
+import kietpt.dto.AccountDto;
+import thupnm.dao.AccountDAO;
 import thupnm.dto.AccountDTO;
 
 /**
@@ -42,34 +44,27 @@ public class LoginCusController extends HttpServlet {
             String password = request.getParameter("txtPassword");
             String json = "";
             System.out.println("do vao loginCustomerController " + email + " - " + password);
-            AccountDAO dao = new AccountDAO();
-            int role = dao.checkLogin(email, password);
+            AccountDao dao = new AccountDao();
             AccountDTO dto = new AccountDTO();
             dto = dao.find(email, password);
             session.setAttribute("INFO", dto);
-            if (dto == null || dto.equals("")) {
-                System.out.println("da vao mobile error");
-                System.out.println("KIETT " + "{}");
-                response.getWriter().write("{}");
-            }
+            int role = dao.checkLogin(email, password);
             if (role == 1) {
                 System.out.println("chuyen sang trang admin");
                 session.setAttribute("ROLEADMIN", role);
-                request.getRequestDispatcher("index.jsp").forward(request, response);
-            } 
-            else if (role == 2) {
-                response.setContentType("application/json");
+                request.getRequestDispatcher("index.jsp").forward(request, response);               
+            } else if (role == 2) {
                 json = new Gson().toJson(dto);
                 System.out.println("KIETTT " + json);
-                response.getWriter().write(json);
-            } else {
+                response.getWriter().write(json);                
+            } else{
                 System.out.println("vào web error ");
                 request.setAttribute("INVALID", "Invalid username or password. Please try again!");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-            }
-
+                response.getWriter().write("{}");
+                request.getRequestDispatcher("login.jsp").forward(request, response);               
+            }            
         } catch (Exception e) {
-            log("ERROR at LoginController" + e.getMessage());
+            e.printStackTrace();
         }
 
     }

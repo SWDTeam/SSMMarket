@@ -12,7 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import kietpt.dao.AccountDAO;
+import kietpt.dao.AccountDao;
 import kietpt.dto.AccountDto;
 
 /**
@@ -38,7 +38,7 @@ public class UpdateCustomerController extends HttpServlet {
         String json = "";
         try {
             System.out.println(" da vao update Customer Controller ");
-            AccountDAO dao = new AccountDAO();
+            AccountDao dao = new AccountDao();
             String email = request.getParameter("txtEmail");
             String username = request.getParameter("txtUsername");
             String address = request.getParameter("txtAddress");

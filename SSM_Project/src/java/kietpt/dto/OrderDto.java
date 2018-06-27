@@ -6,6 +6,7 @@
 package kietpt.dto;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -16,18 +17,30 @@ public class OrderDto implements Serializable {
 
     private int orderId;
     private String orderCode;
-    private Date startTime;
-    private Date updateTime;
-    private Date paymentTime;
+    private Timestamp startTime;
+    private Timestamp updateTime;
+    private Timestamp paymentTime;
     private String addressShip;
     private float totalPrice;
-    private int userId;
+    private int cashierId;
+    private int customerId;
     private String status;
+    private int totalQuantity;
+    
+    
+
+    public int getTotalQuantity() {
+        return totalQuantity;
+    }
+
+    public void setTotalQuantity(int totalQuantity) {
+        this.totalQuantity = totalQuantity;
+    }
 
     public OrderDto() {
     }
 
-    public OrderDto(int orderId, String orderCode, Date startTime, Date updateTime, Date paymentTime, String addressShip, float totalPrice, int userId, String status) {
+    public OrderDto(int orderId, String orderCode, Timestamp startTime, Timestamp updateTime, Timestamp paymentTime, String addressShip, float totalPrice, int customerId,int cashierId, String status) {
         this.orderId = orderId;
         this.orderCode = orderCode;
         this.startTime = startTime;
@@ -35,7 +48,8 @@ public class OrderDto implements Serializable {
         this.paymentTime = paymentTime;
         this.addressShip = addressShip;
         this.totalPrice = totalPrice;
-        this.userId = userId;
+        this.customerId = customerId;
+        this.cashierId = cashierId;
         this.status = status;
     }
 
@@ -55,30 +69,29 @@ public class OrderDto implements Serializable {
         this.orderCode = orderCode;
     }
 
-    public Date getStartTime() {
+    public Timestamp getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(Timestamp startTime) {
         this.startTime = startTime;
     }
 
-    public Date getUpdateTime() {
+    public Timestamp getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
     }
 
-    public Date getPaymentTime() {
+    public Timestamp getPaymentTime() {
         return paymentTime;
     }
 
-    public void setPaymentTime(Date paymentTime) {
+    public void setPaymentTime(Timestamp paymentTime) {
         this.paymentTime = paymentTime;
     }
-
     public String getAddressShip() {
         return addressShip;
     }
@@ -95,13 +108,23 @@ public class OrderDto implements Serializable {
         this.totalPrice = totalPrice;
     }
 
-    public int getUserId() {
-        return userId;
+    public int getCashierId() {
+        return cashierId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setCashierId(int cashierId) {
+        this.cashierId = cashierId;
     }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
+    
 
     public String getStatus() {
         return status;
@@ -110,5 +133,7 @@ public class OrderDto implements Serializable {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    
 
 }

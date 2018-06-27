@@ -13,7 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import kietpt.dao.ProductDAO;
+import kietpt.dao.ProductDao;
 import kietpt.dto.CategoryDto;
 import kietpt.dto.ProductDto;
 
@@ -39,7 +39,7 @@ public class GetListHotProduct extends HttpServlet {
         response.setContentType("application/json");
         String json = "";
         try {
-            ProductDAO dao = new ProductDAO();
+            ProductDao dao = new ProductDao();
             List<ProductDto> listProduct = dao.getListCusHotProduct();
             if (listProduct != null) {
                 json = new Gson().toJson(listProduct);

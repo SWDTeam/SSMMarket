@@ -5,8 +5,13 @@
  */
 package kietpt.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -16,7 +21,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import kietpt.dao.ProductDAO;
+import jdk.nashorn.internal.parser.JSONParser;
+import kietpt.dao.ProductDao;
 import kietpt.dto.OrderDto;
 import kietpt.dto.ProductDto;
 
@@ -38,36 +44,108 @@ public class OrderCusController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        response.setCharacterEncoding("UTF-8");
+
         try {
+            System.out.println("da vao controller OrderCusController");
+            String cart = request.getParameter("listCart");
+            String userId = request.getParameter("userId");
+            String addressShip = request.getParameter("addressShip");
+            System.out.println("car = " + cart);
 
+            JsonParser parser = new JsonParser();
+            JsonArray jsonArray = (JsonArray) parser.parse(cart);
             List<ProductDto> listCart = new ArrayList<>();
-            listCart.add(new ProductDto("D1", 10, 1, 300));
-            listCart.add(new ProductDto("D2", 5, 2, 400));
 
-            ProductDAO dao = new ProductDAO();
+            for (int i = 0; i < jsonArray.size(); i++) {
+                JsonObject jsonObject = jsonArray.get(i).getAsJsonObject();
+                int productId = jsonObject.get("productId").getAsInt();
+                String productKey = jsonObject.get("productKey").getAsString();
+                String productName = jsonObject.get("productName").getAsString();
+                float productPrice = jsonObject.get("productPrice").getAsFloat();
+                int productQuantity = jsonObject.get("productQuantity").getAsInt();
+                listCart.add(new ProductDto(productId, productKey, productName, productQuantity, productPrice));
+            }
+            ProductDao dao = new ProductDao();
             List<ProductDto> listProduct = dao.getListProduct();
-            int afterQuantity = 0;
+
+            float totalPrice = 0;
+            for (int i = 0; i < listCart.size(); i++) {
+                totalPrice += listCart.get(i).getPrice();
+            }
+            int totalQuantity = 0;
+            for (int i = 0; i < listCart.size(); i++) {
+                totalQuantity += listCart.get(i).getQuantity();
+            }
+            String json = "";
+            List<ProductDto> listafter = new ArrayList<>();
             int flag = 0;
+            boolean checked = false;
             for (int i = 0; i < listProduct.size(); i++) {
                 for (int j = 0; j < listCart.size(); j++) {
                     if (listCart.get(j).getProductId() == listProduct.get(i).getProductId()) {
-                        if (listCart.get(j).getQuantity() <= listProduct.get(i).getQuantity()) {
-                            afterQuantity = listCart.get(j).getQuantity() - listProduct.get(i).getQuantity();
-                            flag = 1;
-                        } else {
+                        if (listCart.get(j).getQuantity() > listProduct.get(i).getQuantity()) {
                             flag = 0;
-                            break;
+                            checked = true;
+                            response.getWriter().append(listCart.get(j).getProductName() + " has only "
+                                    + listProduct.get(i).getQuantity() + " in stock.Please decrease quantity of product in your cart!!!" + "/");
+                            System.out.println("đã fail khi số lượng vượt quá ");
+
+                        } else {
+                            // gửi tin nhắn qua bên mobile vì số lương sản phẩm trong kho không đủ
+                            int afterQuantity = listProduct.get(i).getQuantity() - listCart.get(j).getQuantity();
+                            System.out.println("quantity after:  " + afterQuantity);
+                            listafter.add(new ProductDto(listCart.get(j).getProductId(),
+                                    listCart.get(j).getProductKey(), afterQuantity));
+                            flag = 1;
+                            checked = true;
                         }
                     }
+                    System.out.println(" i = " + i + " - " + "j = " + j);
+                }
+                if (flag == 0 && checked == true) {
+                    break;
                 }
             }
-            if (flag == 1) {
+            // insert vào bảng order 
+            if (flag == 1 && checked == true) {
                 OrderDto dto = new OrderDto();
                 Random randomCode = new Random();
-                dto.setOrderCode(String.valueOf(randomCode.nextInt(1000000)));
-                Date date = Calendar.getInstance().getTime();
-                System.out.println("Starttime + : "+date);
-                dto.setStartTime(date);
+                dto.setOrderCode(String.valueOf(randomCode.nextInt(10000000)));
+                Timestamp start = new Timestamp(System.currentTimeMillis());
+                System.out.println("Starttime + : " + start);
+                dto.setStartTime(start);
+                dto.setUpdateTime(null);
+                dto.setPaymentTime(null);
+                dto.setAddressShip(addressShip);
+                dto.setTotalPrice(totalPrice);
+                dto.setCustomerId(Integer.parseInt(userId));
+                dto.setCashierId(Integer.parseInt(userId));
+                dto.setStatus("pending");
+                dto.setTotalQuantity(totalQuantity);
+                String order = dao.insertOrder(dto);
+                String[] orderArr = order.split("-");
+                if (Integer.parseInt(orderArr[0]) > 0) {
+                    if (dao.insertOrderDetail(Integer.parseInt(orderArr[0]), listCart)) {
+                        response.getWriter().append(orderArr[1] + "-" + orderArr[2]);
+                        flag = 2;
+                        System.out.println("Insert order detail thanh cong ");
+                    } else {
+                        System.out.println("Insert order detail that bai ");
+                    }
+                } else {
+                    response.setContentType("application/json");
+                    json = new Gson().toJson("failed");
+                    response.getWriter().write(json);
+                    System.out.println("OrderID ko ton tai");
+                }
+                if (flag == 2) {
+                    if (dao.updateQuantity(listafter)) {
+                        System.out.println("update quantity thanh cong");
+                    } else {
+                        System.out.println("update quantity khong thanh cong, FAIL ");
+                    }
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
